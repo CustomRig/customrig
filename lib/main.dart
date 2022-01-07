@@ -1,4 +1,5 @@
 import 'package:customrig/pages/main_page.dart';
+import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,9 +13,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: myLightTheme,
+      darkTheme: myLightTheme,
       home: const MainPage(),
     );
   }

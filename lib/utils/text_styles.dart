@@ -10,4 +10,10 @@ class MyTextStyles {
     fontWeight: FontWeight.w400,
     fontSize: 14,
   );
+
+  static const TextStyle heading = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w800,
+    letterSpacing: 1,
+  );
 }

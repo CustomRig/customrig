@@ -22,8 +22,10 @@ class _MainPageState extends State<MainPage> {
             appBar: AppBar(
               title: const Text('Custom Rig'),
             ),
+            drawer: const Drawer(),
             body: const HomePage(),
             bottomNavigationBar: NavigationBar(
+              backgroundColor: const Color(0xFFf1f5fb),
               selectedIndex: navBar.index,
               onDestinationSelected: (index) {
                 navBar.setIndex(index);
@@ -32,44 +34,20 @@ class _MainPageState extends State<MainPage> {
                 NavigationDestination(
                   icon: Icon(EvaIcons.homeOutline),
                   label: 'Home',
+                  selectedIcon: Icon(EvaIcons.home),
                 ),
                 NavigationDestination(
                   icon: Icon(EvaIcons.heartOutline),
                   label: 'Favorites',
+                  selectedIcon: Icon(EvaIcons.heart),
                 ),
                 NavigationDestination(
                   icon: Icon(EvaIcons.settingsOutline),
                   label: 'My Rigs',
+                  selectedIcon: Icon(EvaIcons.settings),
                 )
               ],
             ),
-            // bottomNavigationBar: GNav(
-            //   gap: 8,
-            //   color: Colors.grey[800],
-            //   activeColor: Colors.purple,
-            //   iconSize: 24,
-            //   tabMargin: const EdgeInsets.all(10),
-            //   tabBackgroundColor: Colors.purple.withOpacity(0.1),
-            //   padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
-            //   selectedIndex: navBar.index,
-            //   onTabChange: (index) {
-            //     navBar.setIndex(index);
-            //   },
-            //   tabs: const [
-            //     GButton(
-            //       icon: EvaIcons.homeOutline,
-            //       text: 'Home',
-            //     ),
-            //     GButton(
-            //       icon: EvaIcons.homeOutline,
-            //       text: 'Favorites',
-            //     ),
-            //     GButton(
-            //       icon: EvaIcons.homeOutline,
-            //       text: 'My Rigs',
-            //     ),
-            //   ],
-            // ),
           );
         },
       ),
