@@ -1,3 +1,5 @@
+import 'package:customrig/model/page.dart';
+import 'package:customrig/pages/favorite_page.dart';
 import 'package:customrig/pages/home_page.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -12,6 +14,12 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<MyPage> pages = [
+    MyPage(page: const HomePage(), title: 'Custom Rig'),
+    MyPage(page: const FavoritePage(), title: 'Favorites'),
+    MyPage(page: const FavoritePage(), title: 'My Rigs'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -20,10 +28,10 @@ class _MainPageState extends State<MainPage> {
         builder: (context, navBar, child) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Custom Rig'),
+              title: Text(pages[navBar.index].title),
             ),
             drawer: const Drawer(),
-            body: const HomePage(),
+            body: pages[navBar.index].page,
             bottomNavigationBar: NavigationBar(
               backgroundColor: const Color(0xFFf1f5fb),
               selectedIndex: navBar.index,

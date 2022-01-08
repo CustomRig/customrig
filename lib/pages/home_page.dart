@@ -1,7 +1,7 @@
 import 'package:customrig/utils/colors.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/my_horizontal_list.dart';
-import 'package:customrig/widgets/home_page_widgets/main_product_widget.dart';
+import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
