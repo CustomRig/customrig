@@ -1,6 +1,7 @@
 import 'package:customrig/model/page.dart';
 import 'package:customrig/pages/favorite_page.dart';
 import 'package:customrig/pages/home_page.dart';
+import 'package:customrig/pages/my_rigs_page.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +18,7 @@ class _MainPageState extends State<MainPage> {
   List<MyPage> pages = [
     MyPage(page: const HomePage(), title: 'Custom Rig'),
     MyPage(page: const FavoritePage(), title: 'Favorites'),
-    MyPage(page: const FavoritePage(), title: 'My Rigs'),
+    MyPage(page: const MyRigsPage(), title: 'My Rigs'),
   ];
 
   @override
