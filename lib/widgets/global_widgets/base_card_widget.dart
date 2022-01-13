@@ -1,3 +1,5 @@
+import 'package:customrig/pages/product_page.dart';
+import 'package:customrig/utils/colors.dart';
 import 'package:flutter/material.dart';
 
 class BaseCard extends StatelessWidget {
@@ -12,9 +14,18 @@ class BaseCard extends StatelessWidget {
       child: Material(
         elevation: 2.3,
         borderRadius: BorderRadius.circular(12.0),
-        child: Container(
-          padding: const EdgeInsets.all(10.0),
-          child: child,
+        child: InkWell(
+          onTap: () {
+            // Temporary
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => ProductPage()));
+          },
+          borderRadius: BorderRadius.circular(12.0),
+          splashColor: kBlueAccentColor,
+          child: Container(
+            padding: const EdgeInsets.all(10.0),
+            child: child,
+          ),
         ),
       ),
     );

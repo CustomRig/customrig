@@ -9,6 +9,7 @@ class MyTextStyles {
   static const TextStyle productSubtitle = TextStyle(
     fontWeight: FontWeight.w400,
     fontSize: 14,
+    color: Color(0xFF424242),
   );
 
   static const TextStyle heading = TextStyle(
