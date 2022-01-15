@@ -61,28 +61,33 @@ class _ProductPageState extends State<ProductPage> {
               DataColumn(label: Text('ITEM')),
               DataColumn(numeric: true, label: Text('PRICE (₹)')),
             ],
-            rows: [
-              const DataRow(
+            rows: const [
+              DataRow(
                 cells: [
                   DataCell(Text('Item 1')),
-                  DataCell(MyBadge(text: '77272772')),
-                ],
-              ),
-              const DataRow(
-                cells: [
-                  DataCell(Text('Item 1')),
-                  DataCell(MyBadge(text: '77272772')),
+                  DataCell(MyBadge(text: '1000')),
                 ],
               ),
               DataRow(
-                color: MaterialStateProperty.all(Colors.grey.shade100),
+                cells: [
+                  DataCell(Text('Item 1')),
+                  DataCell(MyBadge(text: '40000')),
+                ],
+              ),
+
+              // Total price Row
+              DataRow(
                 selected: true,
-                cells: const [
-                  DataCell(Text('TOTAL')),
-                  DataCell(MyBadge(
-                    text: '77272772',
-                    secondary: true,
-                  )),
+                cells: [
+                  DataCell(
+                    Text(
+                      'TOTAL',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  DataCell(
+                    MyBadge(text: '300', secondary: true),
+                  ),
                 ],
               ),
             ],
