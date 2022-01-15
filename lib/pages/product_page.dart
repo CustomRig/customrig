@@ -62,6 +62,7 @@ class _ProductPageState extends State<ProductPage> {
               DataColumn(numeric: true, label: Text('PRICE (₹)')),
             ],
             rows: const [
+              // The actual items
               DataRow(
                 cells: [
                   DataCell(Text('Item 1')),
@@ -70,7 +71,7 @@ class _ProductPageState extends State<ProductPage> {
               ),
               DataRow(
                 cells: [
-                  DataCell(Text('Item 1')),
+                  DataCell(Text('lorem ipsum ')),
                   DataCell(MyBadge(text: '40000')),
                 ],
               ),

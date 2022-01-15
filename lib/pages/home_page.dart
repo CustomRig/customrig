@@ -42,21 +42,24 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       body: ListView(
         controller: _scrollController,
-        padding: const EdgeInsets.all(12.0),
+        // padding: const EdgeInsets.all(12.0),
         physics: const BouncingScrollPhysics(),
         children: [
-          TextFormField(
-            decoration: InputDecoration(
-              filled: true,
-              fillColor: kBlueAccentColor,
-              hintText: "Search 'Gaming keyboard' ",
-              prefixIcon: const Icon(Icons.search),
-              prefixIconColor: Colors.red,
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50.0),
-                borderSide: BorderSide.none,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: TextFormField(
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: kBlueAccentColor,
+                hintText: "Search 'Gaming keyboard' ",
+                prefixIcon: const Icon(Icons.search),
+                prefixIconColor: Colors.red,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(50.0),
+                  borderSide: BorderSide.none,
+                ),
+                contentPadding: const EdgeInsets.all(16.0),
               ),
-              contentPadding: const EdgeInsets.all(16.0),
             ),
           ),
           _buildTitle('Top Gaming Builds'),
@@ -119,10 +122,22 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Text(
-        title,
-        style: MyTextStyles.heading,
+      padding: const EdgeInsets.symmetric(horizontal: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            title,
+            style: MyTextStyles.heading,
+          ),
+          TextButton(
+            style: TextButton.styleFrom(
+              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+            ),
+            onPressed: () {},
+            child: const Text('VIEW ALL'),
+          )
+        ],
       ),
     );
   }
