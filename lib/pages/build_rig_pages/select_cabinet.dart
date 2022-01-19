@@ -1,99 +1,61 @@
-import 'dart:ui';
-
-import 'package:customrig/utils/colors.dart';
+import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
+import 'package:customrig/widgets/global_widgets/cabinet_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class SelectCabinet extends StatelessWidget {
+  final String selectedCabinet;
+  final void Function(String) onSelectedCabinetChanged;
   const SelectCabinet({
     Key? key,
-    required this.selectedUsage,
-    required this.onSelectedUsageChanged,
+    required this.selectedCabinet,
+    required this.onSelectedCabinetChanged,
   }) : super(key: key);
-
-  final String selectedUsage;
-  final void Function(String) onSelectedUsageChanged;
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
+    final screenDimension = MediaQuery.of(context).size;
+
+    List cabinets = ['q', 'e', 'r', 't', 'y', 'u', 'i']; // for dummy purpose
+
     return ListView(
-      padding: const EdgeInsets.all(12.0),
+      physics: const BouncingScrollPhysics(),
+      padding: const EdgeInsets.all(8.0),
+      shrinkWrap: true,
       children: [
-        const Text(
-          'Select Usage Type',
-          style: MyTextStyles.heading,
+        const Padding(
+          padding: EdgeInsets.only(left: 4.0, top: 4.0),
+          child: Text(
+            'Select Cabinet',
+            style: MyTextStyles.heading,
+          ),
         ),
         spacer(height: 12.0),
-        _usageContainer(
-          screenSize,
-          asset: 'usage_gaming.jpeg',
-          title: 'GAMING',
-        ),
-        spacer(height: 6.0),
-        _usageContainer(
-          screenSize,
-          asset: 'usage_college.jpeg',
-          title: 'COLLEGE',
-        ),
-        spacer(height: 6.0),
-        _usageContainer(
-          screenSize,
-          asset: 'usage_office.jpeg',
-          title: 'OFFICE',
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio:
+                screenDimension.width / (screenDimension.height / 1.6),
+          ),
+          itemCount: cabinets.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CabinetCardWidget(
+                title: 'Apple CPU',
+                imageUrl: kDummyProductImage,
+                price: '12121',
+                id: cabinets[index],
+                isSelected: selectedCabinet == cabinets[index],
+                onTap: () => onSelectedCabinetChanged(cabinets[index]),
+              ),
+            );
+          },
         ),
       ],
-    );
-  }
-
-  Widget _usageContainer(Size screenSize,
-      {required String title, required String asset}) {
-    return GestureDetector(
-      onTap: () => onSelectedUsageChanged(title),
-      child: Container(
-        height: screenSize.height * .25,
-        width: double.maxFinite,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(12),
-          image: DecorationImage(
-            image: AssetImage('assets/images/' + asset),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(12),
-          child: BackdropFilter(
-            filter: selectedUsage == title
-                ? ImageFilter.blur(sigmaX: 3, sigmaY: 3)
-                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-            child: Container(
-              height: screenSize.height * .25,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                border: selectedUsage == title
-                    ? Border.all(width: 6, color: kBlueAccentColor)
-                    : null,
-                borderRadius: BorderRadius.circular(12),
-                color: selectedUsage == title
-                    ? kBlackColor.withOpacity(.6)
-                    : kBlackColor.withOpacity(.3),
-              ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: selectedUsage == title ? 28 : 24,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ),
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:customrig/pages/build_rig_pages/select_cabinet.dart';
+import 'package:customrig/pages/build_rig_pages/select_usage.dart';
 import 'package:customrig/providers/build_rig_provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -45,22 +46,22 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                 controller: _tabController,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  SelectCabinet(
+                  SelectUsage(
                     selectedUsage: buildRigProvider.usageType,
                     onSelectedUsageChanged: (usage) =>
                         buildRigProvider.setUsageType(usage),
                   ),
                   SelectCabinet(
-                    selectedUsage: buildRigProvider.usageType,
-                    onSelectedUsageChanged: (usage) =>
-                        buildRigProvider.setUsageType(usage),
+                    selectedCabinet: buildRigProvider.cabinet,
+                    onSelectedCabinetChanged: (cabinet) =>
+                        buildRigProvider.setCabinet(cabinet),
                   ),
                 ],
               ),
               //
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
-                  _tabController.animateTo(1);
+                  _tabController.animateTo(_tabController.index++);
                   setState(() {
                     currentStep = _tabController.index;
                   });
