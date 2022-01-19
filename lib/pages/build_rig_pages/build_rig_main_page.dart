@@ -1,4 +1,5 @@
 import 'package:customrig/pages/build_rig_pages/select_cabinet.dart';
+import 'package:customrig/pages/build_rig_pages/select_items.dart';
 import 'package:customrig/pages/build_rig_pages/select_usage.dart';
 import 'package:customrig/providers/build_rig_provider.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -20,7 +21,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 2);
+    _tabController = TabController(vsync: this, length: 3);
     super.initState();
   }
 
@@ -31,7 +32,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
       child: Consumer<BuildRigProvider>(
         builder: (context, buildRigProvider, child) {
           return DefaultTabController(
-            length: 2,
+            length: 3,
             initialIndex: 0,
             child: Scaffold(
               appBar: AppBar(
@@ -56,6 +57,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                     onSelectedCabinetChanged: (cabinet) =>
                         buildRigProvider.setCabinet(cabinet),
                   ),
+                  SelectItems(
+                    itemName: 'ram',
+                    items: [],
+                  )
                 ],
               ),
               //

@@ -32,13 +32,13 @@ class SelectUsage extends StatelessWidget {
           asset: 'usage_gaming.jpeg',
           title: 'GAMING',
         ),
-        spacer(height: 6.0),
+        spacer(height: 8.0),
         _usageContainer(
           screenSize,
           asset: 'usage_college.jpeg',
           title: 'COLLEGE',
         ),
-        spacer(height: 6.0),
+        spacer(height: 8.0),
         _usageContainer(
           screenSize,
           asset: 'usage_office.jpeg',
