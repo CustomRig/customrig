@@ -64,31 +64,26 @@ class SelectUsage extends StatelessWidget {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(12),
-          child: BackdropFilter(
-            filter: selectedUsage == title
-                ? ImageFilter.blur(sigmaX: 3, sigmaY: 3)
-                : ImageFilter.blur(sigmaX: 0, sigmaY: 0),
-            child: Container(
-              height: screenSize.height * .25,
-              width: double.maxFinite,
-              decoration: BoxDecoration(
-                border: selectedUsage == title
-                    ? Border.all(width: 6, color: Colors.blueAccent)
-                    : null,
-                borderRadius: BorderRadius.circular(12),
-                color: selectedUsage == title
-                    ? kBlackColor.withOpacity(.6)
-                    : kBlackColor.withOpacity(.3),
-              ),
-              child: Center(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: selectedUsage == title ? 28 : 24,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 2,
-                  ),
+          child: Container(
+            height: screenSize.height * .25,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              border: selectedUsage == title
+                  ? Border.all(width: 6, color: Colors.blueAccent)
+                  : null,
+              borderRadius: BorderRadius.circular(12),
+              color: selectedUsage == title
+                  ? kBlackColor.withOpacity(.3)
+                  : kBlackColor.withOpacity(.6),
+            ),
+            child: Center(
+              child: Text(
+                title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: selectedUsage == title ? 28 : 24,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 2,
                 ),
               ),
             ),
