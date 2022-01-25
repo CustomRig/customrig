@@ -1,8 +1,13 @@
+import 'package:customrig/model/all_items.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/model/rig.dart';
+import 'package:customrig/providers/build_rig/repository/build_rig_repository.dart';
+import 'package:customrig/providers/build_rig/repository/build_rig_repository_impl.dart';
 import 'package:flutter/material.dart';
 
 class BuildRigProvider extends ChangeNotifier {
+  final BuildRigRepository _repository = BuildRigRepositoryImpl();
+
   Rig newRig = Rig();
 
   String usageType = '';
@@ -16,6 +21,8 @@ class BuildRigProvider extends ChangeNotifier {
   Item? cooler;
   Item? wifi;
   Item? operatingSystem;
+
+  AllItems? allItems;
 
   void setUsageType(String usageType) {
     this.usageType = usageType;
@@ -57,6 +64,13 @@ class BuildRigProvider extends ChangeNotifier {
         operatingSystem = item;
         break;
     }
+    notifyListeners();
+  }
+
+  void getAllItems() async {
+    final items = await _repository.getAllItems();
+    print(items);
+    allItems = items;
     notifyListeners();
   }
 }

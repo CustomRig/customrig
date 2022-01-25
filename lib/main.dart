@@ -1,6 +1,8 @@
 import 'package:customrig/pages/main_page.dart';
+import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -11,11 +13,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: myLightTheme,
-      darkTheme: myLightTheme,
-      home: const MainPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<BuildRigProvider>(
+          create: (_) => BuildRigProvider(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        theme: myLightTheme,
+        darkTheme: myLightTheme,
+        home: const MainPage(),
+      ),
     );
   }
 }
