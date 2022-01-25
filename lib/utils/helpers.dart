@@ -12,3 +12,14 @@ void goToPage(BuildContext context, Widget page) {
     ),
   );
 }
+
+extension StringExtension on String {
+  String snakeCaseToTitleCase() {
+    final words = split('_');
+    List<String> finalWords = [];
+    for (var word in words) {
+      finalWords.add(word[0].toUpperCase() + word.substring(1).toLowerCase());
+    }
+    return finalWords.join(' ');
+  }
+}

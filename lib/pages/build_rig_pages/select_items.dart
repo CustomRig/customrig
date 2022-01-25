@@ -1,5 +1,6 @@
 import 'package:customrig/utils/text_styles.dart';
 import 'package:flutter/material.dart';
+import '../../utils/helpers.dart';
 
 class SelectItems extends StatelessWidget {
   final String itemName;
@@ -14,7 +15,7 @@ class SelectItems extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(children: [
       Text(
-        'Select $itemName',
+        'Select ${itemName.snakeCaseToTitleCase()}',
         style: MyTextStyles.heading,
       ),
     ]);

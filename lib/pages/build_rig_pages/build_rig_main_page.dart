@@ -5,7 +5,6 @@ import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,7 +23,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 11);
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       Provider.of<BuildRigProvider>(context, listen: false).getAllItems();
@@ -38,7 +37,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     return Consumer<BuildRigProvider>(
       builder: (context, buildRigProvider, child) {
         return DefaultTabController(
-          length: 3,
+          length: 11,
           initialIndex: 0,
           child: Scaffold(
             appBar: AppBar(
@@ -65,9 +64,43 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             buildRigProvider.setCabinet(cabinet),
                       ),
                       SelectItems(
-                        itemName: 'ram',
-                        items: [],
-                      )
+                        itemName: buildRigProvider.allItems!.processor!.type!,
+                        items: buildRigProvider.allItems!.processor!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.motherboard!.type!,
+                        items: buildRigProvider.allItems!.motherboard!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.ram!.type!,
+                        items: buildRigProvider.allItems!.ram!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.storage!.type!,
+                        items: buildRigProvider.allItems!.storage!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.graphicCard!.type!,
+                        items: buildRigProvider.allItems!.graphicCard!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.cooler!.type!,
+                        items: buildRigProvider.allItems!.cooler!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.powerSupply!.type!,
+                        items: buildRigProvider.allItems!.powerSupply!.items!,
+                      ),
+                      SelectItems(
+                        itemName: buildRigProvider.allItems!.wifiAdapter!.type!,
+                        items: buildRigProvider.allItems!.wifiAdapter!.items!,
+                      ),
+                      SelectItems(
+                        itemName:
+                            buildRigProvider.allItems!.operatingSystem!.type!,
+                        items:
+                            buildRigProvider.allItems!.operatingSystem!.items!,
+                      ),
                     ],
                   )
                 : buildRigProvider.state == BuildRigState.loading
