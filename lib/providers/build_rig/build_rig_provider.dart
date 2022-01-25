@@ -5,7 +5,17 @@ import 'package:customrig/providers/build_rig/repository/build_rig_repository.da
 import 'package:customrig/providers/build_rig/repository/build_rig_repository_impl.dart';
 import 'package:flutter/material.dart';
 
+enum BuildRigState {
+  initial,
+  loading,
+  complete,
+  error,
+}
+
 class BuildRigProvider extends ChangeNotifier {
+  BuildRigState _state = BuildRigState.initial;
+  BuildRigState get state => _state;
+
   final BuildRigRepository _repository = BuildRigRepositoryImpl();
 
   Rig newRig = Rig();
@@ -68,9 +78,22 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   void getAllItems() async {
-    final items = await _repository.getAllItems();
-    print(items);
-    allItems = items;
+    setState(BuildRigState.loading);
+    try {
+      final items = await _repository.getAllItems();
+      print(items.cabinet!.brands![0]);
+      allItems = items;
+      setState(BuildRigState.complete);
+    } on Exception catch (e) {
+      setState(BuildRigState.error);
+      print(e.toString());
+    }
+
+    notifyListeners();
+  }
+
+  void setState(BuildRigState state) {
+    _state = state;
     notifyListeners();
   }
 }

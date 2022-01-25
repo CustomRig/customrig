@@ -23,7 +23,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
   void initState() {
     _tabController = TabController(vsync: this, length: 3);
 
-    Provider.of<BuildRigProvider>(context, listen: false).getAllItems();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Provider.of<BuildRigProvider>(context, listen: false).getAllItems();
+    });
 
     super.initState();
   }
@@ -44,26 +46,28 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
               ),
             ),
             //
-            body: TabBarView(
-              controller: _tabController,
-              physics: const BouncingScrollPhysics(),
-              children: [
-                SelectUsage(
-                  selectedUsage: buildRigProvider.usageType,
-                  onSelectedUsageChanged: (usage) =>
-                      buildRigProvider.setUsageType(usage),
-                ),
-                SelectCabinet(
-                  selectedCabinet: buildRigProvider.cabinet,
-                  onSelectedCabinetChanged: (cabinet) =>
-                      buildRigProvider.setCabinet(cabinet),
-                ),
-                SelectItems(
-                  itemName: 'ram',
-                  items: [],
-                )
-              ],
-            ),
+            body: buildRigProvider.state == BuildRigState.complete
+                ? TabBarView(
+                    controller: _tabController,
+                    physics: const BouncingScrollPhysics(),
+                    children: [
+                      SelectUsage(
+                        selectedUsage: buildRigProvider.usageType,
+                        onSelectedUsageChanged: (usage) =>
+                            buildRigProvider.setUsageType(usage),
+                      ),
+                      SelectCabinet(
+                        selectedCabinet: buildRigProvider.cabinet,
+                        onSelectedCabinetChanged: (cabinet) =>
+                            buildRigProvider.setCabinet(cabinet),
+                      ),
+                      SelectItems(
+                        itemName: 'ram',
+                        items: [],
+                      )
+                    ],
+                  )
+                : Text('Loading'),
             //
             floatingActionButton: FloatingActionButton(
               onPressed: () {

@@ -23,43 +23,40 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => NavbarProvider(),
-      child: Consumer<NavbarProvider>(
-        builder: (context, navBar, child) {
-          return Scaffold(
-            appBar: AppBar(
-              title: Text(pages[navBar.index].title),
-            ),
-            drawer: const Drawer(),
-            body: pages[navBar.index].page,
-            bottomNavigationBar: NavigationBar(
-              backgroundColor: const Color(0xFFf1f5fb),
-              selectedIndex: navBar.index,
-              onDestinationSelected: (index) {
-                navBar.setIndex(index);
-              },
-              destinations: const [
-                NavigationDestination(
-                  icon: Icon(EvaIcons.homeOutline),
-                  label: 'Home',
-                  selectedIcon: Icon(EvaIcons.home),
-                ),
-                NavigationDestination(
-                  icon: Icon(EvaIcons.heartOutline),
-                  label: 'Favorites',
-                  selectedIcon: Icon(EvaIcons.heart),
-                ),
-                NavigationDestination(
-                  icon: Icon(EvaIcons.settingsOutline),
-                  label: 'My Rigs',
-                  selectedIcon: Icon(EvaIcons.settings),
-                )
-              ],
-            ),
-          );
-        },
-      ),
+    return Consumer<NavbarProvider>(
+      builder: (context, navBar, child) {
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(pages[navBar.index].title),
+          ),
+          drawer: const Drawer(),
+          body: pages[navBar.index].page,
+          bottomNavigationBar: NavigationBar(
+            backgroundColor: const Color(0xFFf1f5fb),
+            selectedIndex: navBar.index,
+            onDestinationSelected: (index) {
+              navBar.setIndex(index);
+            },
+            destinations: const [
+              NavigationDestination(
+                icon: Icon(EvaIcons.homeOutline),
+                label: 'Home',
+                selectedIcon: Icon(EvaIcons.home),
+              ),
+              NavigationDestination(
+                icon: Icon(EvaIcons.heartOutline),
+                label: 'Favorites',
+                selectedIcon: Icon(EvaIcons.heart),
+              ),
+              NavigationDestination(
+                icon: Icon(EvaIcons.settingsOutline),
+                label: 'My Rigs',
+                selectedIcon: Icon(EvaIcons.settings),
+              )
+            ],
+          ),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:customrig/pages/main_page.dart';
 import 'package:customrig/providers/build_rig/build_rig_provider.dart';
+import 'package:customrig/providers/nav_bar_provider.dart';
 import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -15,9 +16,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<BuildRigProvider>(
-          create: (_) => BuildRigProvider(),
-        )
+        ChangeNotifierProvider(create: (_) => BuildRigProvider()),
+        ChangeNotifierProvider(create: (_) => NavbarProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

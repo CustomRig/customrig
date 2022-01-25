@@ -6,7 +6,7 @@ class BuildRigRepositoryImpl implements BuildRigRepository {
   @override
   Future<AllItems> getAllItems() async {
     final dio = await MyDio.provideDio();
-    final result = await dio.post('/all_items');
+    final result = await dio.post('/item/getAllItems');
     return AllItems.fromJson(result.data);
   }
 }

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:customrig/utils/colors.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
