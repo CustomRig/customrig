@@ -31,7 +31,7 @@ class SelectCabinet extends StatelessWidget {
             style: MyTextStyles.heading,
           ),
         ),
-        spacer(height: 12.0),
+        spacer(height: 8.0),
         GridView.builder(
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
