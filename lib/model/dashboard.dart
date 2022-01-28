@@ -1,0 +1,51 @@
+import 'package:customrig/model/item.dart';
+
+class Dashboard {
+  int? limit;
+  List<Section>? sections;
+  Dashboard({this.sections});
+
+  Dashboard.fromJson(Map<String, dynamic> json) {
+    limit = json['limit'];
+    if (json['sections'] != null) {
+      sections = <Section>[];
+      json['sections'].forEach((v) {
+        sections!.add(Section.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (sections != null) {
+      data['sections'] = sections!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class Section {
+  String? title;
+  List<Item>? items;
+
+  Section({this.title, this.items});
+
+  Section.fromJson(Map<String, dynamic> json) {
+    title = json['title'];
+    if (json['items'] != null) {
+      items = <Item>[];
+      json['items'].forEach((v) {
+        items!.add(Item.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['title'] = title;
+    if (items != null) {
+      data['items'] = items!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
