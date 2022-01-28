@@ -7,6 +7,7 @@ class Item {
   String? purchaseUrl;
   List<int>? pairingIds;
   String? type;
+  String? category;
   String? id;
 
   Item({
@@ -18,6 +19,7 @@ class Item {
     this.purchaseUrl,
     this.pairingIds,
     this.type,
+    this.category,
     this.id,
   });
 
@@ -30,6 +32,7 @@ class Item {
     purchaseUrl = json['purchase_url'];
     pairingIds = json['pairing_ids'].cast<int>();
     type = json['type'];
+    category = json['type'];
     id = json['id'];
   }
 
@@ -43,6 +46,7 @@ class Item {
     data['purchase_url'] = purchaseUrl;
     data['pairing_ids'] = pairingIds;
     data['type'] = type;
+    data['category'] = type;
     data['id'] = id;
     return data;
   }
