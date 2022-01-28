@@ -64,40 +64,45 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             buildRigProvider.setCabinet(cabinet),
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.processor!.type!,
+                        itemName:
+                            buildRigProvider.allItems!.processor!.category!,
                         items: buildRigProvider.allItems!.processor!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.motherboard!.type!,
+                        itemName:
+                            buildRigProvider.allItems!.motherboard!.category!,
                         items: buildRigProvider.allItems!.motherboard!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.ram!.type!,
+                        itemName: buildRigProvider.allItems!.ram!.category!,
                         items: buildRigProvider.allItems!.ram!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.storage!.type!,
+                        itemName: buildRigProvider.allItems!.storage!.category!,
                         items: buildRigProvider.allItems!.storage!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.graphicCard!.type!,
+                        itemName:
+                            buildRigProvider.allItems!.graphicCard!.category!,
                         items: buildRigProvider.allItems!.graphicCard!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.cooler!.type!,
+                        itemName: buildRigProvider.allItems!.cooler!.category!,
                         items: buildRigProvider.allItems!.cooler!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.powerSupply!.type!,
+                        itemName:
+                            buildRigProvider.allItems!.powerSupply!.category!,
                         items: buildRigProvider.allItems!.powerSupply!.items!,
                       ),
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.wifiAdapter!.type!,
+                        itemName:
+                            buildRigProvider.allItems!.wifiAdapter!.category!,
                         items: buildRigProvider.allItems!.wifiAdapter!.items!,
                       ),
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.operatingSystem!.type!,
+                        itemName: buildRigProvider
+                            .allItems!.operatingSystem!.category!,
                         items:
                             buildRigProvider.allItems!.operatingSystem!.items!,
                       ),

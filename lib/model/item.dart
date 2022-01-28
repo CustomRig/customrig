@@ -32,7 +32,7 @@ class Item {
     purchaseUrl = json['purchase_url'];
     pairingIds = json['pairing_ids'].cast<int>();
     type = json['type'];
-    category = json['type'];
+    category = json['category'];
     id = json['id'];
   }
 

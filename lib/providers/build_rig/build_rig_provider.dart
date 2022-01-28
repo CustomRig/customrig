@@ -44,8 +44,8 @@ class BuildRigProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setItem({required Item item, required String type}) {
-    switch (type) {
+  void setItem({required Item item, required String category}) {
+    switch (category) {
       case 'PROCESSOR':
         processor = item;
         break;
@@ -81,7 +81,7 @@ class BuildRigProvider extends ChangeNotifier {
     setState(BuildRigState.loading);
     try {
       final items = await _repository.getAllItems();
-      print(items.cabinet!.brands![0]);
+      // print(items.cabinet!.brands![0]);
       allItems = items;
       setState(BuildRigState.complete);
     } on Exception catch (e) {

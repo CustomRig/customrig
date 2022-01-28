@@ -87,9 +87,9 @@ class AllItems {
 class Part {
   List<String>? brands;
   List<Item>? items;
-  String? type;
+  String? category;
 
-  Part({this.brands, this.items, this.type});
+  Part({this.brands, this.items, this.category});
 
   Part.fromJson(Map<String, dynamic> json) {
     if (json['brands'] != null) {
@@ -104,7 +104,7 @@ class Part {
         items!.add(Item.fromJson(v));
       });
     }
-    type = json['type'];
+    category = json['category'];
   }
 
   Map<String, dynamic> toJson() {
@@ -115,7 +115,7 @@ class Part {
     if (items != null) {
       data['items'] = items!.map((v) => v.toJson()).toList();
     }
-    data['type'] = type;
+    data['category'] = category;
     return data;
   }
 }

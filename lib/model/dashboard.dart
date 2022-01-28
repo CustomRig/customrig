@@ -1,4 +1,5 @@
 import 'package:customrig/model/item.dart';
+import 'package:customrig/model/rig.dart';
 
 class Dashboard {
   int? limit;
@@ -26,17 +27,29 @@ class Dashboard {
 
 class Section {
   String? title;
-  List<Item>? items;
+  List<dynamic>? items;
+  String? type;
 
-  Section({this.title, this.items});
+  Section({this.title, this.items, this.type});
 
   Section.fromJson(Map<String, dynamic> json) {
     title = json['title'];
-    if (json['items'] != null) {
-      items = <Item>[];
-      json['items'].forEach((v) {
-        items!.add(Item.fromJson(v));
-      });
+    type = json['type'];
+
+    if (json['type'] == 'RIG') {
+      if (json['items'] != null) {
+        items = <Rig>[];
+        json['items'].forEach((v) {
+          items!.add(Rig.fromJson(v));
+        });
+      }
+    } else {
+      if (json['items'] != null) {
+        items = <Item>[];
+        json['items'].forEach((v) {
+          items!.add(Item.fromJson(v));
+        });
+      }
     }
   }
 
