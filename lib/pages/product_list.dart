@@ -28,7 +28,11 @@ class _ProductListState extends State<ProductList> {
         itemBuilder: (BuildContext context, int index) {
           return const Padding(
             padding: EdgeInsets.all(2.0),
-            child: MainProductCard(),
+            child: MainProductCard(
+              title: 'fffff',
+              price: 1212,
+              imageUrl: 'fafaf',
+            ),
           );
         },
       ),

@@ -14,16 +14,19 @@ class DashboardProvider extends ChangeNotifier {
   DashboardState _state = DashboardState.initial;
   DashboardState get state => _state;
 
+  String? _errorMessage;
+  String? get errorMessage => _errorMessage;
+
   void getDashboard() async {
     try {
       setState(DashboardState.loading);
       _dashboard = await _repository.getDashboard();
-
-      print(_dashboard!.sections!.length);
+      print(_dashboard?.sections?.length);
       setState(DashboardState.complete);
     } on Exception catch (e) {
+      print(e.toString());
+      _errorMessage = e.toString();
       setState(DashboardState.error);
-      print(e);
     }
   }
 

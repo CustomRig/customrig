@@ -5,7 +5,17 @@ import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainProductCard extends StatelessWidget {
-  const MainProductCard({Key? key}) : super(key: key);
+  final String title;
+  // final String description;
+  final int price;
+  final String imageUrl;
+  const MainProductCard({
+    Key? key,
+    required this.title,
+    // required this.description,
+    required this.price,
+    required this.imageUrl,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +29,8 @@ class MainProductCard extends StatelessWidget {
             height: screenDimension.height * .2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              image: const DecorationImage(
-                image: NetworkImage(kDummyProductImage),
+              image: DecorationImage(
+                image: NetworkImage(imageUrl),
                 fit: BoxFit.cover,
               ),
             ),
@@ -28,16 +38,16 @@ class MainProductCard extends StatelessWidget {
           spacer(height: 4),
           SizedBox(
             width: screenDimension.height * .2,
-            child: const Text(
-              kDummyDescription,
+            child: Text(
+              title,
               style: MyTextStyles.productSubtitle,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),
           ),
           spacer(height: 4),
-          const Text(
-            '₹' + kDummyPrice,
+          Text(
+            '₹' + price.toString(),
             style: MyTextStyles.productTitle,
           )
         ],

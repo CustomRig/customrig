@@ -20,10 +20,13 @@ class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   bool isListScrolling = false;
 
+  int fakedashboardLength = 4;
+
+  late Size screenSize;
+
   @override
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      print('IN INIT');
       Provider.of<DashboardProvider>(context, listen: false).getDashboard();
     });
 
@@ -49,12 +52,15 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer(
+    screenSize = MediaQuery.of(context).size;
+    return Consumer<DashboardProvider>(
       builder: (context, dashboardProvider, child) {
+        if (dashboardProvider.state == DashboardState.complete) {
+          print('COMPLETE');
+        }
         return Scaffold(
           body: ListView(
             controller: _scrollController,
-            // padding: const EdgeInsets.all(12.0),
             physics: const BouncingScrollPhysics(),
             children: [
               Padding(
@@ -74,17 +80,18 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
-              _buildTitle('Top Gaming Builds'),
-              _buildTopGamingBuildCategory(),
-              //
-              _buildTitle('Top Budget Builds'),
-              _buildTopBudgetBuildCategory(),
-              //
-              _buildTitle('Top Budget Builds'),
-              _buildTopBudgetBuildCategory(),
-              //
-              _buildTitle('Top Budget Builds'),
-              _buildTopBudgetBuildCategory(),
+              ListView(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                children: dashboardProvider.dashboard!.sections!.map((e) {
+                  return Column(
+                    children: [
+                      _buildTitle(e.title!),
+                      _buildItems(),
+                    ],
+                  );
+                }).toList(),
+              ),
             ],
           ),
           floatingActionButton: isListScrolling
@@ -116,22 +123,24 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTopGamingBuildCategory() {
-    return const MyHorizontalList(
+  Widget _buildItems() {
+    return MyHorizontalList(
       items: [
-        MainProductCard(),
-        MainProductCard(),
-        MainProductCard(),
-      ],
-    );
-  }
-
-  Widget _buildTopBudgetBuildCategory() {
-    return const MyHorizontalList(
-      items: [
-        MainProductCard(),
-        MainProductCard(),
-        MainProductCard(),
+        MainProductCard(
+          title: 'fffff',
+          price: 1212,
+          imageUrl: 'fafaf',
+        ),
+        MainProductCard(
+          title: 'fffff',
+          price: 1212,
+          imageUrl: 'fafaf',
+        ),
+        MainProductCard(
+          title: 'fffff',
+          price: 1212,
+          imageUrl: 'fafaf',
+        ),
       ],
     );
   }
@@ -142,16 +151,21 @@ class _HomePageState extends State<HomePage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            title,
-            style: MyTextStyles.heading,
+          SizedBox(
+            width: screenSize.width * .7,
+            child: Text(
+              title,
+              style: MyTextStyles.heading,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
           TextButton(
             style: TextButton.styleFrom(
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             onPressed: () => goToPage(context, const ProductList()),
-            child: const Text('VIEW ALL'),
+            child: const Text('VIEW MORE'),
           )
         ],
       ),
