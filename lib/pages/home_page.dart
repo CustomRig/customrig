@@ -1,3 +1,4 @@
+import 'package:customrig/model/product.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
@@ -87,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                   return Column(
                     children: [
                       _buildTitle(e.title!),
-                      _buildItems(),
+                      _buildItems(e.items!),
                     ],
                   );
                 }).toList(),
@@ -123,25 +124,10 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildItems() {
+  Widget _buildItems(List<Product> items) {
+  
     return MyHorizontalList(
-      items: [
-        MainProductCard(
-          title: 'fffff',
-          price: 1212,
-          imageUrl: 'fafaf',
-        ),
-        MainProductCard(
-          title: 'fffff',
-          price: 1212,
-          imageUrl: 'fafaf',
-        ),
-        MainProductCard(
-          title: 'fffff',
-          price: 1212,
-          imageUrl: 'fafaf',
-        ),
-      ],
+      items: items.map((e) => MainProductCard(title: e., price: price, imageUrl: imageUrl))
     );
   }
 
