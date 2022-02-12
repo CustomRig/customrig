@@ -15,6 +15,7 @@ class Rig {
   Item? operatingSystem;
   String? type;
   String? category;
+  int? price;
 
   Rig({
     this.title,
@@ -31,11 +32,13 @@ class Rig {
     this.operatingSystem,
     this.type,
     this.category,
+    this.price,
   });
 
   Rig.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     description = json['description'];
+    price = json['price'];
     if (json['cabinet'] != null) {
       cabinet = Item.fromJson(json['cabinet']);
     }
@@ -96,6 +99,7 @@ class Rig {
     data['operating_system'] = operatingSystem;
     data['type'] = type;
     data['category'] = category;
+    data['price'] = price;
     return data;
   }
 }

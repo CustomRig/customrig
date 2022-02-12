@@ -1,4 +1,3 @@
-import 'package:customrig/model/product.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
@@ -20,8 +19,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final ScrollController _scrollController = ScrollController();
   bool isListScrolling = false;
-
-  int fakedashboardLength = 4;
 
   late Size screenSize;
 
@@ -56,84 +53,139 @@ class _HomePageState extends State<HomePage> {
     screenSize = MediaQuery.of(context).size;
     return Consumer<DashboardProvider>(
       builder: (context, dashboardProvider, child) {
-        if (dashboardProvider.state == DashboardState.complete) {
-          print('COMPLETE');
-        }
         return Scaffold(
-          body: ListView(
-            controller: _scrollController,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextFormField(
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: kBlueAccentColor,
-                    hintText: "Search 'Gaming keyboard' ",
-                    prefixIcon: const Icon(Icons.search),
-                    prefixIconColor: Colors.red,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(50.0),
-                      borderSide: BorderSide.none,
+          body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverOverlapAbsorber(
+                  handle:
+                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
+                  sliver: SliverSafeArea(
+                    top: true,
+                    sliver: SliverAppBar(
+                      title: Text('Custom Rig'),
+                      leading: Icon(Icons.menu),
+                      bottom: PreferredSize(
+                        child: _searchBar(),
+                        preferredSize: Size.fromHeight(56),
+                      ),
                     ),
-                    contentPadding: const EdgeInsets.all(16.0),
                   ),
                 ),
-              ),
-              ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                children: dashboardProvider.dashboard!.sections!.map((e) {
-                  return Column(
-                    children: [
-                      _buildTitle(e.title!),
-                      _buildItems(e.items!),
-                    ],
-                  );
-                }).toList(),
-              ),
-            ],
+              ];
+            },
+            body:
+
+                // if (dashboardProvider.state == DashboardState.complete &&
+                // dashboardProvider.dashboard!.sections!.isNotEmpty)
+                ListView(
+              physics: const BouncingScrollPhysics(),
+              shrinkWrap: true,
+              children: dashboardProvider.dashboard!.sections!.map((e) {
+                return Column(
+                  children: [
+                    _buildTitle(e.title ?? ''),
+                    _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
+                  ],
+                );
+              }).toList(),
+            ),
+
+            // if (dashboardProvider.state == DashboardState.loading)
+            //   //TODO: replace with shimmer
+            //   const CircularProgressIndicator(),
+
+            // if (dashboardProvider.state == DashboardState.error)
+            //   const Center(child: Text('Something went wrong')),
+
+            // if (dashboardProvider.state == DashboardState.complete &&
+            //     dashboardProvider.dashboard!.sections!.isEmpty)
+            //   const Center(
+            //     child: Text('Looks like there is nothing to show'),
+            //   ),
           ),
           floatingActionButton: isListScrolling
-              ? AnimatedContainer(
-                  duration: const Duration(milliseconds: 150),
-                  curve: Curves.linear,
-                  height: 70,
-                  width: 70,
-                  child: FloatingActionButton(
-                    onPressed: () =>
-                        goToPage(context, const BuildRigMainPage()),
-                    child: const Icon(Icons.handyman_outlined),
-                  ),
-                )
-              : AnimatedContainer(
-                  height: 70,
-                  width: 150,
-                  duration: const Duration(milliseconds: 150),
-                  curve: Curves.linear,
-                  child: FloatingActionButton.extended(
-                    onPressed: () =>
-                        goToPage(context, const BuildRigMainPage()),
-                    icon: const Icon(Icons.handyman_outlined),
-                    label: const Text('Build Rig'),
-                  ),
-                ),
+              ? _smallFloatingActionButton(context)
+              : _expandedFloatingActionButton(context),
         );
       },
     );
   }
 
-  Widget _buildItems(List<Product> items) {
-  
-    return MyHorizontalList(
-      items: items.map((e) => MainProductCard(title: e., price: price, imageUrl: imageUrl))
+  Padding _searchBar() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12, right: 12),
+      child: TextFormField(
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: kBlueAccentColor,
+          hintText: "Search 'Gaming keyboard'",
+          prefixIcon: const Icon(Icons.search),
+          prefixIconColor: Colors.red,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(50.0),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: const EdgeInsets.all(16.0),
+        ),
+      ),
     );
+  }
+
+  AnimatedContainer _expandedFloatingActionButton(BuildContext context) {
+    return AnimatedContainer(
+      height: 70,
+      width: 150,
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.linear,
+      child: FloatingActionButton.extended(
+        onPressed: () => goToPage(context, const BuildRigMainPage()),
+        icon: const Icon(Icons.handyman_outlined),
+        label: const Text('Build Rig'),
+      ),
+    );
+  }
+
+  AnimatedContainer _smallFloatingActionButton(BuildContext context) {
+    return AnimatedContainer(
+      duration: const Duration(milliseconds: 150),
+      curve: Curves.linear,
+      height: 70,
+      width: 70,
+      child: FloatingActionButton(
+        onPressed: () => goToPage(context, const BuildRigMainPage()),
+        child: const Icon(Icons.handyman_outlined),
+      ),
+    );
+  }
+
+  Widget _buildItems(List<dynamic> items, {required String type}) {
+    if (type == 'RIG') {
+      return MyHorizontalList(
+        items: items
+            .map((e) => MainProductCard(
+                  title: e.title,
+                  price: e.price,
+                  imageUrl: e.cabinet.imageUrl,
+                ))
+            .toList(),
+      );
+    } else {
+      return MyHorizontalList(
+        items: items
+            .map((e) => MainProductCard(
+                  title: e.title,
+                  price: e.price,
+                  imageUrl: e.imageUrl,
+                ))
+            .toList(),
+      );
+    }
   }
 
   Widget _buildTitle(String title) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12),
+      padding: const EdgeInsets.only(left: 12, right: 12, top: 6),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

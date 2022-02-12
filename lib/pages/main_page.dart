@@ -26,9 +26,11 @@ class _MainPageState extends State<MainPage> {
     return Consumer<NavbarProvider>(
       builder: (context, navBar, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(pages[navBar.index].title),
-          ),
+          appBar: navBar.index != 0
+              ? AppBar(
+                  title: Text(pages[navBar.index].title),
+                )
+              : null,
           drawer: const Drawer(),
           body: pages[navBar.index].page,
           bottomNavigationBar: NavigationBar(
