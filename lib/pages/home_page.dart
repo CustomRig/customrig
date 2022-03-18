@@ -1,3 +1,4 @@
+import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
@@ -52,57 +53,27 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     screenSize = MediaQuery.of(context).size;
     return Consumer<DashboardProvider>(
-      builder: (context, dashboardProvider, child) {
+      builder: (context, provider, child) {
         return Scaffold(
           body: NestedScrollView(
+            controller: _scrollController,
+            floatHeaderSlivers: true,
             headerSliverBuilder: (context, innerBoxIsScrolled) {
               return [
-                SliverOverlapAbsorber(
-                  handle:
-                      NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                  sliver: SliverSafeArea(
-                    top: true,
-                    sliver: SliverAppBar(
-                      title: Text('Custom Rig'),
-                      leading: Icon(Icons.menu),
-                      bottom: PreferredSize(
-                        child: _searchBar(),
-                        preferredSize: Size.fromHeight(56),
-                      ),
-                    ),
+                SliverAppBar(
+                  pinned: true,
+                  floating: true,
+                  snap: true,
+                  title: const Text('Custom Rig'),
+                  leading: const Icon(Icons.menu),
+                  bottom: PreferredSize(
+                    child: _searchBar(),
+                    preferredSize: const Size.fromHeight(63),
                   ),
                 ),
               ];
             },
-            body:
-
-                // if (dashboardProvider.state == DashboardState.complete &&
-                // dashboardProvider.dashboard!.sections!.isNotEmpty)
-                ListView(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              children: dashboardProvider.dashboard!.sections!.map((e) {
-                return Column(
-                  children: [
-                    _buildTitle(e.title ?? ''),
-                    _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
-                  ],
-                );
-              }).toList(),
-            ),
-
-            // if (dashboardProvider.state == DashboardState.loading)
-            //   //TODO: replace with shimmer
-            //   const CircularProgressIndicator(),
-
-            // if (dashboardProvider.state == DashboardState.error)
-            //   const Center(child: Text('Something went wrong')),
-
-            // if (dashboardProvider.state == DashboardState.complete &&
-            //     dashboardProvider.dashboard!.sections!.isEmpty)
-            //   const Center(
-            //     child: Text('Looks like there is nothing to show'),
-            //   ),
+            body: _buildMainSection(provider: provider),
           ),
           floatingActionButton: isListScrolling
               ? _smallFloatingActionButton(context)
@@ -112,9 +83,37 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Padding _searchBar() {
+  Widget _buildMainSection({required DashboardProvider provider}) {
+    if (provider.state == DashboardState.complete &&
+        provider.dashboard!.sections!.isNotEmpty) {
+      return ListView(
+        // controller: _scrollController,
+        physics: const BouncingScrollPhysics(),
+        shrinkWrap: true,
+        children: provider.dashboard!.sections!.map((e) {
+          return Column(
+            children: [
+              _buildTitle(e.title ?? ''),
+              _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
+            ],
+          );
+        }).toList(),
+      );
+    } else if (provider.state == DashboardState.loading) {
+      // TODO: replace loading indicator with shimmer
+      return const Center(child: CircularProgressIndicator());
+    } else if (provider.state == DashboardState.error) {
+      return Center(child: Text(provider.errorMessage!));
+    } else if (provider.dashboard == null) {
+      return const Center(child: Text('Nothing to show'));
+    } else {
+      return const Center(child: Text('Something went wrong!'));
+    }
+  }
+
+  Widget _searchBar() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12, right: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       child: TextFormField(
         decoration: InputDecoration(
           filled: true,
@@ -160,27 +159,16 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildItems(List<dynamic> items, {required String type}) {
-    if (type == 'RIG') {
-      return MyHorizontalList(
-        items: items
-            .map((e) => MainProductCard(
-                  title: e.title,
-                  price: e.price,
-                  imageUrl: e.cabinet.imageUrl,
-                ))
-            .toList(),
-      );
-    } else {
-      return MyHorizontalList(
-        items: items
-            .map((e) => MainProductCard(
-                  title: e.title,
-                  price: e.price,
-                  imageUrl: e.imageUrl,
-                ))
-            .toList(),
-      );
-    }
+    return MyHorizontalList(
+      items: items
+          .map((e) => MainProductCard(
+                title: e.title,
+                price: e.price,
+                imageUrl: type == 'RIG' ? e.cabinet.imageUrl : e.imageUrl,
+                // showing the picture of the Cabinet for Rigs
+              ))
+          .toList(),
+    );
   }
 
   Widget _buildTitle(String title) {
@@ -190,7 +178,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           SizedBox(
-            width: screenSize.width * .7,
+            width: screenSize.width * .65,
             child: Text(
               title,
               style: MyTextStyles.heading,

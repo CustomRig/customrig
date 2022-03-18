@@ -1,6 +1,7 @@
 import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/providers/dashboard/repository/dashboard_repository.dart';
 import 'package:customrig/providers/dashboard/repository/dashboard_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 enum DashboardState { initial, loading, complete, error }
@@ -21,11 +22,9 @@ class DashboardProvider extends ChangeNotifier {
     try {
       setState(DashboardState.loading);
       _dashboard = await _repository.getDashboard();
-      print(_dashboard?.sections?.length);
       setState(DashboardState.complete);
-    } on Exception catch (e) {
-      print(e.toString());
-      _errorMessage = e.toString();
+    } on DioError catch (e) {
+      _errorMessage = e.error;
       setState(DashboardState.error);
     }
   }

@@ -7,6 +7,10 @@ class DashboardRepositoryImpl implements DashboardRepository {
   Future<Dashboard> getDashboard() async {
     final dio = await MyDio.provideDio();
     final result = await dio.post('/dashboard/get');
+    // TODO:
+    // store result in prefs.
+    // compare with newly fetched data.
+    // update accordingly
     return Dashboard.fromJson(result.data);
   }
 }
