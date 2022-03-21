@@ -14,6 +14,7 @@ class SmallProductCard extends StatelessWidget {
     final screenDimension = MediaQuery.of(context).size;
 
     return BaseCard(
+      onTap: () {},
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

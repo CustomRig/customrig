@@ -1,26 +1,36 @@
+import 'package:customrig/pages/product_page.dart';
 import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
 import 'package:flutter/material.dart';
 
+import '../../model/item.dart';
+
 class MainProductCard extends StatelessWidget {
-  final String title;
-  // final String description;
-  final int price;
-  final String imageUrl;
+  // final String title;
+  // // final String description;
+  // final int price;
+  // final String imageUrl;
+  final dynamic item;
   const MainProductCard({
     Key? key,
-    required this.title,
-    // required this.description,
-    required this.price,
-    required this.imageUrl,
+    required this.item,
+    // required this.title,
+    // // required this.description,
+    // required this.price,
+    // required this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenDimension = MediaQuery.of(context).size;
+
+    String _getImage(dynamic item) =>
+        item.type == 'RIG' ? item.cabinet.imageUrl : item.imageUrl;
+
     return BaseCard(
+      onTap: () => goToPage(context, const ProductPage()),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +40,7 @@ class MainProductCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
-                image: NetworkImage(imageUrl),
+                image: NetworkImage(_getImage(item)),
                 fit: BoxFit.cover,
               ),
             ),
@@ -39,7 +49,7 @@ class MainProductCard extends StatelessWidget {
           SizedBox(
             width: screenDimension.height * .2,
             child: Text(
-              title,
+              item.title ?? '',
               style: MyTextStyles.productSubtitle,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
@@ -47,7 +57,7 @@ class MainProductCard extends StatelessWidget {
           ),
           spacer(height: 4),
           Text(
-            '₹' + price.toString(),
+            '₹' + item.price.toString(),
             style: MyTextStyles.productTitle,
           )
         ],

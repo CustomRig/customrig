@@ -4,8 +4,9 @@ import 'package:flutter/material.dart';
 
 class BaseCard extends StatelessWidget {
   final Widget child;
-
-  const BaseCard({Key? key, required this.child}) : super(key: key);
+  final VoidCallback onTap;
+  const BaseCard({Key? key, required this.child, required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,7 @@ class BaseCard extends StatelessWidget {
         elevation: 2.3,
         borderRadius: BorderRadius.circular(12.0),
         child: InkWell(
-          onTap: () {
-            // Temporary
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ProductPage()));
-          },
+          onTap: onTap,
           borderRadius: BorderRadius.circular(12.0),
           splashColor: kBlueAccentColor,
           child: Container(

@@ -160,14 +160,7 @@ class _HomePageState extends State<HomePage> {
 
   Widget _buildItems(List<dynamic> items, {required String type}) {
     return MyHorizontalList(
-      items: items
-          .map((e) => MainProductCard(
-                title: e.title,
-                price: e.price,
-                imageUrl: type == 'RIG' ? e.cabinet.imageUrl : e.imageUrl,
-                // showing the picture of the Cabinet for Rigs
-              ))
-          .toList(),
+      items: items.map((e) => MainProductCard(item: e)).toList(),
     );
   }
 

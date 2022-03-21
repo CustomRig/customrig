@@ -1,3 +1,4 @@
+import 'package:customrig/model/item.dart';
 import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -26,12 +27,10 @@ class _ProductListState extends State<ProductList> {
         ),
         itemCount: 10,
         itemBuilder: (BuildContext context, int index) {
-          return const Padding(
+          return Padding(
             padding: EdgeInsets.all(2.0),
             child: MainProductCard(
-              title: 'fffff',
-              price: 1212,
-              imageUrl: 'fafaf',
+              item: Item(),
             ),
           );
         },
