@@ -1,18 +1,16 @@
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/pages/product_page.dart';
-import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
 import 'package:flutter/material.dart';
-
-import '../../model/item.dart';
 
 class MainProductCard extends StatelessWidget {
   // final String title;
   // // final String description;
   // final int price;
   // final String imageUrl;
-  final dynamic item;
+  final BaseItem item;
   const MainProductCard({
     Key? key,
     required this.item,
@@ -30,7 +28,7 @@ class MainProductCard extends StatelessWidget {
         item.type == 'RIG' ? item.cabinet.imageUrl : item.imageUrl;
 
     return BaseCard(
-      onTap: () => goToPage(context, const ProductPage()),
+      onTap: () => goToPage(context, ProductPage(item: item)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

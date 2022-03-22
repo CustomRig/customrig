@@ -1,4 +1,4 @@
-import 'package:customrig/utils/colors.dart';
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
@@ -7,7 +7,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  final BaseItem item;
+  const ProductPage({Key? key, required this.item}) : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();

@@ -1,3 +1,4 @@
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/model/rig.dart';
 
@@ -27,7 +28,7 @@ class Dashboard {
 
 class Section {
   String? title;
-  List<dynamic>? items;
+  List<BaseItem>? items;
   String? type;
 
   Section({this.title, this.items, this.type});
@@ -54,10 +55,12 @@ class Section {
   }
 
   Map<String, dynamic> toJson() {
+    throw UnimplementedError('toJson not implemented for class BaseItem');
+
     final Map<String, dynamic> data = <String, dynamic>{};
     data['title'] = title;
     if (items != null) {
-      data['items'] = items!.map((v) => v.toJson()).toList();
+      // data['items'] = items!.map((v) => v.toJson()).toList();
     }
     return data;
   }

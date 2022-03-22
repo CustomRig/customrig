@@ -1,53 +1,32 @@
-class Item {
-  String? brand;
-  String? title;
-  String? description;
-  int? price;
-  String? imageUrl;
-  String? purchaseUrl;
-  List<int>? pairingIds;
-  String? type;
-  String? category;
-  String? id;
+import 'package:customrig/model/base_item.dart';
 
-  Item({
-    this.brand,
-    this.title,
-    this.description,
-    this.price,
-    this.imageUrl,
-    this.purchaseUrl,
-    this.pairingIds,
-    this.type,
-    this.category,
-    this.id,
-  });
-
+class Item extends BaseItem {
+  Item();
   Item.fromJson(Map<String, dynamic> json) {
-    brand = json['brand'];
-    title = json['title'];
-    description = json['description'];
-    price = json['price'];
-    imageUrl = json['image_url'];
-    purchaseUrl = json['purchase_url'];
-    pairingIds = json['pairing_ids'].cast<int>();
-    type = json['type'];
-    category = json['category'];
-    id = json['id'];
+    super.brand = json['brand'];
+    super.title = json['title'];
+    super.description = json['description'];
+    super.price = json['price'];
+    super.imageUrl = json['image_url'];
+    super.purchaseUrl = json['purchase_url'];
+    super.pairingIds = json['pairing_ids'].cast<int>();
+    super.type = json['type'];
+    super.category = json['category'];
+    super.id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['brand'] = brand;
-    data['title'] = title;
-    data['description'] = description;
-    data['price'] = price;
-    data['image_url'] = imageUrl;
-    data['purchase_url'] = purchaseUrl;
-    data['pairing_ids'] = pairingIds;
-    data['type'] = type;
-    data['category'] = type;
-    data['id'] = id;
+    data['brand'] = super.brand;
+    data['title'] = super.title;
+    data['description'] = super.description;
+    data['price'] = super.price;
+    data['image_url'] = super.imageUrl;
+    data['purchase_url'] = super.purchaseUrl;
+    data['pairing_ids'] = super.pairingIds;
+    data['type'] = super.type;
+    data['category'] = super.type;
+    data['id'] = super.id;
     return data;
   }
 }

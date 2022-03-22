@@ -1,3 +1,4 @@
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
@@ -158,7 +159,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildItems(List<dynamic> items, {required String type}) {
+  Widget _buildItems(List<BaseItem> items, {required String type}) {
     return MyHorizontalList(
       items: items.map((e) => MainProductCard(item: e)).toList(),
     );
