@@ -1,4 +1,5 @@
 import 'package:customrig/model/base_item.dart';
+import 'package:customrig/utils/colors.dart';
 import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
@@ -16,6 +17,26 @@ class ProductPage extends StatefulWidget {
 
 class _ProductPageState extends State<ProductPage> {
   late Size screenDimension;
+
+  final ScrollController _scrollController = ScrollController();
+  bool isAtBottom = false;
+  @override
+  void initState() {
+    _scrollController.addListener(() {
+      if (_scrollController.offset >
+          _scrollController.position.maxScrollExtent - 40) {
+        setState(() {
+          isAtBottom = true;
+        });
+      } else {
+        setState(() {
+          isAtBottom = false;
+        });
+      }
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     screenDimension = MediaQuery.of(context).size;
@@ -37,65 +58,131 @@ class _ProductPageState extends State<ProductPage> {
         ],
       ),
       body: ListView(
+        controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         padding: const EdgeInsets.all(12.0),
         children: [
-          _buildItemImage(url: kDummyProductImage),
+          _buildItemImage(url: widget.item.imageUrl ?? ''),
           _buildItemTitleAndDescription(
-              title: kDummyTitle, description: kDummyDescription),
-
-          // Data table here
-
-          DataTable(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.2),
-                  offset: const Offset(1, 1),
-                  blurRadius: 3,
+            title: widget.item.title ?? '',
+            description: widget.item.description ?? '',
+          ),
+          if (widget.item.type == 'RIG') _buildRigItemsTable(widget.item),
+          if (widget.item.type == 'ITEM') _buildItemPrice(widget.item),
+        ],
+      ),
+      bottomSheet: !isAtBottom
+          ? Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Material(
+                elevation: 2,
+                borderRadius: BorderRadius.circular(8.0),
+                color: kBlueAccentColor,
+                child: Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'TOTAL PRICE',
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      MyBadge(
+                        text: widget.item.price.toString(),
+                        secondary: true,
+                      )
+                    ],
+                  ),
                 ),
-              ],
-            ),
-            columns: const [
-              DataColumn(label: Text('ITEM')),
-              DataColumn(numeric: true, label: Text('PRICE (₹)')),
-            ],
-            rows: const [
-              // The actual items
-              DataRow(
-                cells: [
-                  DataCell(Text('Item 1')),
-                  DataCell(MyBadge(text: '1000')),
-                ],
               ),
-              DataRow(
-                cells: [
-                  DataCell(Text('lorem ipsum ')),
-                  DataCell(MyBadge(text: '40000')),
-                ],
-              ),
+            )
+          : SizedBox.shrink(),
+    );
+  }
 
-              // Total price Row
-              DataRow(
-                selected: true,
-                cells: [
-                  DataCell(
-                    Text(
-                      'TOTAL',
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  DataCell(
-                    MyBadge(text: '300', secondary: true),
-                  ),
-                ],
-              ),
-            ],
+  Widget _buildItemPrice(BaseItem item) {
+    return Container();
+  }
+
+  Widget _buildRigItemsTable(BaseItem item) {
+    return DataTable(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12.0),
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            offset: const Offset(1, 1),
+            blurRadius: 3,
           ),
         ],
       ),
+      columns: const [
+        DataColumn(label: Text('ITEM')),
+        DataColumn(numeric: true, label: Text('PRICE (₹)')),
+      ],
+      rows: [
+        // The actual items
+        DataRow(
+          cells: [
+            DataCell(Text(item.motherboard?.title ?? '')),
+            DataCell(MyBadge(text: item.motherboard?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.processor?.title ?? '')),
+            DataCell(MyBadge(text: item.processor?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.ram?.title ?? '')),
+            DataCell(MyBadge(text: item.ram?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.storage?.title ?? '')),
+            DataCell(MyBadge(text: item.storage?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.powerSupply?.title ?? '')),
+            DataCell(MyBadge(text: item.powerSupply?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.wifiAdapter?.title ?? '')),
+            DataCell(MyBadge(text: item.wifiAdapter?.price.toString() ?? '')),
+          ],
+        ),
+        DataRow(
+          cells: [
+            DataCell(Text(item.operatingSystem?.title ?? '')),
+            DataCell(
+                MyBadge(text: item.operatingSystem?.price.toString() ?? '')),
+          ],
+        ),
+
+        // Total price Row
+        DataRow(
+          selected: true,
+          cells: [
+            const DataCell(
+              Text(
+                'TOTAL',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+            ),
+            DataCell(
+              MyBadge(text: item.price.toString(), secondary: true),
+            ),
+          ],
+        ),
+      ],
     );
   }
 
