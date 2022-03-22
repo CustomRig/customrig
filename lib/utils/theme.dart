@@ -1,26 +1,27 @@
+import 'package:customrig/utils/color_scheme.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
 import 'colors.dart';
 
 ThemeData myLightTheme = ThemeData(
-  primarySwatch: Colors.blue,
+  colorScheme: lightColorScheme,
 
   // floating action theme
-  floatingActionButtonTheme: const FloatingActionButtonThemeData(
-    backgroundColor: kBlueAccentColor,
-    foregroundColor: kBlackColor,
-    extendedSizeConstraints: BoxConstraints.tightFor(
+  floatingActionButtonTheme: FloatingActionButtonThemeData(
+    backgroundColor: lightColorScheme.primary,
+    foregroundColor: lightColorScheme.onPrimary,
+    extendedSizeConstraints: const BoxConstraints.tightFor(
       height: 70,
       width: 150,
     ),
-    sizeConstraints: BoxConstraints.tightFor(
+    sizeConstraints: const BoxConstraints.tightFor(
       height: 70,
       width: 70,
     ),
-    extendedPadding: EdgeInsets.all(22.0),
+    extendedPadding: const EdgeInsets.all(22.0),
     extendedIconLabelSpacing: 16.0,
-    shape: RoundedRectangleBorder(
+    shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.all(
         Radius.circular(22),
       ),
@@ -36,4 +37,8 @@ ThemeData myLightTheme = ThemeData(
       color: kBlackColor,
     ),
   ),
+
+  // bottom sheet theme
+  bottomSheetTheme:
+      BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),
 );
