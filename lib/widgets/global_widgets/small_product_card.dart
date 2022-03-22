@@ -39,7 +39,9 @@ class SmallProductCard extends StatelessWidget {
               children: [
                 Text(
                   kDummyTitle,
-                  style: MyTextStyles.productTitle.copyWith(color: Colors.blue),
+                  style: MyTextStyles.productTitle.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),

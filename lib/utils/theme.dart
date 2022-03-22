@@ -38,6 +38,12 @@ ThemeData myLightTheme = ThemeData(
     ),
   ),
 
+  // navigation bar theme
+  navigationBarTheme: NavigationBarThemeData(
+    // backgroundColor: lightColorScheme.secondaryContainer,
+    indicatorColor: lightColorScheme.primaryContainer,
+  ),
+
   // bottom sheet theme
   bottomSheetTheme:
       BottomSheetThemeData(backgroundColor: Colors.black.withOpacity(0)),

@@ -15,7 +15,6 @@ class SelectUsage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
     return ListView(
       padding: const EdgeInsets.all(12.0),
       physics: const BouncingScrollPhysics(),
@@ -26,19 +25,19 @@ class SelectUsage extends StatelessWidget {
         ),
         spacer(height: 12.0),
         _usageContainer(
-          screenSize,
+          context,
           asset: 'usage_gaming.jpeg',
           title: 'GAMING',
         ),
         spacer(height: 8.0),
         _usageContainer(
-          screenSize,
+          context,
           asset: 'usage_college.jpeg',
           title: 'COLLEGE',
         ),
         spacer(height: 8.0),
         _usageContainer(
-          screenSize,
+          context,
           asset: 'usage_office.jpeg',
           title: 'OFFICE',
         ),
@@ -46,8 +45,12 @@ class SelectUsage extends StatelessWidget {
     );
   }
 
-  Widget _usageContainer(Size screenSize,
-      {required String title, required String asset}) {
+  Widget _usageContainer(
+    BuildContext context, {
+    required String title,
+    required String asset,
+  }) {
+    final screenSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () => onSelectedUsageChanged(title),
       child: Container(
@@ -67,7 +70,10 @@ class SelectUsage extends StatelessWidget {
             width: double.maxFinite,
             decoration: BoxDecoration(
               border: selectedUsage == title
-                  ? Border.all(width: 6, color: Colors.blueAccent)
+                  ? Border.all(
+                      width: 6,
+                      color: Theme.of(context).colorScheme.primary,
+                    )
                   : null,
               borderRadius: BorderRadius.circular(12),
               color: selectedUsage == title

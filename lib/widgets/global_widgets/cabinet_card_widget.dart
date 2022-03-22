@@ -31,7 +31,8 @@ class CabinetCardWidget extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           border: isSelected
-              ? Border.all(width: 6, color: Colors.blueAccent)
+              ? Border.all(
+                  width: 6, color: Theme.of(context).colorScheme.primary)
               : null,
         ),
 

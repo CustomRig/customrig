@@ -118,10 +118,10 @@ class _HomePageState extends State<HomePage> {
       child: TextFormField(
         decoration: InputDecoration(
           filled: true,
-          fillColor: kBlueAccentColor,
+          fillColor: Theme.of(context).colorScheme.primaryContainer,
           hintText: "Search 'Gaming keyboard'",
           prefixIcon: const Icon(Icons.search),
-          prefixIconColor: Colors.red,
+          prefixIconColor: Theme.of(context).colorScheme.onPrimaryContainer,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(50.0),
             borderSide: BorderSide.none,

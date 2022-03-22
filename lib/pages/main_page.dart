@@ -34,13 +34,13 @@ class _MainPageState extends State<MainPage> {
           drawer: const Drawer(),
           body: pages[navBar.index].page,
           bottomNavigationBar: NavigationBar(
-            backgroundColor: const Color(0xFFf1f5fb),
             selectedIndex: navBar.index,
             onDestinationSelected: (index) {
               navBar.setIndex(index);
             },
             destinations: const [
               NavigationDestination(
+                
                 icon: Icon(EvaIcons.homeOutline),
                 label: 'Home',
                 selectedIcon: Icon(EvaIcons.home),

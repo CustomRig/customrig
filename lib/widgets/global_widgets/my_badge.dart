@@ -18,11 +18,13 @@ class MyBadge extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         border: Border.all(
           width: 1.2,
-          color: secondary ? Colors.green : Colors.blue,
+          color: secondary
+              ? Theme.of(context).colorScheme.primary
+              : Theme.of(context).colorScheme.tertiaryContainer,
         ),
         color: secondary
-            ? Colors.green.withOpacity(.1)
-            : Colors.blue.withOpacity(.1),
+            ? Theme.of(context).colorScheme.primary.withOpacity(.5)
+            : Theme.of(context).colorScheme.tertiaryContainer.withOpacity(.5),
       ),
       width: screenSize.width * .2,
       height: 30,
@@ -31,7 +33,9 @@ class MyBadge extends StatelessWidget {
         textAlign: TextAlign.right,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: secondary ? Colors.green : Colors.blue,
+          color: secondary
+              ? Theme.of(context).colorScheme.onPrimary
+              : Theme.of(context).colorScheme.onTertiaryContainer,
         ),
       ),
     );
