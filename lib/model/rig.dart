@@ -3,7 +3,9 @@ import 'package:customrig/model/item.dart';
 
 class Rig extends BaseItem {
   Rig();
+
   Rig.fromJson(Map<String, dynamic> json) {
+    super.type = json['type'];
     super.title = json['title'];
     super.description = json['description'];
     super.price = json['price'];
@@ -47,8 +49,7 @@ class Rig extends BaseItem {
       super.operatingSystem = Item.fromJson(json['operating_system']);
     }
 
-    super.imageUrl = json['cabinet']['imageUrl'];
-    super.type = json['type'];
+    super.imageUrl = json['cabinet']['image_url'];
     super.category = json['category'];
   }
 
