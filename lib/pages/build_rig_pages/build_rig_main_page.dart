@@ -35,7 +35,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
   @override
   Widget build(BuildContext context) {
     return Consumer<BuildRigProvider>(
-      builder: (context, buildRigProvider, child) {
+      builder: (context, provider, child) {
         return DefaultTabController(
           length: 11,
           initialIndex: 0,
@@ -48,88 +48,123 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
               ),
             ),
             //
-            body: buildRigProvider.state == BuildRigState.complete
+            body: provider.state == BuildRigState.complete
                 ? TabBarView(
                     controller: _tabController,
                     physics: const BouncingScrollPhysics(),
                     children: [
                       // usage
                       SelectUsage(
-                        selectedUsage: buildRigProvider.usageType,
+                        selectedUsage: provider.usageType,
                         onSelectedUsageChanged: (usage) =>
-                            buildRigProvider.setUsageType(usage),
+                            provider.setUsageType(usage),
                       ),
 
                       // Cabinet
                       SelectCabinet(
-                        cabinets: buildRigProvider.allItems!.cabinet!.items!,
-                        selectedCabinet: buildRigProvider.cabinet,
+                        cabinets: provider.allItems!.cabinet!.items!,
+                        selectedCabinet: provider.cabinet,
                         onSelectedCabinetChanged: (cabinet) =>
-                            buildRigProvider.setCabinet(cabinet),
+                            provider.setCabinet(cabinet),
                       ),
 
                       // processor
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.processor!.category!,
-                        items: buildRigProvider.allItems!.processor!.items!,
+                        itemName: provider.allItems!.processor!.category!,
+                        brands: provider.allItems!.processor!.brands!,
+                        items: provider.allItems!.processor!.items!,
+                        selectedBrand: provider.processor!.brand!,
+                        selectedItem: provider.processor!,
                       ),
+
+                      // mother board
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.motherboard!.category!,
-                        items: buildRigProvider.allItems!.motherboard!.items!,
+                        itemName: provider.allItems!.motherboard!.category!,
+                        brands: provider.allItems!.motherboard!.brands!,
+                        items: provider.allItems!.motherboard!.items!,
+                        selectedBrand: provider.motherboard!.brand!,
+                        selectedItem: provider.motherboard!,
                       ),
+
+                      // RAM
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.ram!.category!,
-                        items: buildRigProvider.allItems!.ram!.items!,
+                        itemName: provider.allItems!.ram!.category!,
+                        brands: provider.allItems!.ram!.brands!,
+                        items: provider.allItems!.ram!.items!,
+                        selectedBrand: provider.ram!.brand!,
+                        selectedItem: provider.ram!,
                       ),
+
+                      // Storage
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.storage!.category!,
-                        items: buildRigProvider.allItems!.storage!.items!,
+                        itemName: provider.allItems!.storage!.category!,
+                        brands: provider.allItems!.storage!.brands!,
+                        items: provider.allItems!.storage!.items!,
+                        selectedBrand: provider.storage!.brand!,
+                        selectedItem: provider.storage!,
                       ),
+
+                      //graphic card
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.graphicCard!.category!,
-                        items: buildRigProvider.allItems!.graphicCard!.items!,
+                        itemName: provider.allItems!.graphicCard!.category!,
+                        brands: provider.allItems!.graphicCard!.brands!,
+                        items: provider.allItems!.graphicCard!.items!,
+                        selectedBrand: provider.graphicCard!.brand!,
+                        selectedItem: provider.graphicCard!,
                       ),
+
+                      // cooler
                       SelectItems(
-                        itemName: buildRigProvider.allItems!.cooler!.category!,
-                        items: buildRigProvider.allItems!.cooler!.items!,
+                        itemName: provider.allItems!.cooler!.category!,
+                        brands: provider.allItems!.cooler!.brands!,
+                        items: provider.allItems!.cooler!.items!,
+                        selectedBrand: provider.cooler!.brand!,
+                        selectedItem: provider.cooler!,
                       ),
+
+                      // power supply
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.powerSupply!.category!,
-                        items: buildRigProvider.allItems!.powerSupply!.items!,
+                        itemName: provider.allItems!.powerSupply!.category!,
+                        brands: provider.allItems!.powerSupply!.brands!,
+                        items: provider.allItems!.powerSupply!.items!,
+                        selectedBrand: provider.powerSupply!.brand!,
+                        selectedItem: provider.powerSupply!,
                       ),
+
+                      // wifi adapter
                       SelectItems(
-                        itemName:
-                            buildRigProvider.allItems!.wifiAdapter!.category!,
-                        items: buildRigProvider.allItems!.wifiAdapter!.items!,
+                        itemName: provider.allItems!.wifiAdapter!.category!,
+                        brands: provider.allItems!.wifiAdapter!.brands!,
+                        items: provider.allItems!.wifiAdapter!.items!,
+                        selectedBrand: provider.wifiAdapter!.brand!,
+                        selectedItem: provider.wifiAdapter!,
                       ),
+
+                      // OS
                       SelectItems(
-                        itemName: buildRigProvider
-                            .allItems!.operatingSystem!.category!,
-                        items:
-                            buildRigProvider.allItems!.operatingSystem!.items!,
+                        itemName: provider.allItems!.operatingSystem!.category!,
+                        brands: provider.allItems!.operatingSystem!.brands!,
+                        items: provider.allItems!.operatingSystem!.items!,
+                        selectedBrand: provider.operatingSystem!.brand!,
+                        selectedItem: provider.operatingSystem!,
                       ),
                     ],
                   )
-                : buildRigProvider.state == BuildRigState.loading
+                : provider.state == BuildRigState.loading
                     ? _showLoadingWidget()
-                    : buildRigProvider.state == BuildRigState.error
+                    : provider.state == BuildRigState.error
                         ? _showErrorWidget()
                         : const SizedBox.shrink(),
             //
 
-            floatingActionButton:
-                buildRigProvider.state == BuildRigState.complete
-                    ? FloatingActionButton(
-                        onPressed: () {
-                          _tabController.animateTo(++_tabController.index);
-                        },
-                        child: const Icon(EvaIcons.chevronRight),
-                      )
-                    : const SizedBox.shrink(),
+            floatingActionButton: provider.state == BuildRigState.complete
+                ? FloatingActionButton(
+                    onPressed: () {
+                      _tabController.animateTo(++_tabController.index);
+                    },
+                    child: const Icon(EvaIcons.chevronRight),
+                  )
+                : const SizedBox.shrink(),
           ),
         );
       },

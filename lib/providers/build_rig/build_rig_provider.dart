@@ -30,7 +30,7 @@ class BuildRigProvider extends ChangeNotifier {
   Item? get processor => _processor;
 
   Item? _motherboard;
-  Item? get motherBoard => _motherboard;
+  Item? get motherboard => _motherboard;
 
   Item? _graphicCard;
   Item? get graphicCard => _graphicCard;
@@ -48,7 +48,7 @@ class BuildRigProvider extends ChangeNotifier {
   Item? get cooler => _cooler;
 
   Item? _wifi;
-  Item? get wifi => _wifi;
+  Item? get wifiAdapter => _wifi;
 
   Item? _operatingSystem;
   Item? get operatingSystem => _operatingSystem;
