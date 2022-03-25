@@ -12,7 +12,7 @@ class Item extends BaseItem {
     super.pairingIds = json['pairing_ids'].cast<int>();
     super.type = json['type'];
     super.category = json['category'];
-    super.id = json['id'];
+    super.id = json['_id'];
   }
 
   Map<String, dynamic> toJson() {

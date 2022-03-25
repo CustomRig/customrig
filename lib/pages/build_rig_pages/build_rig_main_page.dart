@@ -53,16 +53,22 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                     controller: _tabController,
                     physics: const BouncingScrollPhysics(),
                     children: [
+                      // usage
                       SelectUsage(
                         selectedUsage: buildRigProvider.usageType,
                         onSelectedUsageChanged: (usage) =>
                             buildRigProvider.setUsageType(usage),
                       ),
+
+                      // Cabinet
                       SelectCabinet(
+                        cabinets: buildRigProvider.allItems!.cabinet!.items!,
                         selectedCabinet: buildRigProvider.cabinet,
                         onSelectedCabinetChanged: (cabinet) =>
                             buildRigProvider.setCabinet(cabinet),
                       ),
+
+                      // processor
                       SelectItems(
                         itemName:
                             buildRigProvider.allItems!.processor!.category!,
@@ -119,10 +125,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                 buildRigProvider.state == BuildRigState.complete
                     ? FloatingActionButton(
                         onPressed: () {
-                          _tabController.animateTo(_tabController.index++);
-                          setState(() {
-                            currentStep = _tabController.index;
-                          });
+                          _tabController.animateTo(++_tabController.index);
                         },
                         child: const Icon(EvaIcons.chevronRight),
                       )

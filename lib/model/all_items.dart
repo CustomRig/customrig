@@ -1,16 +1,16 @@
 import 'package:customrig/model/item.dart';
 
 class AllItems {
-  Part? cabinet;
-  Part? processor;
-  Part? motherboard;
-  Part? graphicCard;
-  Part? powerSupply;
-  Part? storage;
-  Part? ram;
-  Part? cooler;
-  Part? wifiAdapter;
-  Part? operatingSystem;
+  Parts? cabinet;
+  Parts? processor;
+  Parts? motherboard;
+  Parts? graphicCard;
+  Parts? powerSupply;
+  Parts? storage;
+  Parts? ram;
+  Parts? cooler;
+  Parts? wifiAdapter;
+  Parts? operatingSystem;
 
   AllItems({
     this.cabinet,
@@ -26,25 +26,26 @@ class AllItems {
   });
 
   AllItems.fromJson(Map<String, dynamic> json) {
-    cabinet = json['cabinet'] != null ? Part.fromJson(json['cabinet']) : null;
+    cabinet = json['cabinet'] != null ? Parts.fromJson(json['cabinet']) : null;
     processor =
-        json['processor'] != null ? Part.fromJson(json['processor']) : null;
-    motherboard =
-        json['motherboard'] != null ? Part.fromJson(json['motherboard']) : null;
+        json['processor'] != null ? Parts.fromJson(json['processor']) : null;
+    motherboard = json['motherboard'] != null
+        ? Parts.fromJson(json['motherboard'])
+        : null;
     graphicCard = json['graphic_card'] != null
-        ? Part.fromJson(json['graphic_card'])
+        ? Parts.fromJson(json['graphic_card'])
         : null;
     powerSupply = json['power_supply'] != null
-        ? Part.fromJson(json['power_supply'])
+        ? Parts.fromJson(json['power_supply'])
         : null;
-    storage = json['storage'] != null ? Part.fromJson(json['storage']) : null;
-    ram = json['ram'] != null ? Part.fromJson(json['ram']) : null;
-    cooler = json['cooler'] != null ? Part.fromJson(json['cooler']) : null;
+    storage = json['storage'] != null ? Parts.fromJson(json['storage']) : null;
+    ram = json['ram'] != null ? Parts.fromJson(json['ram']) : null;
+    cooler = json['cooler'] != null ? Parts.fromJson(json['cooler']) : null;
     wifiAdapter = json['wifi_adapter'] != null
-        ? Part.fromJson(json['wifi_adapter'])
+        ? Parts.fromJson(json['wifi_adapter'])
         : null;
     operatingSystem = json['operating_system'] != null
-        ? Part.fromJson(json['operating_system'])
+        ? Parts.fromJson(json['operating_system'])
         : null;
   }
 
@@ -84,14 +85,14 @@ class AllItems {
   }
 }
 
-class Part {
+class Parts {
   List<String>? brands;
   List<Item>? items;
   String? category;
 
-  Part({this.brands, this.items, this.category});
+  Parts({this.brands, this.items, this.category});
 
-  Part.fromJson(Map<String, dynamic> json) {
+  Parts.fromJson(Map<String, dynamic> json) {
     if (json['brands'] != null) {
       brands = [];
       json['brands'].forEach((v) {

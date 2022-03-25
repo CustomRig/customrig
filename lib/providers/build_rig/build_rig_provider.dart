@@ -20,58 +20,80 @@ class BuildRigProvider extends ChangeNotifier {
 
   Rig newRig = Rig();
 
-  String usageType = '';
-  String cabinet = '';
-  Item? processor;
-  Item? motherboard;
-  Item? graphicCard;
-  Item? powerSupply;
-  Item? storage;
-  Item? ram;
-  Item? cooler;
-  Item? wifi;
-  Item? operatingSystem;
+  String _usageType = '';
+  String get usageType => _usageType;
 
-  AllItems? allItems;
+  Item? _cabinet;
+  Item? get cabinet => _cabinet;
+
+  Item? _processor;
+  Item? get processor => _processor;
+
+  Item? _motherboard;
+  Item? get motherBoard => _motherboard;
+
+  Item? _graphicCard;
+  Item? get graphicCard => _graphicCard;
+
+  Item? _powerSupply;
+  Item? get powerSupply => _powerSupply;
+
+  Item? _storage;
+  Item? get storage => _storage;
+
+  Item? _ram;
+  Item? get ram => _ram;
+
+  Item? _cooler;
+  Item? get cooler => _cooler;
+
+  Item? _wifi;
+  Item? get wifi => _wifi;
+
+  Item? _operatingSystem;
+  Item? get operatingSystem => _operatingSystem;
+
+  AllItems? _allItems;
+  AllItems? get allItems => _allItems;
 
   void setUsageType(String usageType) {
-    this.usageType = usageType;
+    _usageType = usageType;
     notifyListeners();
   }
 
-  void setCabinet(String cabinet) {
-    this.cabinet = cabinet;
+  void setCabinet(Item cabinet) {
+    _cabinet = cabinet;
     notifyListeners();
   }
 
   void setItem({required Item item, required String category}) {
     switch (category) {
       case 'PROCESSOR':
-        processor = item;
+        _processor = item;
         break;
       case 'MOTHERBOARD':
-        motherboard = item;
+        _motherboard = item;
         break;
       case 'GRAPHIC_CARD':
-        graphicCard = item;
+        _graphicCard = item;
         break;
       case 'POWER_SUPPLY':
-        powerSupply = item;
+        _powerSupply = item;
         break;
       case 'STORAGE':
-        storage = item;
+        _storage = item;
         break;
       case 'RAM':
-        ram = item;
+        _ram = item;
         break;
       case 'COOLER':
-        cooler = item;
+        _cooler = item;
         break;
       case 'WIFI':
-        wifi = item;
+        _wifi = item;
         break;
       case 'OPERATING_SYSTEM':
-        operatingSystem = item;
+        _operatingSystem = item;
         break;
     }
     notifyListeners();
@@ -82,7 +104,7 @@ class BuildRigProvider extends ChangeNotifier {
     try {
       final items = await _repository.getAllItems();
       // print(items.cabinet!.brands![0]);
-      allItems = items;
+      _allItems = items;
       setState(BuildRigState.complete);
     } on Exception catch (e) {
       setState(BuildRigState.error);

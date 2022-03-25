@@ -1,23 +1,23 @@
-import 'package:customrig/utils/dummy_data.dart';
+import 'package:customrig/model/item.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/cabinet_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class SelectCabinet extends StatelessWidget {
-  final String selectedCabinet;
-  final void Function(String) onSelectedCabinetChanged;
+  final List<Item> cabinets;
+  final void Function(Item) onSelectedCabinetChanged;
+  final Item? selectedCabinet;
   const SelectCabinet({
     Key? key,
-    required this.selectedCabinet,
     required this.onSelectedCabinetChanged,
+    required this.cabinets,
+    required this.selectedCabinet,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenDimension = MediaQuery.of(context).size;
-
-    List cabinets = ['q', 'e', 'r', 't', 'y', 'u', 'i']; // for dummy purpose
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -45,11 +45,12 @@ class SelectCabinet extends StatelessWidget {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: CabinetCardWidget(
-                title: 'Apple CPU',
-                imageUrl: kDummyProductImage,
-                price: '12121',
-                id: cabinets[index],
-                isSelected: selectedCabinet == cabinets[index],
+                title: cabinets[index].title!,
+                imageUrl: cabinets[index].imageUrl!,
+                price: cabinets[index].price.toString(),
+                isSelected: selectedCabinet != null
+                    ? cabinets[index].id == selectedCabinet!.id!
+                    : false,
                 onTap: () => onSelectedCabinetChanged(cabinets[index]),
               ),
             );

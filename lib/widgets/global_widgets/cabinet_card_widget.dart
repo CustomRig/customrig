@@ -1,4 +1,3 @@
-import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +5,6 @@ class CabinetCardWidget extends StatelessWidget {
   final String title;
   final String imageUrl;
   final String price;
-  final String id;
   final bool isSelected;
   final VoidCallback onTap;
   const CabinetCardWidget({
@@ -14,7 +12,6 @@ class CabinetCardWidget extends StatelessWidget {
     required this.title,
     required this.imageUrl,
     required this.price,
-    required this.id,
     required this.isSelected,
     required this.onTap,
   }) : super(key: key);
