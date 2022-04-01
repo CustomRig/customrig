@@ -73,8 +73,11 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.processor!.category!,
                         brands: provider.allItems!.processor!.brands!,
                         items: provider.allItems!.processor!.items!,
-                        selectedBrand: provider.processor!.brand!,
-                        selectedItem: provider.processor!,
+                        selectedBrand: provider.brand,
+                        selectedItem: provider.processor,
+                        onBrandChanged: (brand) =>
+                            provider.setProcessorBrand(brand),
+                        onItemChanged: (item) => provider.setProcessor(item),
                       ),
 
                       // mother board
@@ -82,8 +85,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.motherboard!.category!,
                         brands: provider.allItems!.motherboard!.brands!,
                         items: provider.allItems!.motherboard!.items!,
-                        selectedBrand: provider.motherboard!.brand!,
-                        selectedItem: provider.motherboard!,
+                        selectedBrand: provider.motherboard?.brand,
+                        selectedItem: provider.motherboard,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // RAM
@@ -91,8 +96,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.ram!.category!,
                         brands: provider.allItems!.ram!.brands!,
                         items: provider.allItems!.ram!.items!,
-                        selectedBrand: provider.ram!.brand!,
-                        selectedItem: provider.ram!,
+                        selectedBrand: provider.ram?.brand,
+                        selectedItem: provider.ram,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // Storage
@@ -100,8 +107,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.storage!.category!,
                         brands: provider.allItems!.storage!.brands!,
                         items: provider.allItems!.storage!.items!,
-                        selectedBrand: provider.storage!.brand!,
-                        selectedItem: provider.storage!,
+                        selectedBrand: provider.storage?.brand,
+                        selectedItem: provider.storage,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       //graphic card
@@ -109,8 +118,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.graphicCard!.category!,
                         brands: provider.allItems!.graphicCard!.brands!,
                         items: provider.allItems!.graphicCard!.items!,
-                        selectedBrand: provider.graphicCard!.brand!,
-                        selectedItem: provider.graphicCard!,
+                        selectedBrand: provider.graphicCard?.brand,
+                        selectedItem: provider.graphicCard,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // cooler
@@ -118,8 +129,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.cooler!.category!,
                         brands: provider.allItems!.cooler!.brands!,
                         items: provider.allItems!.cooler!.items!,
-                        selectedBrand: provider.cooler!.brand!,
-                        selectedItem: provider.cooler!,
+                        selectedBrand: provider.cooler?.brand,
+                        selectedItem: provider.cooler,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // power supply
@@ -127,8 +140,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.powerSupply!.category!,
                         brands: provider.allItems!.powerSupply!.brands!,
                         items: provider.allItems!.powerSupply!.items!,
-                        selectedBrand: provider.powerSupply!.brand!,
-                        selectedItem: provider.powerSupply!,
+                        selectedBrand: provider.powerSupply?.brand,
+                        selectedItem: provider.powerSupply,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // wifi adapter
@@ -136,8 +151,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.wifiAdapter!.category!,
                         brands: provider.allItems!.wifiAdapter!.brands!,
                         items: provider.allItems!.wifiAdapter!.items!,
-                        selectedBrand: provider.wifiAdapter!.brand!,
-                        selectedItem: provider.wifiAdapter!,
+                        selectedBrand: provider.wifiAdapter?.brand,
+                        selectedItem: provider.wifiAdapter,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
 
                       // OS
@@ -145,8 +162,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.operatingSystem!.category!,
                         brands: provider.allItems!.operatingSystem!.brands!,
                         items: provider.allItems!.operatingSystem!.items!,
-                        selectedBrand: provider.operatingSystem!.brand!,
-                        selectedItem: provider.operatingSystem!,
+                        selectedBrand: provider.operatingSystem?.brand,
+                        selectedItem: provider.operatingSystem,
+                        onBrandChanged: (brand) {},
+                        onItemChanged: (item) {},
                       ),
                     ],
                   )

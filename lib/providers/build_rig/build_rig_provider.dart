@@ -56,6 +56,14 @@ class BuildRigProvider extends ChangeNotifier {
   AllItems? _allItems;
   AllItems? get allItems => _allItems;
 
+  String? _processorBrand;
+  String? get brand => _processorBrand;
+
+  void setProcessorBrand(String brand) {
+    _processorBrand = brand;
+    notifyListeners();
+  }
+
   void setUsageType(String usageType) {
     _usageType = usageType;
     notifyListeners();
@@ -63,6 +71,11 @@ class BuildRigProvider extends ChangeNotifier {
 
   void setCabinet(Item cabinet) {
     _cabinet = cabinet;
+    notifyListeners();
+  }
+
+  void setProcessor(Item processor) {
+    _processor = processor;
     notifyListeners();
   }
 

@@ -1,4 +1,6 @@
 import 'package:customrig/model/item.dart';
+import 'package:customrig/widgets/global_widgets/brand_card.dart';
+import 'package:customrig/widgets/global_widgets/build_rig_item_card.dart';
 import 'package:flutter/material.dart';
 import '../../utils/helpers.dart';
 
@@ -6,15 +8,21 @@ class SelectItems extends StatelessWidget {
   final String itemName;
   final List<Item> items;
   final List<String> brands;
-  final String selectedBrand;
-  final Item selectedItem;
+  final String? selectedBrand;
+  final Item? selectedItem;
+
+  final void Function(String) onBrandChanged;
+  final void Function(Item) onItemChanged;
+
   const SelectItems({
     Key? key,
     required this.brands,
     required this.itemName,
     required this.items,
-    required this.selectedBrand,
-    required this.selectedItem,
+    this.selectedBrand,
+    this.selectedItem,
+    required this.onBrandChanged,
+    required this.onItemChanged,
   }) : super(key: key);
 
   @override
@@ -32,6 +40,8 @@ class SelectItems extends StatelessWidget {
             ),
           ),
         ),
+
+        // brands
         const Padding(
           padding: EdgeInsets.only(left: 12.0, top: 12.0),
           child: Text(
@@ -41,10 +51,35 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(9.0),
           child: Wrap(
-              children: brands
-                  .map((e) => _buildBrandCard(brands.length, e))
-                  .toList()),
-        )
+            children:
+                brands.map((e) => _buildBrandCard(brands.length, e)).toList(),
+          ),
+        ),
+
+        // items
+        const Padding(
+          padding: EdgeInsets.only(left: 12.0, top: 12.0),
+          child: Text(
+            'Products',
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(9.0),
+          child: GridView.builder(
+            itemCount: items.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 2 / 1.8),
+            itemBuilder: (context, index) {
+              return BuildRigItemCard(
+                item: items[index],
+                isSelected: selectedItem == items[index],
+                onItemChanged: onItemChanged,
+              );
+            },
+          ),
+        ),
       ],
     );
   }
@@ -53,78 +88,8 @@ class SelectItems extends StatelessWidget {
     return BrandCard(
       brandsLength: brandsLength,
       brand: brand,
+      isSelected: brand == selectedBrand,
+      onBrandChanged: onBrandChanged,
     );
-  }
-}
-
-class BrandCard extends StatelessWidget {
-  const BrandCard({
-    Key? key,
-    required this.brandsLength,
-    required this.brand,
-  }) : super(key: key);
-
-  final int brandsLength;
-  final String brand;
-
-  @override
-  Widget build(BuildContext context) {
-    final screenSize = MediaQuery.of(context).size;
-    double calculatedSizeForCard;
-
-    // this calculates the size of the card based on number of cards
-    switch (brandsLength) {
-      case 1:
-        calculatedSizeForCard = 0.3;
-        break;
-      case 2:
-        calculatedSizeForCard = 0.45;
-        break;
-      case 3:
-        calculatedSizeForCard = 0.300;
-        break;
-      case 4:
-        calculatedSizeForCard = 0.218;
-        break;
-      default:
-        calculatedSizeForCard = 0.0;
-    }
-
-    // if cards are more than 4, than set this below size and wrap to bottom
-    if (brandsLength > 4) calculatedSizeForCard = 0.223;
-
-    return Padding(
-      padding: const EdgeInsets.all(3),
-      child: Material(
-        elevation: 2.3,
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12),
-            image: DecorationImage(
-              image:
-                  AssetImage('assets/images/brands/' + _getBrandImage(brand)),
-              fit: BoxFit.fill,
-            ),
-          ),
-          height: screenSize.width * calculatedSizeForCard,
-          width: screenSize.width * calculatedSizeForCard,
-        ),
-      ),
-    );
-  }
-
-  String _getBrandImage(String brand) {
-    String _brand;
-    switch (brand) {
-      case 'ASUS':
-        _brand = 'asus.png';
-        break;
-
-      default:
-        _brand = 'asus.png';
-        break;
-    }
-    return _brand;
   }
 }
