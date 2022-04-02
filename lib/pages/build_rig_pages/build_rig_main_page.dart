@@ -73,11 +73,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.processor!.category!,
                         brands: provider.allItems!.processor!.brands!,
                         items: provider.allItems!.processor!.items!,
-                        selectedBrand: provider.brand,
+                        selectedBrand: provider.processorBrand,
                         selectedItem: provider.processor,
-                        onBrandChanged: (brand) =>
-                            provider.setProcessorBrand(brand),
-                        onItemChanged: (item) => provider.setProcessor(item),
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "PROCESSOR"),
+                        onItemChanged: (item) =>
+                            provider.setItem(item: item, category: "PROCESSOR"),
                       ),
 
                       // mother board
@@ -85,10 +86,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.motherboard!.category!,
                         brands: provider.allItems!.motherboard!.brands!,
                         items: provider.allItems!.motherboard!.items!,
-                        selectedBrand: provider.motherboard?.brand,
+                        selectedBrand: provider.motherboardBrand,
                         selectedItem: provider.motherboard,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "MOTHERBOARD"),
+                        onItemChanged: (item) => provider.setItem(
+                            item: item, category: "MOTHERBOARD"),
                       ),
 
                       // RAM
@@ -96,10 +99,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.ram!.category!,
                         brands: provider.allItems!.ram!.brands!,
                         items: provider.allItems!.ram!.items!,
-                        selectedBrand: provider.ram?.brand,
+                        selectedBrand: provider.ramBrand,
                         selectedItem: provider.ram,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) =>
+                            provider.setBrand(brand: brand, category: "RAM"),
+                        onItemChanged: (item) =>
+                            provider.setItem(item: item, category: "RAM"),
                       ),
 
                       // Storage
@@ -107,10 +112,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.storage!.category!,
                         brands: provider.allItems!.storage!.brands!,
                         items: provider.allItems!.storage!.items!,
-                        selectedBrand: provider.storage?.brand,
+                        selectedBrand: provider.storageBrand,
                         selectedItem: provider.storage,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "STORAGE"),
+                        onItemChanged: (item) =>
+                            provider.setItem(item: item, category: "STORAGE"),
                       ),
 
                       //graphic card
@@ -118,10 +125,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.graphicCard!.category!,
                         brands: provider.allItems!.graphicCard!.brands!,
                         items: provider.allItems!.graphicCard!.items!,
-                        selectedBrand: provider.graphicCard?.brand,
+                        selectedBrand: provider.graphicCardBrand,
                         selectedItem: provider.graphicCard,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "GRAPHIC_CARD"),
+                        onItemChanged: (item) => provider.setItem(
+                            item: item, category: "GRAPHIC_CARD"),
                       ),
 
                       // cooler
@@ -129,10 +138,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.cooler!.category!,
                         brands: provider.allItems!.cooler!.brands!,
                         items: provider.allItems!.cooler!.items!,
-                        selectedBrand: provider.cooler?.brand,
+                        selectedBrand: provider.coolerBrand,
                         selectedItem: provider.cooler,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) =>
+                            provider.setBrand(brand: brand, category: "COOLER"),
+                        onItemChanged: (item) =>
+                            provider.setItem(item: item, category: "COOLER"),
                       ),
 
                       // power supply
@@ -140,10 +151,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.powerSupply!.category!,
                         brands: provider.allItems!.powerSupply!.brands!,
                         items: provider.allItems!.powerSupply!.items!,
-                        selectedBrand: provider.powerSupply?.brand,
+                        selectedBrand: provider.powerSupplyBrand,
                         selectedItem: provider.powerSupply,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "POWER_SUPPLY"),
+                        onItemChanged: (item) => provider.setItem(
+                            item: item, category: "POWER_SUPPLY"),
                       ),
 
                       // wifi adapter
@@ -151,10 +164,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.wifiAdapter!.category!,
                         brands: provider.allItems!.wifiAdapter!.brands!,
                         items: provider.allItems!.wifiAdapter!.items!,
-                        selectedBrand: provider.wifiAdapter?.brand,
+                        selectedBrand: provider.wifiAdapterBrand,
                         selectedItem: provider.wifiAdapter,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "WIFI_ADAPTER"),
+                        onItemChanged: (item) => provider.setItem(
+                            item: item, category: "WIFI_ADAPTER"),
                       ),
 
                       // OS
@@ -162,10 +177,12 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         itemName: provider.allItems!.operatingSystem!.category!,
                         brands: provider.allItems!.operatingSystem!.brands!,
                         items: provider.allItems!.operatingSystem!.items!,
-                        selectedBrand: provider.operatingSystem?.brand,
+                        selectedBrand: provider.operatingSystemBrand,
                         selectedItem: provider.operatingSystem,
-                        onBrandChanged: (brand) {},
-                        onItemChanged: (item) {},
+                        onBrandChanged: (brand) => provider.setBrand(
+                            brand: brand, category: "OPERATING_SYSTEM"),
+                        onItemChanged: (item) => provider.setItem(
+                            item: item, category: "OPERATING_SYSTEM"),
                       ),
                     ],
                   )
@@ -179,9 +196,13 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
             floatingActionButton: provider.state == BuildRigState.complete
                 ? FloatingActionButton(
                     onPressed: () {
-                      _tabController.animateTo(++_tabController.index);
+                      _tabController.animateTo(
+                        _tabController.index != _tabController.length - 1
+                            ? ++_tabController.index
+                            : _tabController.index,
+                      );
                     },
-                    child: const Icon(EvaIcons.chevronRight),
+                    child: Icon(provider.getIcon(_tabController)),
                   )
                 : const SizedBox.shrink(),
           ),

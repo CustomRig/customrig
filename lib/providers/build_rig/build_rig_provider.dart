@@ -3,6 +3,7 @@ import 'package:customrig/model/item.dart';
 import 'package:customrig/model/rig.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository_impl.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 enum BuildRigState {
@@ -56,12 +57,36 @@ class BuildRigProvider extends ChangeNotifier {
   AllItems? _allItems;
   AllItems? get allItems => _allItems;
 
+  // Brand
   String? _processorBrand;
-  String? get brand => _processorBrand;
+  String? get processorBrand => _processorBrand;
 
-  void setProcessorBrand(String brand) {
-    _processorBrand = brand;
-    notifyListeners();
+  String? _motherboardBrand;
+  String? get motherboardBrand => _motherboardBrand;
+
+  String? _graphicCardBrand;
+  String? get graphicCardBrand => _graphicCardBrand;
+
+  String? _powerSupplyBrand;
+  String? get powerSupplyBrand => _powerSupplyBrand;
+
+  String? _storageBrand;
+  String? get storageBrand => _storageBrand;
+
+  String? _ramBrand;
+  String? get ramBrand => _ramBrand;
+
+  String? _coolerBrand;
+  String? get coolerBrand => _coolerBrand;
+
+  String? _wifiBrand;
+  String? get wifiAdapterBrand => _wifiBrand;
+
+  String? _operatingSystemBrand;
+  String? get operatingSystemBrand => _operatingSystemBrand;
+
+  IconData getIcon(TabController t) {
+    return t.index != t.length - 1 ? EvaIcons.chevronRight : EvaIcons.checkmark;
   }
 
   void setUsageType(String usageType) {
@@ -69,13 +94,41 @@ class BuildRigProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setCabinet(Item cabinet) {
-    _cabinet = cabinet;
+  void setCabinet(Item item) {
+    _cabinet = item;
     notifyListeners();
   }
 
-  void setProcessor(Item processor) {
-    _processor = processor;
+  void setBrand({required String brand, required String category}) {
+    switch (category) {
+      case 'PROCESSOR':
+        _processorBrand = brand;
+        break;
+      case 'MOTHERBOARD':
+        _motherboardBrand = brand;
+        break;
+      case 'GRAPHIC_CARD':
+        _graphicCardBrand = brand;
+        break;
+      case 'POWER_SUPPLY':
+        _powerSupplyBrand = brand;
+        break;
+      case 'STORAGE':
+        _storageBrand = brand;
+        break;
+      case 'RAM':
+        _ramBrand = brand;
+        break;
+      case 'COOLER':
+        _coolerBrand = brand;
+        break;
+      case 'WIFI_ADAPTER ':
+        _wifiBrand = brand;
+        break;
+      case 'OPERATING_SYSTEM':
+        _operatingSystemBrand = brand;
+        break;
+    }
     notifyListeners();
   }
 
@@ -102,7 +155,7 @@ class BuildRigProvider extends ChangeNotifier {
       case 'COOLER':
         _cooler = item;
         break;
-      case 'WIFI':
+      case 'WIFI_ADAPTER':
         _wifi = item;
         break;
       case 'OPERATING_SYSTEM':

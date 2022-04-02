@@ -22,6 +22,7 @@ class BuildRigItemCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12.0),
         elevation: 2.4,
         child: InkWell(
+          borderRadius: BorderRadius.circular(12.0),
           onTap: () => onItemChanged(item),
           child: Container(
             padding: const EdgeInsets.all(12.0),
