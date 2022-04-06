@@ -21,6 +21,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
   int currentStep = 0;
   late TabController _tabController;
 
+  IconData _fabIcon = EvaIcons.chevronRight;
+
   @override
   void initState() {
     _tabController = TabController(vsync: this, length: 11);
@@ -194,21 +196,33 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
             //
 
             floatingActionButton: provider.state == BuildRigState.complete
-                ? FloatingActionButton(
-                    onPressed: () {
-                      _tabController.animateTo(
-                        _tabController.index != _tabController.length - 1
-                            ? ++_tabController.index
-                            : _tabController.index,
-                      );
-                    },
-                    child: Icon(provider.getIcon(_tabController)),
-                  )
+                ? _getFloatingActionButton()
                 : const SizedBox.shrink(),
           ),
         );
       },
     );
+  }
+
+  Widget _getFloatingActionButton() {
+    if (_tabController.index != _tabController.length - 1) {
+      return FloatingActionButton(
+        onPressed: () {
+          _tabController.animateTo(
+            _tabController.index != _tabController.length - 1
+                ? ++_tabController.index
+                : _tabController.index,
+          );
+        },
+        child: const Icon(EvaIcons.chevronRight),
+      );
+    } else {
+      return FloatingActionButton.extended(
+        onPressed: () {},
+        label: const Text('FINISH'),
+        icon: const Icon(EvaIcons.checkmark),
+      );
+    }
   }
 
   Widget _showLoadingWidget() {

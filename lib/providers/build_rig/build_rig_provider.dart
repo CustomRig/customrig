@@ -85,10 +85,6 @@ class BuildRigProvider extends ChangeNotifier {
   String? _operatingSystemBrand;
   String? get operatingSystemBrand => _operatingSystemBrand;
 
-  IconData getIcon(TabController t) {
-    return t.index != t.length - 1 ? EvaIcons.chevronRight : EvaIcons.checkmark;
-  }
-
   void setUsageType(String usageType) {
     _usageType = usageType;
     notifyListeners();

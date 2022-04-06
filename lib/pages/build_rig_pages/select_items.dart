@@ -27,6 +27,11 @@ class SelectItems extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    List<Item> itemsSortedByBrand = items.where((e) {
+      return selectedBrand != null
+          ? e.brand == selectedBrand
+          : e.brand == e.brand;
+    }).toList();
     return ListView(
       children: [
         Padding(
@@ -66,15 +71,15 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(9.0),
           child: GridView.builder(
-            itemCount: items.length,
+            itemCount: itemsSortedByBrand.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 2 / 1.8),
             itemBuilder: (context, index) {
               return BuildRigItemCard(
-                item: items[index],
-                isSelected: selectedItem == items[index],
+                item: itemsSortedByBrand[index],
+                isSelected: selectedItem == itemsSortedByBrand[index],
                 onItemChanged: onItemChanged,
               );
             },
