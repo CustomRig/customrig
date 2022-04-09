@@ -1,6 +1,7 @@
 import 'package:customrig/pages/main_page.dart';
 import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
+import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
 import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => BuildRigProvider()),
         ChangeNotifierProvider(create: (_) => NavbarProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
+        ChangeNotifierProvider(create: (_) => FavoriteItemsProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

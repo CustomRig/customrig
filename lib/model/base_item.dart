@@ -12,7 +12,8 @@ class BaseItem {
   String? imageUrl;
   String? purchaseUrl;
 
-  List<int>? pairingIds;
+  List<String>? pairingIds;
+  List<String>? usage;
 
   Item? cabinet;
   Item? processor;

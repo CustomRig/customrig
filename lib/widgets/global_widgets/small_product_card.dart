@@ -1,5 +1,4 @@
-import 'package:customrig/utils/colors.dart';
-import 'package:customrig/utils/dummy_data.dart';
+import 'package:customrig/model/item.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
@@ -7,7 +6,13 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class SmallProductCard extends StatelessWidget {
-  const SmallProductCard({Key? key}) : super(key: key);
+  final Item item;
+  final Function() onRemovePressed;
+  const SmallProductCard({
+    Key? key,
+    required this.item,
+    required this.onRemovePressed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +28,8 @@ class SmallProductCard extends StatelessWidget {
             width: screenDimension.width * 0.2,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
-              image: const DecorationImage(
-                image: NetworkImage(kDummyProductImage),
+              image: DecorationImage(
+                image: NetworkImage(item.imageUrl!),
                 fit: BoxFit.cover,
               ),
             ),
@@ -38,21 +43,21 @@ class SmallProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  kDummyTitle,
+                  item.title ?? '',
                   style: MyTextStyles.productTitle.copyWith(
                     color: Theme.of(context).colorScheme.primary,
                   ),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const Text(
-                  kDummyDescription,
+                Text(
+                  item.description ?? '',
                   style: MyTextStyles.productSubtitle,
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),
-                const Text(
-                  '₹' + kDummyPrice,
+                Text(
+                  '₹' + item.price.toString(),
                   style: MyTextStyles.productTitle,
                 )
               ],
@@ -63,7 +68,7 @@ class SmallProductCard extends StatelessWidget {
             message: 'Remove from favorites',
             child: InkWell(
               borderRadius: BorderRadius.circular(50.0),
-              onTap: () {},
+              onTap: onRemovePressed,
               child: const Icon(EvaIcons.closeCircleOutline),
             ),
           )

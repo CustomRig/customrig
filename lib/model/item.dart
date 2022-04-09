@@ -9,10 +9,11 @@ class Item extends BaseItem {
     super.price = json['price'];
     super.imageUrl = json['image_url'];
     super.purchaseUrl = json['purchase_url'];
-    super.pairingIds = json['pairing_ids'].cast<int>();
+    super.pairingIds = json['pairing_ids'].cast<String>();
     super.type = json['type'];
     super.category = json['category'];
     super.id = json['_id'];
+    super.usage = json['usage'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
