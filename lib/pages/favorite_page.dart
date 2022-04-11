@@ -15,7 +15,7 @@ class _FavoritePageState extends State<FavoritePage> {
   void initState() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       Provider.of<FavoriteItemsProvider>(context, listen: false)
-          .getFavoriteItems(uid: '');
+          .getFavoriteItems();
     });
 
     super.initState();

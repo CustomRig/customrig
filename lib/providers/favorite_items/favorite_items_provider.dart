@@ -26,7 +26,7 @@ class FavoriteItemsProvider extends ChangeNotifier {
   List<Item> _favoriteItems = [];
   List<Item> get favoriteItems => _favoriteItems;
 
-  Future<List<Item>> getFavoriteItems({required uid}) async {
+  Future<List<Item>> getFavoriteItems() async {
     setState(FavoriteItemState.loading);
     try {
       _favoriteItems = await _repository.getFavoriteItems();
