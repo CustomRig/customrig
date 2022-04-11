@@ -3,6 +3,7 @@ import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
+import 'package:customrig/providers/user_build/user_build_provider.dart';
 import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => NavbarProvider()),
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteItemsProvider()),
+        ChangeNotifierProvider(create: (_) => UserBuildProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

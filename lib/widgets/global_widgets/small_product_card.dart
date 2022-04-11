@@ -1,3 +1,4 @@
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
@@ -6,7 +7,7 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 class SmallProductCard extends StatelessWidget {
-  final Item item;
+  final BaseItem item;
   final Function() onRemovePressed;
   const SmallProductCard({
     Key? key,
