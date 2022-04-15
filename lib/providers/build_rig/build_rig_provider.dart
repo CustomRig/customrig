@@ -3,6 +3,7 @@ import 'package:customrig/model/item.dart';
 import 'package:customrig/model/rig.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository_impl.dart';
+import 'package:dio/dio.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
@@ -161,6 +162,27 @@ class BuildRigProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  int _getRigPrice() {
+    return cabinet!.price! +
+        processor!.price! +
+        motherboard!.price! +
+        graphicCard!.price! +
+        powerSupply!.price! +
+        storage!.price! +
+        ram!.price! +
+        cooler!.price! +
+        wifiAdapter!.price! +
+        operatingSystem!.price!;
+  }
+
+  String _getRigDescription() {
+    return '${_processor!.title!}  ${_ram!.title!} Ram,  ${_graphicCard!.title!} GPU';
+  }
+
+  String _getRigTitle() {
+    return 'Rig #${UniqueKey().toString()}';
+  }
+
   void getAllItems() async {
     setState(BuildRigState.loading);
     try {
@@ -168,12 +190,37 @@ class BuildRigProvider extends ChangeNotifier {
       // print(items.cabinet!.brands![0]);
       _allItems = items;
       setState(BuildRigState.complete);
-    } on Exception catch (e) {
+    } on DioError catch (e) {
       setState(BuildRigState.error);
-      print(e.toString());
     }
 
     notifyListeners();
+  }
+
+  Future<Rig> buildUserRig() async {
+    Rig? rig;
+    try {
+      rig = await _repository.buildUserRig(
+        title: _getRigTitle(),
+        description: _getRigDescription(),
+        price: _getRigPrice(),
+        usage: _usageType,
+        cabinetId: _cabinet?.id,
+        processorId: _processor?.id,
+        motherboardId: _motherboard?.id,
+        graphicCardId: graphicCard?.id,
+        powerSupplyId: powerSupply!.id,
+        storageId: storage!.id,
+        ramId: ram!.id,
+        coolerId: _cooler!.id,
+        wifiAdapterId: wifiAdapter!.id,
+        operatingSystemId: operatingSystem!.id,
+      );
+    } on DioError catch (e) {
+      print(e);
+    }
+
+    return rig!;
   }
 
   void setState(BuildRigState state) {

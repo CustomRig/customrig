@@ -8,16 +8,22 @@ class SelectCabinet extends StatelessWidget {
   final List<Item> cabinets;
   final void Function(Item) onSelectedCabinetChanged;
   final Item? selectedCabinet;
+  final String? usage;
   const SelectCabinet({
     Key? key,
     required this.onSelectedCabinetChanged,
     required this.cabinets,
     required this.selectedCabinet,
+    required this.usage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final screenDimension = MediaQuery.of(context).size;
+
+    List<Item> sortedCabinets = cabinets.where((e) {
+      return usage != null ? e.usage!.contains(usage) : true;
+    }).toList();
 
     return ListView(
       physics: const BouncingScrollPhysics(),
@@ -40,18 +46,18 @@ class SelectCabinet extends StatelessWidget {
             childAspectRatio:
                 screenDimension.width / (screenDimension.height / 1.6),
           ),
-          itemCount: cabinets.length,
+          itemCount: sortedCabinets.length,
           itemBuilder: (BuildContext context, int index) {
             return Padding(
               padding: const EdgeInsets.all(4.0),
               child: CabinetCardWidget(
-                title: cabinets[index].title!,
-                imageUrl: cabinets[index].imageUrl!,
-                price: cabinets[index].price.toString(),
+                title: sortedCabinets[index].title!,
+                imageUrl: sortedCabinets[index].imageUrl!,
+                price: sortedCabinets[index].price.toString(),
                 isSelected: selectedCabinet != null
-                    ? cabinets[index].id == selectedCabinet!.id!
+                    ? sortedCabinets[index].id == selectedCabinet!.id!
                     : false,
-                onTap: () => onSelectedCabinetChanged(cabinets[index]),
+                onTap: () => onSelectedCabinetChanged(sortedCabinets[index]),
               ),
             );
           },

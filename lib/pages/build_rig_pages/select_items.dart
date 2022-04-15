@@ -10,7 +10,7 @@ class SelectItems extends StatelessWidget {
   final List<String> brands;
   final String? selectedBrand;
   final Item? selectedItem;
-  final String? pairingId;
+  final List<String>? pairingIds;
   final String? usage;
 
   final void Function(String) onBrandChanged;
@@ -25,23 +25,21 @@ class SelectItems extends StatelessWidget {
     this.selectedItem,
     required this.onBrandChanged,
     required this.onItemChanged,
-    this.pairingId,
-    this.usage,
+    this.pairingIds,
+    required this.usage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Item> itemsSortedByBrand = items
-        .where((e) {
-          return selectedBrand != null
-              ? e.brand == selectedBrand
-              : e.brand == e.brand;
-        })
-        .toList()
-        .where((e) {
-          return e.pairingIds!.contains(pairingId) && e.usage!.contains(usage);
-        })
-        .toList();
+    List<Item> sortedItems = items.where((e) {
+      return selectedBrand != null ? e.brand == selectedBrand : true;
+    }).where((e) {
+      return usage != null ? e.usage!.contains(usage) : true;
+    }).where((e) {
+      return pairingIds != null
+          ? pairingIds!.any((element) => e.pairingIds!.contains(element))
+          : true;
+    }).toList();
 
     return ListView(
       children: [
@@ -82,15 +80,15 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(9.0),
           child: GridView.builder(
-            itemCount: itemsSortedByBrand.length,
+            itemCount: sortedItems.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2, childAspectRatio: 2 / 1.8),
             itemBuilder: (context, index) {
               return BuildRigItemCard(
-                item: itemsSortedByBrand[index],
-                isSelected: selectedItem == itemsSortedByBrand[index],
+                item: sortedItems[index],
+                isSelected: selectedItem == sortedItems[index],
                 onItemChanged: onItemChanged,
               );
             },

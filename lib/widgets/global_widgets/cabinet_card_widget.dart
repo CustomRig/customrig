@@ -53,6 +53,7 @@ class CabinetCardWidget extends StatelessWidget {
             padding: const EdgeInsets.all(12.0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
                   title,
@@ -61,6 +62,7 @@ class CabinetCardWidget extends StatelessWidget {
                     fontSize: isSelected ? 24.0 : 22.0,
                   ),
                   maxLines: 2,
+                  textAlign: TextAlign.center,
                 ),
                 Text(
                   '₹' + price,

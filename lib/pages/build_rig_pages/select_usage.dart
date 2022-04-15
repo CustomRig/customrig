@@ -33,7 +33,7 @@ class SelectUsage extends StatelessWidget {
         _usageContainer(
           context,
           asset: 'usage_college.jpeg',
-          title: 'COLLEGE',
+          title: 'SCHOOL',
         ),
         spacer(height: 8.0),
         _usageContainer(

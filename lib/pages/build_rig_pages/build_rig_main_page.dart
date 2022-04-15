@@ -68,6 +68,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         selectedCabinet: provider.cabinet,
                         onSelectedCabinetChanged: (cabinet) =>
                             provider.setCabinet(cabinet),
+                        usage: provider.usageType,
                       ),
 
                       // processor
@@ -81,6 +82,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "PROCESSOR"),
                         onItemChanged: (item) =>
                             provider.setItem(item: item, category: "PROCESSOR"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // mother board
@@ -94,6 +97,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "MOTHERBOARD"),
                         onItemChanged: (item) => provider.setItem(
                             item: item, category: "MOTHERBOARD"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // RAM
@@ -107,6 +112,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setBrand(brand: brand, category: "RAM"),
                         onItemChanged: (item) =>
                             provider.setItem(item: item, category: "RAM"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // Storage
@@ -120,6 +127,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "STORAGE"),
                         onItemChanged: (item) =>
                             provider.setItem(item: item, category: "STORAGE"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       //graphic card
@@ -133,6 +142,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "GRAPHIC_CARD"),
                         onItemChanged: (item) => provider.setItem(
                             item: item, category: "GRAPHIC_CARD"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // cooler
@@ -146,6 +157,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setBrand(brand: brand, category: "COOLER"),
                         onItemChanged: (item) =>
                             provider.setItem(item: item, category: "COOLER"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // power supply
@@ -159,6 +172,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "POWER_SUPPLY"),
                         onItemChanged: (item) => provider.setItem(
                             item: item, category: "POWER_SUPPLY"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // wifi adapter
@@ -172,6 +187,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "WIFI_ADAPTER"),
                         onItemChanged: (item) => provider.setItem(
                             item: item, category: "WIFI_ADAPTER"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
 
                       // OS
@@ -185,6 +202,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             brand: brand, category: "OPERATING_SYSTEM"),
                         onItemChanged: (item) => provider.setItem(
                             item: item, category: "OPERATING_SYSTEM"),
+                        usage: provider.usageType,
+                        pairingIds: provider.processor?.pairingIds!,
                       ),
                     ],
                   )
@@ -196,7 +215,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
             //
 
             floatingActionButton: provider.state == BuildRigState.complete
-                ? _getFloatingActionButton()
+                ? _getFloatingActionButton(provider)
                 : const SizedBox.shrink(),
           ),
         );
@@ -204,7 +223,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     );
   }
 
-  Widget _getFloatingActionButton() {
+  Widget _getFloatingActionButton(BuildRigProvider provider) {
     if (_tabController.index != _tabController.length - 1) {
       return FloatingActionButton(
         onPressed: () {
@@ -218,7 +237,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
       );
     } else {
       return FloatingActionButton.extended(
-        onPressed: () {},
+        onPressed: () async {
+          final rig = await provider.buildUserRig();
+        },
         label: const Text('FINISH'),
         icon: const Icon(EvaIcons.checkmark),
       );
