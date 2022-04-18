@@ -52,6 +52,7 @@ class Rig extends BaseItem {
     super.imageUrl = json['cabinet']['image_url'];
     super.category = json['category'];
     super.id = json['_id'];
+    super.usage = json['usage'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {

@@ -24,9 +24,6 @@ class MainProductCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenDimension = MediaQuery.of(context).size;
 
-    String _getImage(dynamic item) =>
-        item.type == 'RIG' ? item.cabinet.imageUrl : item.imageUrl;
-
     return BaseCard(
       onTap: () => goToPage(context, ProductPage(item: item)),
       child: Column(
@@ -38,7 +35,7 @@ class MainProductCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
-                image: NetworkImage(_getImage(item)),
+                image: NetworkImage(item.imageUrl!),
                 fit: BoxFit.cover,
               ),
             ),
@@ -49,7 +46,7 @@ class MainProductCard extends StatelessWidget {
             child: Text(
               item.title ?? '',
               style: MyTextStyles.productSubtitle,
-              maxLines: 3,
+              maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
           ),
