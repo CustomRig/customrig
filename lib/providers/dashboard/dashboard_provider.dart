@@ -20,9 +20,11 @@ class DashboardProvider extends ChangeNotifier {
 
   void getDashboard() async {
     try {
-      setState(DashboardState.loading);
-      _dashboard = await _repository.getDashboard();
-      setState(DashboardState.complete);
+      if (_dashboard == null) {
+        setState(DashboardState.loading);
+        _dashboard = await _repository.getDashboard();
+        setState(DashboardState.complete);
+      }
     } on DioError catch (e) {
       _errorMessage = e.error.toString();
       setState(DashboardState.error);

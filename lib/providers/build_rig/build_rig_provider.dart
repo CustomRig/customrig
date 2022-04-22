@@ -184,12 +184,13 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   void getAllItems() async {
-    setState(BuildRigState.loading);
     try {
-      final items = await _repository.getAllItems();
-      // print(items.cabinet!.brands![0]);
-      _allItems = items;
-      setState(BuildRigState.complete);
+      if (_allItems == null) {
+        setState(BuildRigState.loading);
+        final items = await _repository.getAllItems();
+        _allItems = items;
+        setState(BuildRigState.complete);
+      }
     } on DioError catch (e) {
       setState(BuildRigState.error);
     }
