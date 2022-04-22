@@ -1,4 +1,6 @@
-import 'package:customrig/pages/main_page.dart';
+import 'package:customrig/global/constants/prefs_string.dart';
+import 'package:customrig/pages/auth_pages/auth_wrapper.dart';
+import 'package:customrig/providers/authentication/auth_provider.dart';
 import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
@@ -7,13 +9,20 @@ import 'package:customrig/providers/user_build/user_build_provider.dart';
 import 'package:customrig/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final _prefs = await SharedPreferences.getInstance();
+  // checking if user is logged in
+  runApp(MyApp(
+    isUserLoggedIn: _prefs.getString(kUserKey) != null,
+  ));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isUserLoggedIn;
+  const MyApp({Key? key, required this.isUserLoggedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +33,15 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => DashboardProvider()),
         ChangeNotifierProvider(create: (_) => FavoriteItemsProvider()),
         ChangeNotifierProvider(create: (_) => UserBuildProvider()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
       ],
       child: MaterialApp(
-        title: 'Flutter Demo',
+        title: 'CustomRig',
         theme: myLightTheme,
         darkTheme: myLightTheme,
-        home: const MainPage(),
+        home: AuthWrapper(
+          isUserLoggedIn: isUserLoggedIn,
+        ),
       ),
     );
   }

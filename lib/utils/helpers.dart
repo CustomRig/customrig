@@ -13,6 +13,25 @@ void goToPage(BuildContext context, Widget page) {
   );
 }
 
+void replacePage(BuildContext context, Widget page) {
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (context) => page,
+    ),
+  );
+}
+
+void pushReplacement(BuildContext context, Widget page) {
+  Navigator.pushAndRemoveUntil(
+    context,
+    MaterialPageRoute(
+      builder: (context) => page,
+    ),
+    (_) => false,
+  );
+}
+
 extension StringExtension on String {
   String snakeCaseToTitleCase() {
     final words = split('_');
