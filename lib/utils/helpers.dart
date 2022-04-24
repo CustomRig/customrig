@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 spacer({double? height, double? width}) {
   return SizedBox(height: height ?? 0, width: width ?? 0);
@@ -41,4 +43,17 @@ extension StringExtension on String {
     }
     return finalWords.join(' ');
   }
+}
+
+String formatCurrency(int price) {
+  final format = NumberFormat(
+    '##,##,###',
+  );
+  return format.format(price);
+}
+
+void launchURL(String url) async {
+  try {
+    launchUrl(Uri.parse(url));
+  } on Exception catch (e) {}
 }

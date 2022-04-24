@@ -1,6 +1,7 @@
 import 'package:customrig/model/base_item.dart';
 import 'package:customrig/widgets/global_widgets/my_badge.dart';
 import 'package:flutter/material.dart';
+import '../../utils/helpers.dart';
 
 class RigItemTable extends StatelessWidget {
   final BaseItem item;
@@ -25,34 +26,61 @@ class RigItemTable extends StatelessWidget {
         DataColumn(numeric: true, label: Text('PRICE (₹)')),
       ],
       rows: [
-        _buildRow(
-          title: item.motherboard?.title ?? '',
-          price: item.motherboard?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.processor?.title ?? '',
-          price: item.processor?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.ram?.title ?? '',
-          price: item.ram?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.storage?.title ?? '',
-          price: item.storage?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.powerSupply?.title ?? '',
-          price: item.powerSupply?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.wifiAdapter?.title ?? '',
-          price: item.wifiAdapter?.price.toString() ?? '',
-        ),
-        _buildRow(
-          title: item.operatingSystem?.title ?? '',
-          price: item.operatingSystem?.price.toString() ?? '',
-        ),
+        if (item.motherboard != null)
+          _buildRow(
+            context,
+            title: item.motherboard?.title ?? '',
+            price: item.motherboard?.price ?? 0,
+            category: item.motherboard?.category ?? '',
+          ),
+
+        if (item.processor != null)
+          _buildRow(
+            context,
+            title: item.processor?.title ?? '',
+            price: item.processor?.price ?? 0,
+            category: item.processor?.category ?? '',
+          ),
+
+        if (item.ram != null)
+          _buildRow(
+            context,
+            title: item.ram?.title ?? '',
+            price: item.ram?.price ?? 0,
+            category: item.ram?.category ?? '',
+          ),
+
+        if (item.storage != null)
+          _buildRow(
+            context,
+            title: item.storage?.title ?? '',
+            price: item.storage?.price ?? 0,
+            category: item.storage?.category ?? '',
+          ),
+
+        if (item.powerSupply != null)
+          _buildRow(
+            context,
+            title: item.powerSupply?.title ?? '',
+            price: item.powerSupply?.price ?? 0,
+            category: item.powerSupply?.category ?? '',
+          ),
+
+        if (item.wifiAdapter != null)
+          _buildRow(
+            context,
+            title: item.wifiAdapter?.title ?? '',
+            price: item.wifiAdapter?.price ?? 0,
+            category: item.wifiAdapter?.category ?? '',
+          ),
+
+        if (item.operatingSystem != null)
+          _buildRow(
+            context,
+            title: item.operatingSystem?.title ?? '',
+            price: item.operatingSystem?.price ?? 0,
+            category: item.operatingSystem?.category ?? '',
+          ),
 
         // Total price Row
         DataRow(
@@ -65,7 +93,7 @@ class RigItemTable extends StatelessWidget {
               ),
             ),
             DataCell(
-              MyBadge(text: item.price.toString(), secondary: true),
+              MyBadge(text: '₹ ' + formatCurrency(item.price!)),
             ),
           ],
         ),
@@ -73,11 +101,47 @@ class RigItemTable extends StatelessWidget {
     );
   }
 
-  DataRow _buildRow({required String title, required String price}) {
+  DataRow _buildRow(
+    BuildContext context, {
+    required String title,
+    required int price,
+    required String category,
+  }) {
+    final screenSize = MediaQuery.of(context).size;
     return DataRow(
       cells: [
-        DataCell(Text(title)),
-        DataCell(MyBadge(text: price)),
+        DataCell(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                category.snakeCaseToTitleCase().toUpperCase(),
+                style: Theme.of(context)
+                    .textTheme
+                    .caption
+                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
+              ),
+              SizedBox(
+                width: screenSize.width * 0.4,
+                child: Text(
+                  title,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
+        ),
+        DataCell(
+          Text(
+            formatCurrency(price),
+            style: Theme.of(context).textTheme.bodyText1?.copyWith(
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+          ),
+        ),
       ],
     );
   }

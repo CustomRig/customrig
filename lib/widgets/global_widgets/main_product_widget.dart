@@ -6,18 +6,10 @@ import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
 import 'package:flutter/material.dart';
 
 class MainProductCard extends StatelessWidget {
-  // final String title;
-  // // final String description;
-  // final int price;
-  // final String imageUrl;
   final BaseItem item;
   const MainProductCard({
     Key? key,
     required this.item,
-    // required this.title,
-    // // required this.description,
-    // required this.price,
-    // required this.imageUrl,
   }) : super(key: key);
 
   @override
@@ -35,7 +27,7 @@ class MainProductCard extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8.0),
               image: DecorationImage(
-                image: NetworkImage(item.imageUrl!),
+                image: NetworkImage(item.imageUrl ?? ''),
                 fit: BoxFit.cover,
               ),
             ),
@@ -52,7 +44,7 @@ class MainProductCard extends StatelessWidget {
           ),
           spacer(height: 4),
           Text(
-            '₹' + item.price.toString(),
+            '₹ ' + formatCurrency(item.price ?? 0),
             style: MyTextStyles.productTitle,
           )
         ],

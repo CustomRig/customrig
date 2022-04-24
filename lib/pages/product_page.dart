@@ -1,8 +1,5 @@
 import 'package:customrig/model/base_item.dart';
-import 'package:customrig/utils/colors.dart';
-import 'package:customrig/utils/dummy_data.dart';
 import 'package:customrig/utils/helpers.dart';
-import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/my_badge.dart';
 import 'package:customrig/widgets/global_widgets/rig_items_table.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
@@ -25,7 +22,8 @@ class _ProductPageState extends State<ProductPage> {
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.offset >
-          _scrollController.position.maxScrollExtent - 40) {
+              _scrollController.position.maxScrollExtent - 40 &&
+          _scrollController.hasClients) {
         setState(() {
           isAtBottom = true;
         });
@@ -64,10 +62,7 @@ class _ProductPageState extends State<ProductPage> {
         padding: const EdgeInsets.all(12.0),
         children: [
           _buildItemImage(url: widget.item.imageUrl ?? ''),
-          _buildItemTitleAndDescription(
-            title: widget.item.title ?? '',
-            description: widget.item.description ?? '',
-          ),
+          _buildItemTitleAndDescription(widget.item),
           if (widget.item.type == 'RIG') RigItemTable(widget.item),
         ],
       ),
@@ -78,7 +73,7 @@ class _ProductPageState extends State<ProductPage> {
   Widget _buildBottomSheet(bool isAtBottom) {
     return !isAtBottom
         ? Padding(
-            padding: const EdgeInsets.all(12.0),
+            padding: const EdgeInsets.all(8.0),
             child: Material(
               elevation: 2,
               borderRadius: BorderRadius.circular(8.0),
@@ -89,15 +84,15 @@ class _ProductPageState extends State<ProductPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'TOTAL PRICE',
+                      widget.item.type == 'RIG' ? 'TOTAL PRICE' : 'PRICE',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        color: Theme.of(context).colorScheme.onPrimaryContainer,
+                        color:
+                            Theme.of(context).colorScheme.onSecondaryContainer,
                       ),
                     ),
                     MyBadge(
-                      text: widget.item.price.toString(),
-                      secondary: true,
+                      text: '₹ ' + formatCurrency(widget.item.price ?? 0),
                     )
                   ],
                 ),
@@ -121,14 +116,37 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 
-  Widget _buildItemTitleAndDescription(
-      {required String title, required String description}) {
+  Widget _buildItemTitleAndDescription(BaseItem item) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         spacer(height: 8.0),
-        Text(title, style: MyTextStyles.productTitle),
-        Text(description, style: MyTextStyles.productSubtitle),
+        if (item.brand != null)
+          Text(item.brand ?? '', style: Theme.of(context).textTheme.caption),
+        //
+        Text(
+          item.title ?? '',
+          maxLines: 2,
+          style: Theme.of(context)
+              .textTheme
+              .headline6
+              ?.copyWith(fontWeight: FontWeight.bold),
+        ),
+
+        spacer(height: 8.0),
+        if (widget.item.type == 'ITEM')
+          ElevatedButton.icon(
+            onPressed: () {
+              launchURL(item.purchaseUrl ?? '');
+            },
+            icon: const Icon(EvaIcons.shoppingBagOutline),
+            label: const Text('BUY NOW'),
+          ),
+
+        spacer(height: 8.0),
+        Text("Product Description", style: Theme.of(context).textTheme.caption),
+        Text(item.description ?? '',
+            style: Theme.of(context).textTheme.bodyText1),
         spacer(height: 8.0),
       ],
     );
