@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:customrig/global/constants/prefs_string.dart';
 import 'package:customrig/providers/authentication/repository/auth_repository.dart';
 import 'package:customrig/providers/authentication/repository/auth_repository_impl.dart';
@@ -50,8 +52,7 @@ class AuthProvider extends ChangeNotifier {
         );
 
         _prefs.clearPrefs(kUserKey);
-        final res = await _prefs.setString(kUserKey, user!);
-        print(res);
+        final res = await _prefs.setString(kUserKey, json.encode(user));
         _setState(AuthState.complete);
       } on DioError catch (e) {
         _errorMessage = e.response!.data['err'];
@@ -71,7 +72,7 @@ class AuthProvider extends ChangeNotifier {
         );
 
         _prefs.clearPrefs(kUserKey);
-        final res = await _prefs.setString(kUserKey, user!);
+        final res = await _prefs.setString(kUserKey, json.encode(user));
         print(res);
         _setState(AuthState.complete);
       } on DioError catch (e) {

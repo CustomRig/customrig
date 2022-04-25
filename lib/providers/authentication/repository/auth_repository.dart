@@ -1,4 +1,6 @@
+import 'package:customrig/model/user.dart';
+
 abstract class AuthRepository {
-  Future<String?> logIn(String email, String password);
-  Future<String?> signUp(String email, String password);
+  Future<User?> logIn(String email, String password);
+  Future<User?> signUp(String email, String password);
 }

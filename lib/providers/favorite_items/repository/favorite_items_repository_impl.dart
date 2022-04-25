@@ -1,21 +1,29 @@
 import 'package:customrig/global/dio/dio.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository.dart';
+import 'package:customrig/services/user_service.dart';
 
 class FavoriteItemsRepositoryImpl implements FavoriteItemsRepository {
-  final _uid = 'ahjfshlkajsflka';
+  UserService _userService = UserService();
+
+  String? _uid;
 
   @override
   Future<void> addItemToFavorite({required String itemId}) async {
+    _uid = await _userService.getUserId();
+
     final dio = await MyDio.provideDio();
-    await dio.post('/item/addItemToFavorite', data: {
-      "uid": _uid,
-      "itemId": itemId,
-    });
+    if (_uid != null) {
+      await dio.post('/item/addItemToFavorite', data: {
+        "uid": _uid,
+        "itemId": itemId,
+      });
+    }
   }
 
   @override
   Future<List<Item>> getFavoriteItems() async {
+    _uid = await _userService.getUserId();
     List<Item> _favoriteItemsList = [];
 
     final dio = await MyDio.provideDio();
@@ -36,6 +44,7 @@ class FavoriteItemsRepositoryImpl implements FavoriteItemsRepository {
   Future<void> removeItemFromFavorite({
     required String itemId,
   }) async {
+    _uid = await _userService.getUserId();
     final dio = await MyDio.provideDio();
     await dio.post('/item/removeItemFromFavorites', data: {
       "uid": _uid,

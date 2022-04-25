@@ -4,19 +4,19 @@ import 'package:customrig/providers/authentication/repository/auth_repository.da
 
 class AuthRepositoryImpl implements AuthRepository {
   @override
-  Future<String?> logIn(String email, String password) async {
+  Future<User?> logIn(String email, String password) async {
     final dio = await MyDio.provideDio();
     final result = await dio.post('/user/login', data: {
       'email': email,
       'password': password,
     });
-    print("===========");
-    print(result);
-    return User.fromJson(result.data).id;
+    // print("===========");
+    // print(result);
+    return User.fromJson(result.data);
   }
 
   @override
-  Future<String?> signUp(String email, String password) async {
+  Future<User?> signUp(String email, String password) async {
     final dio = await MyDio.provideDio();
     final result = await dio.post('/user/register', data: {
       'email': email,
@@ -24,6 +24,6 @@ class AuthRepositoryImpl implements AuthRepository {
     });
     print(result.data);
 
-    return User.fromJson(result.data).id;
+    return User.fromJson(result.data);
   }
 }

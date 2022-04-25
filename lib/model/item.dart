@@ -27,7 +27,8 @@ class Item extends BaseItem {
     data['pairing_ids'] = super.pairingIds;
     data['type'] = super.type;
     data['category'] = super.type;
-    data['id'] = super.id;
+    data['_id'] = super.id;
+    data['usage'] = super.usage;
     return data;
   }
 }

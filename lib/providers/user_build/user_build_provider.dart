@@ -30,7 +30,7 @@ class UserBuildProvider extends ChangeNotifier {
       setState(UserBuildState.complete);
     } on DioError catch (e) {
       setState(UserBuildState.error);
-      _errorMessage = e.message;
+      _errorMessage = e.response.toString();
     }
     return <Rig>[];
   }

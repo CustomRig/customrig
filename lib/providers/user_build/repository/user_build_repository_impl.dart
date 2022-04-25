@@ -1,13 +1,18 @@
 import 'package:customrig/global/dio/dio.dart';
 import 'package:customrig/model/rig.dart';
 import 'package:customrig/providers/user_build/repository/user_build_repository.dart';
+import 'package:customrig/services/user_service.dart';
 
 class UserBuildRepositoryImpl implements UserBuildRepository {
-  final _uid = 'ahjfshlkajsflka';
+  UserService _userService = UserService();
+
+  String? _uid;
 
   @override
   Future<List<Rig>> getUserBuilds() async {
     List<Rig> _userBuildsList = [];
+
+    _uid = await _userService.getUserId();
 
     final dio = await MyDio.provideDio();
     final result = await dio.post('/user/getBuildRigs', data: {
@@ -25,6 +30,8 @@ class UserBuildRepositoryImpl implements UserBuildRepository {
 
   @override
   Future<void> removeUserBuild({required String rigId}) async {
+    _uid = await _userService.getUserId();
+
     final dio = await MyDio.provideDio();
     await dio.post('/rig/removeRigFromUserBuild', data: {
       "uid": _uid,

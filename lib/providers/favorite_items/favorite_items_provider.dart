@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:customrig/global/constants/prefs_string.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository_impl.dart';
+import 'package:customrig/services/prefs.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -23,17 +27,37 @@ class FavoriteItemsProvider extends ChangeNotifier {
   final tempItemId = "6251b7daea44221898adb735";
   //TODO: remove temp ids
 
+  final Prefs _prefs = Prefs();
+
   List<Item> _favoriteItems = [];
   List<Item> get favoriteItems => _favoriteItems;
 
   Future<List<Item>> getFavoriteItems() async {
-    setState(FavoriteItemState.loading);
+    if (_favoriteItems.isEmpty) setState(FavoriteItemState.loading);
+
     try {
-      _favoriteItems = await _repository.getFavoriteItems();
-      setState(FavoriteItemState.complete);
+      final itemsFromPrefs = await _getFavItemsFromPrefs();
+
+      if (itemsFromPrefs.isNotEmpty) {
+        _favoriteItems = itemsFromPrefs;
+        notifyListeners();
+
+        final favItemsFromApi = await _repository.getFavoriteItems();
+
+        if (_favoriteItems.length != favItemsFromApi.length) {
+          _favoriteItems = favItemsFromApi;
+          _prefs.setString(kFavoriteItems, json.encode(favItemsFromApi));
+        }
+        setState(FavoriteItemState.complete);
+      } else {
+        setState(FavoriteItemState.loading);
+        _favoriteItems = await _repository.getFavoriteItems();
+        _prefs.setString(kFavoriteItems, json.encode(_favoriteItems));
+        setState(FavoriteItemState.complete);
+      }
     } on DioError catch (e) {
       setState(FavoriteItemState.error);
-      _errorMessage = e.message;
+      _errorMessage = e.response.toString();
     }
     return <Item>[];
   }
@@ -58,5 +82,19 @@ class FavoriteItemsProvider extends ChangeNotifier {
   void setState(FavoriteItemState state) {
     _state = state;
     notifyListeners();
+  }
+
+  Future<List<Item>> _getFavItemsFromPrefs() async {
+    final favItemsFromPrefsString = await _prefs.getString(kFavoriteItems);
+    if (favItemsFromPrefsString != null) {
+      final favItemsFromPrefsJson = json.decode(favItemsFromPrefsString);
+      final favItems = favItemsFromPrefsJson
+          .map<Item>((item) => Item.fromJson(item))
+          .toList();
+      print(favItems);
+      return favItems;
+    } else {
+      return [];
+    }
   }
 }

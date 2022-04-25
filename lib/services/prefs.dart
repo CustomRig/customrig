@@ -6,15 +6,13 @@ class Prefs {
     return await _prefs.setString(key, value);
   }
 
-  String? getString(String key) {
-    String? _string;
-    SharedPreferences.getInstance()
-        .then((value) => _string = value.getString(key));
-    return _string;
+  Future<String?> getString(String key) async {
+    final _prefs = await SharedPreferences.getInstance();
+    return _prefs.getString(key);
   }
 
-  Future<void> clearPrefs(String key) async {
+  Future<bool> clearPrefs(String key) async {
     final _prefs = await SharedPreferences.getInstance();
-    await _prefs.remove(key);
+    return await _prefs.remove(key);
   }
 }
