@@ -72,8 +72,9 @@ class FavoriteItemsProvider extends ChangeNotifier {
   Future<void> removeItemFromFavorite({required String itemId}) async {
     try {
       _favoriteItems.removeWhere((element) => element.id == itemId);
-      await _repository.removeItemFromFavorite(itemId: itemId);
       notifyListeners();
+      _prefs.setString(kFavoriteItems, json.encode(_favoriteItems));
+      await _repository.removeItemFromFavorite(itemId: itemId);
     } on DioError catch (e) {
       //TODO: handle this if time permits
     }
