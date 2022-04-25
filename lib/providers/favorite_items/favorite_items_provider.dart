@@ -33,6 +33,9 @@ class FavoriteItemsProvider extends ChangeNotifier {
   List<Item> get favoriteItems => _favoriteItems;
 
   Future<List<Item>> getFavoriteItems() async {
+    // first check if there is data in shared preferences
+    // if yes, then show it
+    // if no, then fetch from server and show it and add it to the shared preferences
     if (_favoriteItems.isEmpty) setState(FavoriteItemState.loading);
 
     try {
