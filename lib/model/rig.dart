@@ -50,15 +50,16 @@ class Rig extends BaseItem {
     }
 
     super.imageUrl = json['cabinet']['image_url'];
-    super.category = json['category'];
+    // super.category = json['category'];
     super.id = json['_id'];
     super.usage = json['usage'].cast<String>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    // data['title'] = title;
-    // data['description'] = description;
+    data['_id'] = id;
+    data['title'] = title;
+    data['description'] = description;
     data['cabinet'] = cabinet;
     data['processor'] = processor;
     data['motherboard'] = motherboard;
@@ -70,7 +71,7 @@ class Rig extends BaseItem {
     data['wifi_adapter'] = wifiAdapter;
     data['operating_system'] = operatingSystem;
     data['type'] = type;
-    data['category'] = category;
+    data['usage'] = usage;
     data['price'] = price;
     return data;
   }
