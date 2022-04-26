@@ -24,9 +24,6 @@ class FavoriteItemsProvider extends ChangeNotifier {
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
 
-  final tempItemId = "6251b7daea44221898adb735";
-  //TODO: remove temp ids
-
   final Prefs _prefs = Prefs();
 
   List<Item> _favoriteItems = [];
@@ -65,11 +62,8 @@ class FavoriteItemsProvider extends ChangeNotifier {
     return <Item>[];
   }
 
-  Future<void> addItemToFavorite({
-    required String itemId,
-    required String uid,
-  }) async {
-    await _repository.addItemToFavorite(itemId: tempItemId);
+  Future<void> addItemToFavorite({required String itemId}) async {
+    await _repository.addItemToFavorite(itemId: itemId);
   }
 
   Future<void> removeItemFromFavorite({required String itemId}) async {
