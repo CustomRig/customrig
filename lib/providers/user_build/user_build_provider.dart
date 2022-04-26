@@ -38,6 +38,7 @@ class UserBuildProvider extends ChangeNotifier {
       if (rigsFromPrefs.isNotEmpty) {
         _userBuilds = rigsFromPrefs;
         notifyListeners();
+        setState(UserBuildState.complete);
 
         final userBuildsFromApi = await _repository.getUserBuilds();
 
@@ -45,8 +46,6 @@ class UserBuildProvider extends ChangeNotifier {
           _userBuilds = userBuildsFromApi;
           _prefs.setString(kUserRigs, json.encode(userBuildsFromApi));
         }
-
-        setState(UserBuildState.complete);
       } else {
         _userBuilds = await _repository.getUserBuilds();
         setState(UserBuildState.complete);

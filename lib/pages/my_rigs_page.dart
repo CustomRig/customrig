@@ -30,7 +30,8 @@ class _MyRigsPageState extends State<MyRigsPage> {
   }
 
   Widget _buildUserBuildRigs(UserBuildProvider value) {
-    if (value.state == UserBuildState.loading) {
+    if (value.state == UserBuildState.loading ||
+        value.state == UserBuildState.initial) {
       return const Center(child: CircularProgressIndicator());
     } else if (value.state == UserBuildState.complete) {
       if (value.favoriteItems.isEmpty) {

@@ -31,7 +31,8 @@ class _FavoritePageState extends State<FavoritePage> {
   }
 
   Widget _buildFavoriteItems(FavoriteItemsProvider value) {
-    if (value.state == FavoriteItemState.loading) {
+    if (value.state == FavoriteItemState.loading ||
+        value.state == FavoriteItemState.initial) {
       return const Center(child: CircularProgressIndicator());
     } else if (value.state == FavoriteItemState.complete) {
       if (value.favoriteItems.isEmpty) {

@@ -41,6 +41,7 @@ class FavoriteItemsProvider extends ChangeNotifier {
       if (itemsFromPrefs.isNotEmpty) {
         _favoriteItems = itemsFromPrefs;
         notifyListeners();
+        setState(FavoriteItemState.complete);
 
         final favItemsFromApi = await _repository.getFavoriteItems();
 
@@ -48,7 +49,6 @@ class FavoriteItemsProvider extends ChangeNotifier {
           _favoriteItems = favItemsFromApi;
           _prefs.setString(kFavoriteItems, json.encode(favItemsFromApi));
         }
-        setState(FavoriteItemState.complete);
       } else {
         setState(FavoriteItemState.loading);
         _favoriteItems = await _repository.getFavoriteItems();
