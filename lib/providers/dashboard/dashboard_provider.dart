@@ -1,6 +1,10 @@
+import 'dart:convert';
+
+import 'package:customrig/global/constants/prefs_string.dart';
 import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/providers/dashboard/repository/dashboard_repository.dart';
 import 'package:customrig/providers/dashboard/repository/dashboard_repository_impl.dart';
+import 'package:customrig/services/prefs.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -8,7 +12,7 @@ enum DashboardState { initial, loading, complete, error }
 
 class DashboardProvider extends ChangeNotifier {
   final DashboardRepository _repository = DashboardRepositoryImpl();
-
+  final Prefs _prefs = Prefs();
   Dashboard? _dashboard;
   Dashboard? get dashboard => _dashboard;
 
@@ -19,11 +23,23 @@ class DashboardProvider extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   void getDashboard() async {
+    if (_dashboard == null) setState(DashboardState.loading);
+
     try {
-      if (_dashboard == null) {
-        setState(DashboardState.loading);
+      final dashboardFromPrefs = await _getDashboardFromPrefs();
+
+      if (dashboardFromPrefs != null) {
+        _dashboard = dashboardFromPrefs;
+        notifyListeners();
+        setState(DashboardState.complete);
+
+        final _dashboardFromApi = await _repository.getDashboard();
+        _dashboard = _dashboardFromApi;
+        notifyListeners();
+      } else {
         _dashboard = await _repository.getDashboard();
         setState(DashboardState.complete);
+        _prefs.setString(kDashboard, json.encode(_dashboard));
       }
     } on DioError catch (e) {
       _errorMessage = e.error.toString();
@@ -34,5 +50,16 @@ class DashboardProvider extends ChangeNotifier {
   setState(DashboardState state) {
     _state = state;
     notifyListeners();
+  }
+
+  Future<Dashboard?> _getDashboardFromPrefs() async {
+    final dashboardPrefsString = await _prefs.getString(kDashboard);
+    if (dashboardPrefsString != null) {
+      final dashboardFromPrefs = json.decode(dashboardPrefsString);
+      final dashboard = Dashboard.fromJson(dashboardFromPrefs);
+      return dashboard;
+    } else {
+      return null;
+    }
   }
 }

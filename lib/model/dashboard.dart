@@ -55,12 +55,13 @@ class Section {
   }
 
   Map<String, dynamic> toJson() {
-    throw UnimplementedError('toJson not implemented for class BaseItem');
+    // throw UnimplementedError('toJson not implemented for class BaseItem');
 
     final Map<String, dynamic> data = <String, dynamic>{};
     data['title'] = title;
+    data['type'] = type;
     if (items != null) {
-      // data['items'] = items!.map((v) => v.toJson()).toList();
+      data['items'] = items?.map((v) => v.toJson()).toList();
     }
     return data;
   }
