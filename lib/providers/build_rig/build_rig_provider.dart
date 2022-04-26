@@ -1,10 +1,13 @@
+import 'dart:convert';
+
+import 'package:customrig/global/constants/prefs_string.dart';
 import 'package:customrig/model/all_items.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/model/rig.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository_impl.dart';
+import 'package:customrig/services/prefs.dart';
 import 'package:dio/dio.dart';
-import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 
 enum BuildRigState {
@@ -20,7 +23,7 @@ class BuildRigProvider extends ChangeNotifier {
 
   final BuildRigRepository _repository = BuildRigRepositoryImpl();
 
-  Rig newRig = Rig();
+  final Prefs _prefs = Prefs();
 
   String _usageType = '';
   String get usageType => _usageType;
@@ -184,10 +187,25 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   void getAllItems() async {
+    if (_allItems == null) setState(BuildRigState.loading);
+
     try {
-      if (_allItems == null) {
-        setState(BuildRigState.loading);
+      final allItemsFromPrefs = await _getFavItemsFromPrefs();
+
+      if (allItemsFromPrefs != null) {
+        _allItems = allItemsFromPrefs;
+        notifyListeners();
+        setState(BuildRigState.complete);
+
+        final allItemsFromApi = await _repository.getAllItems();
+
+        if (allItemsFromApi != null) {
+          _allItems = allItemsFromApi;
+          notifyListeners();
+        }
+      } else {
         final items = await _repository.getAllItems();
+        _prefs.setString(kBuildRigItems, json.encode(items));
         _allItems = items;
         setState(BuildRigState.complete);
       }
@@ -227,5 +245,20 @@ class BuildRigProvider extends ChangeNotifier {
   void setState(BuildRigState state) {
     _state = state;
     notifyListeners();
+  }
+
+  Future<AllItems?> _getFavItemsFromPrefs() async {
+    final buildRigItemsPrefsString = await _prefs.getString(kBuildRigItems);
+    if (buildRigItemsPrefsString != null) {
+      final buildRigItemsFromPrefs = json.decode(buildRigItemsPrefsString);
+      final buildRigItems = AllItems.fromJson(buildRigItemsFromPrefs);
+
+      print(buildRigItems);
+      return buildRigItems;
+    } else {
+      print('nullll');
+
+      return null;
+    }
   }
 }
