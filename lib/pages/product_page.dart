@@ -23,7 +23,6 @@ class _ProductPageState extends State<ProductPage> {
 
   final ScrollController _scrollController = ScrollController();
   bool isAtBottom = false;
-  bool isFavorite = false;
 
   @override
   void initState() {
@@ -34,15 +33,6 @@ class _ProductPageState extends State<ProductPage> {
         type: widget.type,
       );
     });
-
-    // if (widget.item != null) {
-    //   product = widget.item;
-    //   _checkIfFavorite();
-    // } else {
-    //   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-    //     _loadProduct();
-    //   });
-    // }
 
     _scrollController.addListener(() {
       if (_scrollController.offset >
@@ -68,26 +58,22 @@ class _ProductPageState extends State<ProductPage> {
   //   });
   // }
 
-  // void _loadProduct() async {
-  //   final provider = Provider.of<ProductPageProvider>(context, listen: false);
-  //   final _product = await provider.getProduct(widget.itemId!, widget.type!);
-  //   setState(() {
-  //     product = _product;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     screenDimension = MediaQuery.of(context).size;
     return Consumer<ProductPageProvider>(
       builder: (context, value, child) {
+        // loading product from API
         if (value.state == ProductPageState.loading) {
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(),
             ),
           );
-        } else {
+        }
+
+        // if loaded from local product object or Dynamic link
+        else if (value.state == ProductPageState.complete) {
           if (value.product != null) {
             return Scaffold(
               appBar: AppBar(
@@ -96,19 +82,12 @@ class _ProductPageState extends State<ProductPage> {
                   value.product?.type == 'ITEM'
                       ? IconButton(
                           icon: Icon(
-                            isFavorite ? EvaIcons.heart : EvaIcons.heartOutline,
-                            color: isFavorite ? Colors.redAccent : null,
+                            value.isFavorite
+                                ? EvaIcons.heart
+                                : EvaIcons.heartOutline,
+                            color: value.isFavorite ? Colors.redAccent : null,
                           ),
-                          onPressed: () {
-                            isFavorite
-                                ? value.removeItemFromFavorites(
-                                    itemId: value.product!.id!)
-                                : value.addItemToFavorite(item: value.product!);
-
-                            setState(() {
-                              isFavorite = !isFavorite;
-                            });
-                          },
+                          onPressed: () => value.handleFavorite(),
                         )
                       : const SizedBox.shrink(),
                   IconButton(
@@ -139,6 +118,16 @@ class _ProductPageState extends State<ProductPage> {
           } else {
             return Text('something went wrong lol');
           }
+        }
+
+        // if api fetch fails
+        else if (value.state == ProductPageState.error) {
+          return const Text('Failed to load item');
+        }
+
+        // if all above fails
+        else {
+          return const SizedBox.shrink();
         }
       },
     );

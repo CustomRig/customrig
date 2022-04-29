@@ -19,40 +19,31 @@ class ProductPageProvider extends ChangeNotifier {
 
   final _favItemPrefsService = FavoriteItemsPrefsService();
   final _dynamicLink = DynamicLinkService();
+
   ProductPageState _state = ProductPageState.initial;
   ProductPageState get state => _state;
 
   BaseItem? _product;
   BaseItem? get product => _product;
 
-  Future<bool> addItemToFavorite({required BaseItem item}) async {
-    try {
-      // _favItemPrefsService.addItemToFavorite(item);
-      await _repository.addItemToFavorite(itemId: item.id!);
-      return true;
-    } catch (e) {
-      print(e);
-      return false;
-    }
-  }
-
-  Future<bool> removeItemFromFavorites({required String itemId}) async {
-    try {
-      _favItemPrefsService.removeItemFromFavorites(itemId);
-      await _repository.remoteItemFromFavorite(itemId: itemId);
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
-
-  Future<bool> isFavorite(String id) async {
-    return await _favItemPrefsService.isItemFavorite(id);
-  }
+  bool _isFavorite = false;
+  bool get isFavorite => _isFavorite;
 
   Future<void> shareProduct(BaseItem item) async {
     final link = await _dynamicLink.createDynamicLink(item.id!, item.type!);
     Share.share(link, subject: item.title);
+  }
+
+  void handleFavorite() {
+    if (_isFavorite) {
+      _removeItemFromFavorites(itemId: _product!.id!);
+      _isFavorite = !_isFavorite;
+      notifyListeners();
+    } else {
+      _addItemToFavorite(item: _product!);
+      _isFavorite = !_isFavorite;
+      notifyListeners();
+    }
   }
 
   Future<void> loadProduct(
@@ -75,8 +66,34 @@ class ProductPageProvider extends ChangeNotifier {
     } else {
       // from local product object
       _product = product;
-      notifyListeners();
+      _isFavorite = await _checkIfFavorite(product.id!);
+      _setState(ProductPageState.complete);
     }
+  }
+
+  Future<bool> _addItemToFavorite({required BaseItem item}) async {
+    try {
+      // _favItemPrefsService.addItemToFavorite(item);
+      await _repository.addItemToFavorite(itemId: item.id!);
+      return true;
+    } catch (e) {
+      print(e);
+      return false;
+    }
+  }
+
+  Future<bool> _removeItemFromFavorites({required String itemId}) async {
+    try {
+      _favItemPrefsService.removeItemFromFavorites(itemId);
+      await _repository.remoteItemFromFavorite(itemId: itemId);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  Future<bool> _checkIfFavorite(String itemId) async {
+    return await _favItemPrefsService.isItemFavorite(itemId);
   }
 
   void _setState(ProductPageState state) {
