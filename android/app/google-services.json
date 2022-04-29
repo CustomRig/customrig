@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "421587781521",
+    "project_id": "custom-rig-4f47a",
+    "storage_bucket": "custom-rig-4f47a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421587781521:android:47cd3bd2eefcf7c61cbc30",
+        "android_client_info": {
+          "package_name": "me.varad.customrig"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421587781521-nd2s0n7ej7q1493ecg6ggtvb23u8idug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBa0j3P57ggose976-_PXJSANqRKRvnwdE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421587781521-nd2s0n7ej7q1493ecg6ggtvb23u8idug.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
