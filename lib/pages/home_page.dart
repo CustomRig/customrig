@@ -3,6 +3,7 @@ import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
+import 'package:customrig/services/dynamic_link_service.dart';
 import 'package:customrig/utils/colors.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
@@ -26,6 +27,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    DynamicLinkService.initDynamicLink(context);
+
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       Provider.of<DashboardProvider>(context, listen: false).getDashboard();
     });

@@ -8,8 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
-  final BaseItem item;
-  const ProductPage({Key? key, required this.item}) : super(key: key);
+  final BaseItem? item;
+  final String? itemId;
+  final String? type;
+  const ProductPage({Key? key, this.item, this.itemId, this.type})
+      : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -20,12 +23,27 @@ class _ProductPageState extends State<ProductPage> {
 
   final ScrollController _scrollController = ScrollController();
   bool isAtBottom = false;
-
   bool isFavorite = false;
 
   @override
   void initState() {
-    checkIfFavorite();
+    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      Provider.of<ProductPageProvider>(context, listen: false).loadProduct(
+        widget.item,
+        itemId: widget.itemId,
+        type: widget.type,
+      );
+    });
+
+    // if (widget.item != null) {
+    //   product = widget.item;
+    //   _checkIfFavorite();
+    // } else {
+    //   WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    //     _loadProduct();
+    //   });
+    // }
+
     _scrollController.addListener(() {
       if (_scrollController.offset >
               _scrollController.position.maxScrollExtent - 40 &&
@@ -42,67 +60,91 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
-  void checkIfFavorite() async {
-    final provider = Provider.of<ProductPageProvider>(context, listen: false);
-    isFavorite = await provider.isFavorite(widget.item.id!);
-    setState(() {
-      isFavorite = isFavorite;
-    });
-  }
+  // void _checkIfFavorite() async {
+  //   final provider = Provider.of<ProductPageProvider>(context, listen: false);
+  //   isFavorite = await provider.isFavorite(product!.id!);
+  //   setState(() {
+  //     isFavorite = isFavorite;
+  //   });
+  // }
+
+  // void _loadProduct() async {
+  //   final provider = Provider.of<ProductPageProvider>(context, listen: false);
+  //   final _product = await provider.getProduct(widget.itemId!, widget.type!);
+  //   setState(() {
+  //     product = _product;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
     screenDimension = MediaQuery.of(context).size;
     return Consumer<ProductPageProvider>(
       builder: (context, value, child) {
-        return Scaffold(
-          appBar: AppBar(
-            actions: [
-              widget.item.type == 'ITEM'
-                  ? IconButton(
-                      icon: Icon(
-                        isFavorite ? EvaIcons.heart : EvaIcons.heartOutline,
-                        color: isFavorite ? Colors.redAccent : null,
-                      ),
-                      onPressed: () {
-                        isFavorite
-                            ? value.removeItemFromFavorites(
-                                itemId: widget.item.id!)
-                            : value.addItemToFavorite(item: widget.item);
+        if (value.state == ProductPageState.loading) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        } else {
+          if (value.product != null) {
+            return Scaffold(
+              appBar: AppBar(
+                actions: [
+                  // TODO: make able to add rigs to favorites
+                  value.product?.type == 'ITEM'
+                      ? IconButton(
+                          icon: Icon(
+                            isFavorite ? EvaIcons.heart : EvaIcons.heartOutline,
+                            color: isFavorite ? Colors.redAccent : null,
+                          ),
+                          onPressed: () {
+                            isFavorite
+                                ? value.removeItemFromFavorites(
+                                    itemId: value.product!.id!)
+                                : value.addItemToFavorite(item: value.product!);
 
-                        setState(() {
-                          isFavorite = !isFavorite;
-                        });
-                      },
-                    )
-                  : const SizedBox.shrink(),
-              IconButton(
-                icon: const Icon(Icons.share),
-                onPressed: () {},
+                            setState(() {
+                              isFavorite = !isFavorite;
+                            });
+                          },
+                        )
+                      : const SizedBox.shrink(),
+                  IconButton(
+                    icon: const Icon(Icons.share),
+                    onPressed: () async {
+                      await value.shareProduct(value.product!);
+                    },
+                  ),
+                  IconButton(
+                    icon: const Icon(EvaIcons.download),
+                    onPressed: () {},
+                  ),
+                ],
               ),
-              IconButton(
-                icon: const Icon(EvaIcons.download),
-                onPressed: () {},
+              body: ListView(
+                controller: _scrollController,
+                physics: const BouncingScrollPhysics(),
+                padding: const EdgeInsets.all(12.0),
+                children: [
+                  _buildItemImage(url: value.product?.imageUrl ?? ''),
+                  _buildItemTitleAndDescription(value.product!),
+                  if (value.product?.type == 'RIG')
+                    RigItemTable(value.product!),
+                ],
               ),
-            ],
-          ),
-          body: ListView(
-            controller: _scrollController,
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.all(12.0),
-            children: [
-              _buildItemImage(url: widget.item.imageUrl ?? ''),
-              _buildItemTitleAndDescription(widget.item),
-              if (widget.item.type == 'RIG') RigItemTable(widget.item),
-            ],
-          ),
-          bottomSheet: _buildBottomSheet(isAtBottom),
-        );
+              bottomSheet: _buildBottomSheet(value.product!, isAtBottom),
+            );
+          } else {
+            return Text('something went wrong lol');
+          }
+        }
       },
     );
   }
 
-  Widget _buildBottomSheet(bool isAtBottom) {
+  Widget _buildBottomSheet(BaseItem product, bool isAtBottom) {
     return !isAtBottom
         ? Padding(
             padding: const EdgeInsets.all(8.0),
@@ -116,7 +158,7 @@ class _ProductPageState extends State<ProductPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      widget.item.type == 'RIG' ? 'TOTAL PRICE' : 'PRICE',
+                      product.type == 'RIG' ? 'TOTAL PRICE' : 'PRICE',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color:
@@ -124,7 +166,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                     ),
                     MyBadge(
-                      text: '₹ ' + formatCurrency(widget.item.price ?? 0),
+                      text: '₹ ' + formatCurrency(product.price ?? 0),
                     )
                   ],
                 ),
@@ -166,7 +208,7 @@ class _ProductPageState extends State<ProductPage> {
         ),
 
         spacer(height: 8.0),
-        if (widget.item.type == 'ITEM')
+        if (item.type == 'ITEM')
           ElevatedButton.icon(
             onPressed: () {
               launchURL(item.purchaseUrl ?? '');
