@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:customrig/model/base_item.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
-import 'package:customrig/pages/product_list.dart';
+import 'package:customrig/pages/product_list_page.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/services/dynamic_link_service.dart';
 import 'package:customrig/utils/helpers.dart';
@@ -143,6 +143,14 @@ class _HomePageState extends State<HomePage> {
           ),
           contentPadding: const EdgeInsets.all(16.0),
         ),
+        onFieldSubmitted: (value) {
+          goToPage(
+              context,
+              ProductListPage(
+                value: value,
+                isSearch: true,
+              ));
+        },
       ),
     );
   }
@@ -199,7 +207,11 @@ class _HomePageState extends State<HomePage> {
             style: TextButton.styleFrom(
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
-            onPressed: () => goToPage(context, const ProductList()),
+            onPressed: () => goToPage(
+                context,
+                const ProductListPage(
+                  value: '',
+                )),
             child: const Text('VIEW MORE'),
           )
         ],

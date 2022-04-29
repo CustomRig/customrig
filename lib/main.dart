@@ -5,6 +5,7 @@ import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
+import 'package:customrig/providers/product_list/product_list_provider.dart';
 import 'package:customrig/providers/product_page/product_page_provider.dart';
 import 'package:customrig/providers/user_build/user_build_provider.dart';
 import 'package:customrig/utils/theme.dart';
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => UserBuildProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductPageProvider()),
+        ChangeNotifierProvider(create: (_) => ProductListProvider()),
       ],
       child: MaterialApp(
         title: 'CustomRig',
