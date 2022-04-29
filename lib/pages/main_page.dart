@@ -16,7 +16,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   List<MyPage> pages = [
-    MyPage(page: const HomePage(), title: 'Custom Rig'),
+    MyPage(page: const HomePage(), title: 'CustomRig'),
     MyPage(page: const FavoritePage(), title: 'Favorites'),
     MyPage(page: const MyRigsPage(), title: 'My Rigs'),
   ];
@@ -40,7 +40,6 @@ class _MainPageState extends State<MainPage> {
             },
             destinations: const [
               NavigationDestination(
-                
                 icon: Icon(EvaIcons.homeOutline),
                 label: 'Home',
                 selectedIcon: Icon(EvaIcons.home),
