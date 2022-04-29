@@ -1,10 +1,10 @@
+import 'dart:async';
+
 import 'package:customrig/model/base_item.dart';
-import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/services/dynamic_link_service.dart';
-import 'package:customrig/utils/colors.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/my_horizontal_list.dart';
@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
                   pinned: true,
                   floating: true,
                   snap: true,
-                  title: const Text('Custom Rig'),
+                  title: const Text('CustomRig'),
                   leading: const Icon(Icons.menu),
                   bottom: PreferredSize(
                     child: _searchBar(),
@@ -88,6 +88,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMainSection({required DashboardProvider provider}) {
+    // complete
     if (provider.state == DashboardState.complete &&
         provider.dashboard!.sections!.isNotEmpty) {
       return ListView(
@@ -103,14 +104,25 @@ class _HomePageState extends State<HomePage> {
           );
         }).toList(),
       );
-    } else if (provider.state == DashboardState.loading) {
-      // TODO: replace loading indicator with shimmer
+    }
+
+    // loading
+    else if (provider.state == DashboardState.loading) {
       return const Center(child: CircularProgressIndicator());
-    } else if (provider.state == DashboardState.error) {
+    }
+
+    // error
+    else if (provider.state == DashboardState.error) {
       return Center(child: Text(provider.errorMessage!));
-    } else if (provider.dashboard == null) {
+    }
+
+    // null
+    else if (provider.dashboard == null) {
       return const Center(child: Text('Nothing to show'));
-    } else {
+    }
+
+    // something went wrong
+    else {
       return const Center(child: Text('Something went wrong!'));
     }
   }
@@ -122,7 +134,7 @@ class _HomePageState extends State<HomePage> {
         decoration: InputDecoration(
           filled: true,
           fillColor: Theme.of(context).colorScheme.primaryContainer,
-          hintText: "Search 'Gaming keyboard'",
+          hintText: 'Search for parts, accessories, etc.',
           prefixIcon: const Icon(Icons.search),
           prefixIconColor: Theme.of(context).colorScheme.onPrimaryContainer,
           border: OutlineInputBorder(
