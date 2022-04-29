@@ -11,6 +11,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   dio: ^4.0.4
   eva_icons_flutter: ^3.0.2
+  firebase_core: ^1.15.0
+  firebase_dynamic_links: ^4.2.1
   flutter:
     sdk: flutter
   intl: ^0.17.0

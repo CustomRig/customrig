@@ -1,9 +1,11 @@
 import 'package:customrig/model/base_item.dart';
+import 'package:customrig/providers/product_page/product_page_provider.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/widgets/global_widgets/my_badge.dart';
 import 'package:customrig/widgets/global_widgets/rig_items_table.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
   final BaseItem item;
@@ -18,8 +20,12 @@ class _ProductPageState extends State<ProductPage> {
 
   final ScrollController _scrollController = ScrollController();
   bool isAtBottom = false;
+
+  bool isFavorite = false;
+
   @override
   void initState() {
+    checkIfFavorite();
     _scrollController.addListener(() {
       if (_scrollController.offset >
               _scrollController.position.maxScrollExtent - 40 &&
@@ -36,37 +42,63 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
+  void checkIfFavorite() async {
+    final provider = Provider.of<ProductPageProvider>(context, listen: false);
+    isFavorite = await provider.isFavorite(widget.item.id!);
+    setState(() {
+      isFavorite = isFavorite;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     screenDimension = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            icon: const Icon(EvaIcons.heartOutline),
-            onPressed: () {},
+    return Consumer<ProductPageProvider>(
+      builder: (context, value, child) {
+        return Scaffold(
+          appBar: AppBar(
+            actions: [
+              widget.item.type == 'ITEM'
+                  ? IconButton(
+                      icon: Icon(
+                        isFavorite ? EvaIcons.heart : EvaIcons.heartOutline,
+                        color: isFavorite ? Colors.redAccent : null,
+                      ),
+                      onPressed: () {
+                        isFavorite
+                            ? value.removeItemFromFavorites(
+                                itemId: widget.item.id!)
+                            : value.addItemToFavorite(item: widget.item);
+
+                        setState(() {
+                          isFavorite = !isFavorite;
+                        });
+                      },
+                    )
+                  : const SizedBox.shrink(),
+              IconButton(
+                icon: const Icon(Icons.share),
+                onPressed: () {},
+              ),
+              IconButton(
+                icon: const Icon(EvaIcons.download),
+                onPressed: () {},
+              ),
+            ],
           ),
-          IconButton(
-            icon: const Icon(Icons.share),
-            onPressed: () {},
+          body: ListView(
+            controller: _scrollController,
+            physics: const BouncingScrollPhysics(),
+            padding: const EdgeInsets.all(12.0),
+            children: [
+              _buildItemImage(url: widget.item.imageUrl ?? ''),
+              _buildItemTitleAndDescription(widget.item),
+              if (widget.item.type == 'RIG') RigItemTable(widget.item),
+            ],
           ),
-          IconButton(
-            icon: const Icon(EvaIcons.download),
-            onPressed: () {},
-          ),
-        ],
-      ),
-      body: ListView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
-        padding: const EdgeInsets.all(12.0),
-        children: [
-          _buildItemImage(url: widget.item.imageUrl ?? ''),
-          _buildItemTitleAndDescription(widget.item),
-          if (widget.item.type == 'RIG') RigItemTable(widget.item),
-        ],
-      ),
-      bottomSheet: _buildBottomSheet(isAtBottom),
+          bottomSheet: _buildBottomSheet(isAtBottom),
+        );
+      },
     );
   }
 

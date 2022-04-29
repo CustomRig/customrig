@@ -1,10 +1,7 @@
-import 'dart:convert';
-
-import 'package:customrig/global/constants/prefs_string.dart';
 import 'package:customrig/model/item.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository_impl.dart';
-import 'package:customrig/services/prefs.dart';
+import 'package:customrig/services/favorite_items_prefs_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
@@ -24,10 +21,10 @@ class FavoriteItemsProvider extends ChangeNotifier {
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
 
-  final Prefs _prefs = Prefs();
-
   List<Item> _favoriteItems = [];
   List<Item> get favoriteItems => _favoriteItems;
+
+  final _favoriteItemsPrefs = FavoriteItemsPrefsService();
 
   Future<List<Item>> getFavoriteItems() async {
     // first check if there is data in shared preferences
@@ -36,7 +33,7 @@ class FavoriteItemsProvider extends ChangeNotifier {
     if (_favoriteItems.isEmpty) setState(FavoriteItemState.loading);
 
     try {
-      final itemsFromPrefs = await _getFavItemsFromPrefs();
+      final itemsFromPrefs = await _favoriteItemsPrefs.getFavoriteItems();
 
       if (itemsFromPrefs.isNotEmpty) {
         _favoriteItems = itemsFromPrefs;
@@ -47,12 +44,12 @@ class FavoriteItemsProvider extends ChangeNotifier {
 
         if (_favoriteItems.length != favItemsFromApi.length) {
           _favoriteItems = favItemsFromApi;
-          _prefs.setString(kFavoriteItems, json.encode(favItemsFromApi));
+          _favoriteItemsPrefs.setFavoriteItems(favItemsFromApi);
         }
       } else {
         setState(FavoriteItemState.loading);
         _favoriteItems = await _repository.getFavoriteItems();
-        _prefs.setString(kFavoriteItems, json.encode(_favoriteItems));
+        _favoriteItemsPrefs.setFavoriteItems(_favoriteItems);
         setState(FavoriteItemState.complete);
       }
     } on DioError catch (e) {
@@ -62,15 +59,11 @@ class FavoriteItemsProvider extends ChangeNotifier {
     return <Item>[];
   }
 
-  Future<void> addItemToFavorite({required String itemId}) async {
-    await _repository.addItemToFavorite(itemId: itemId);
-  }
-
   Future<void> removeItemFromFavorite({required String itemId}) async {
     try {
       _favoriteItems.removeWhere((element) => element.id == itemId);
       notifyListeners();
-      _prefs.setString(kFavoriteItems, json.encode(_favoriteItems));
+      _favoriteItemsPrefs.removeItemFromFavorites(itemId);
       await _repository.removeItemFromFavorite(itemId: itemId);
     } on DioError catch (e) {
       //TODO: handle this if time permits
@@ -80,19 +73,5 @@ class FavoriteItemsProvider extends ChangeNotifier {
   void setState(FavoriteItemState state) {
     _state = state;
     notifyListeners();
-  }
-
-  Future<List<Item>> _getFavItemsFromPrefs() async {
-    final favItemsFromPrefsString = await _prefs.getString(kFavoriteItems);
-    if (favItemsFromPrefsString != null) {
-      final favItemsFromPrefsJson = json.decode(favItemsFromPrefsString);
-      final favItems = favItemsFromPrefsJson
-          .map<Item>((item) => Item.fromJson(item))
-          .toList();
-      print(favItems);
-      return favItems;
-    } else {
-      return [];
-    }
   }
 }
