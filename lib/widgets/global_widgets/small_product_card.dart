@@ -1,5 +1,6 @@
 import 'package:customrig/model/base_item.dart';
 import 'package:customrig/model/item.dart';
+import 'package:customrig/pages/product_page.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/base_card_widget.dart';
@@ -20,7 +21,9 @@ class SmallProductCard extends StatelessWidget {
     final screenDimension = MediaQuery.of(context).size;
 
     return BaseCard(
-      onTap: () {},
+      onTap: () {
+        goToPage(context, ProductPage(item: item));
+      },
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -58,7 +61,7 @@ class SmallProductCard extends StatelessWidget {
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
-                  '₹' + item.price.toString(),
+                  '₹ ' + formatCurrency(item.price!),
                   style: MyTextStyles.productTitle,
                 )
               ],
