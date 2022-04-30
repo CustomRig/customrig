@@ -1,16 +1,19 @@
-import 'package:customrig/model/item.dart';
 import 'package:customrig/providers/product_list/product_list_provider.dart';
 import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ProductListPage extends StatefulWidget {
+  final String title;
   final String value;
+  final String? type;
   final bool isSearch;
   const ProductListPage({
     Key? key,
     required this.value,
     this.isSearch = false,
+    this.type,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -26,7 +29,7 @@ class _ProductListPageState extends State<ProductListPage> {
             .searchItems(widget.value);
       } else {
         Provider.of<ProductListProvider>(context, listen: false)
-            .getItemsByCategory(widget.value);
+            .getItemsByCategory(category: widget.value, type: widget.type!);
       }
     });
     super.initState();
@@ -39,7 +42,7 @@ class _ProductListPageState extends State<ProductListPage> {
       builder: (context, value, child) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(widget.value.toLowerCase()),
+            title: Text(widget.title),
           ),
           body: _buildGridView(
             screenDimension: screenDimension,
@@ -56,24 +59,30 @@ class _ProductListPageState extends State<ProductListPage> {
   }) {
     // complete
     if (provider.state == ProductListState.complete) {
-      return GridView.builder(
-        padding: const EdgeInsets.all(10.0),
-        physics: const BouncingScrollPhysics(),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio:
-              screenDimension.width / (screenDimension.height / 1.44),
-        ),
-        itemCount: provider.items.length,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: MainProductCard(
-              item: provider.items[index],
-            ),
-          );
-        },
-      );
+      if (provider.items.isNotEmpty) {
+        return GridView.builder(
+          padding: const EdgeInsets.all(10.0),
+          physics: const BouncingScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio:
+                screenDimension.width / (screenDimension.height / 1.44),
+          ),
+          itemCount: provider.items.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.all(2.0),
+              child: MainProductCard(
+                item: provider.items[index],
+              ),
+            );
+          },
+        );
+      } else {
+        return const Center(
+          child: Text('Nothing to show!'),
+        );
+      }
     }
 
     // loading

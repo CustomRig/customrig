@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:customrig/model/base_item.dart';
+import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';
 import 'package:customrig/pages/product_list_page.dart';
 import 'package:customrig/providers/dashboard/dashboard_provider.dart';
@@ -98,7 +99,7 @@ class _HomePageState extends State<HomePage> {
         children: provider.dashboard!.sections!.map((e) {
           return Column(
             children: [
-              _buildTitle(e.title ?? ''),
+              _buildTitle(e),
               _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
             ],
           );
@@ -147,6 +148,7 @@ class _HomePageState extends State<HomePage> {
           goToPage(
               context,
               ProductListPage(
+                title: value,
                 value: value,
                 isSearch: true,
               ));
@@ -188,7 +190,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget _buildTitle(String title) {
+  Widget _buildTitle(Section section) {
     return Padding(
       padding: const EdgeInsets.only(left: 12, right: 12, top: 6),
       child: Row(
@@ -197,7 +199,7 @@ class _HomePageState extends State<HomePage> {
           SizedBox(
             width: screenSize.width * .65,
             child: Text(
-              title,
+              section.title!,
               style: MyTextStyles.heading,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -209,8 +211,10 @@ class _HomePageState extends State<HomePage> {
             ),
             onPressed: () => goToPage(
                 context,
-                const ProductListPage(
-                  value: '',
+                ProductListPage(
+                  value: section.category!,
+                  type: section.type,
+                  title: section.title!,
                 )),
             child: const Text('VIEW MORE'),
           )

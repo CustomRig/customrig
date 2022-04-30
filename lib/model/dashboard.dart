@@ -30,12 +30,14 @@ class Section {
   String? title;
   List<BaseItem>? items;
   String? type;
+  String? category;
 
   Section({this.title, this.items, this.type});
 
   Section.fromJson(Map<String, dynamic> json) {
     title = json['title'];
     type = json['type'];
+    category = json['category'];
 
     if (json['type'] == 'RIG') {
       if (json['items'] != null) {
@@ -60,6 +62,7 @@ class Section {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['title'] = title;
     data['type'] = type;
+    data['category'] = category;
     if (items != null) {
       data['items'] = items?.map((v) => v.toJson()).toList();
     }
