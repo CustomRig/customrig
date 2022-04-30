@@ -13,10 +13,11 @@ class DynamicLinkService {
       iosParameters: const IOSParameters(bundleId: "me.varad.customrig"),
     );
 
-    final dynamicLink =
-        await FirebaseDynamicLinks.instance.buildLink(_dynamicLinkParams);
+    final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(
+        _dynamicLinkParams,
+        shortLinkType: ShortDynamicLinkType.unguessable);
 
-    return dynamicLink.toString();
+    return dynamicLink.shortUrl.toString();
   }
 
   static Future<void> initDynamicLink(BuildContext context) async {

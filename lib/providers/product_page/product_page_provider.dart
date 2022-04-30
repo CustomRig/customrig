@@ -31,7 +31,9 @@ class ProductPageProvider extends ChangeNotifier {
 
   Future<void> shareProduct(BaseItem item) async {
     final link = await _dynamicLink.createDynamicLink(item.id!, item.type!);
-    Share.share(link, subject: item.title);
+    Share.share(
+        'Checkout out this ${item.type == 'RIG' ? 'rig' : 'product'} \n' + link,
+        subject: item.title);
   }
 
   void handleFavorite() {
