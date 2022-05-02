@@ -41,9 +41,7 @@ class _ProductListPageState extends State<ProductListPage> {
     return Consumer<ProductListProvider>(
       builder: (context, value, child) {
         return Scaffold(
-          appBar: AppBar(
-            title: Text(widget.title),
-          ),
+          appBar: !widget.isSearch ? AppBar(title: Text(widget.title)) : null,
           body: _buildGridView(
             screenDimension: screenDimension,
             provider: value,

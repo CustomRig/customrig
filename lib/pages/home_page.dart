@@ -60,26 +60,7 @@ class _HomePageState extends State<HomePage> {
     return Consumer<DashboardProvider>(
       builder: (context, provider, child) {
         return Scaffold(
-          body: NestedScrollView(
-            controller: _scrollController,
-            floatHeaderSlivers: true,
-            headerSliverBuilder: (context, innerBoxIsScrolled) {
-              return [
-                SliverAppBar(
-                  pinned: true,
-                  floating: true,
-                  snap: true,
-                  title: const Text('CustomRig'),
-                  leading: const Icon(Icons.menu),
-                  bottom: PreferredSize(
-                    child: _searchBar(),
-                    preferredSize: const Size.fromHeight(63),
-                  ),
-                ),
-              ];
-            },
-            body: _buildMainSection(provider: provider),
-          ),
+          body: _buildMainSection(provider: provider),
           floatingActionButton: isListScrolling
               ? _smallFloatingActionButton(context)
               : _expandedFloatingActionButton(context),

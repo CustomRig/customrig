@@ -3,8 +3,10 @@ import 'package:customrig/pages/favorite_page.dart';
 import 'package:customrig/pages/home_page.dart';
 import 'package:customrig/pages/my_rigs_page.dart';
 import 'package:customrig/providers/nav_bar_provider.dart';
+import 'package:customrig/widgets/global_widgets/search_deligate.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/global_widgets/drawer.dart';
@@ -28,11 +30,22 @@ class _MainPageState extends State<MainPage> {
     return Consumer<NavbarProvider>(
       builder: (context, navBar, child) {
         return Scaffold(
-          appBar: navBar.index != 0
-              ? AppBar(
-                  title: Text(pages[navBar.index].title),
-                )
-              : null,
+          appBar: AppBar(
+            title: Text(pages[navBar.index].title),
+            actions: <Widget>[
+              navBar.index == 0
+                  ? IconButton(
+                      onPressed: () {
+                        showSearch(
+                          context: context,
+                          delegate: MySearchDelegate(),
+                        );
+                      },
+                      icon: const Icon(Ionicons.search),
+                    )
+                  : const SizedBox.shrink(),
+            ],
+          ),
           drawer: const MyDrawer(),
           body: pages[navBar.index].page,
           bottomNavigationBar: NavigationBar(
