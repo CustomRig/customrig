@@ -1,18 +1,19 @@
 import 'dart:convert';
 
 import 'package:customrig/global/constants/prefs_string.dart';
-import 'package:customrig/model/item.dart';
 import 'package:customrig/services/prefs.dart';
+
+import '../model/base_item.dart';
 
 class FavoriteItemsPrefsService {
   final Prefs _prefs = Prefs();
 
-  Future<List<Item>> getFavoriteItems() async {
+  Future<List<BaseItem>> getFavoriteItems() async {
     final favItemsFromPrefsString = await _prefs.getString(kFavoriteItems);
     if (favItemsFromPrefsString != null) {
       final favItemsFromPrefsJson = json.decode(favItemsFromPrefsString);
       final favItems = favItemsFromPrefsJson
-          .map<Item>((item) => Item.fromJson(item))
+          .map<BaseItem>((item) => BaseItem.fromJson(item))
           .toList();
       return favItems;
     } else {
@@ -20,11 +21,11 @@ class FavoriteItemsPrefsService {
     }
   }
 
-  Future<void> setFavoriteItems(List<Item> items) async {
+  Future<void> setFavoriteItems(List<BaseItem> items) async {
     await _prefs.setString(kFavoriteItems, json.encode(items));
   }
 
-  void addItemToFavorite(Item item) async {
+  void addItemToFavorite(BaseItem item) async {
     final favItems = await getFavoriteItems();
     favItems.add(item);
     setFavoriteItems(favItems);

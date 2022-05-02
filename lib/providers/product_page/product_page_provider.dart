@@ -75,7 +75,7 @@ class ProductPageProvider extends ChangeNotifier {
 
   Future<bool> _addItemToFavorite({required BaseItem item}) async {
     try {
-      // _favItemPrefsService.addItemToFavorite(item);
+      _favItemPrefsService.addItemToFavorite(item);
       await _repository.addItemToFavorite(itemId: item.id!);
       return true;
     } catch (e) {
