@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'providers/theme/theme_provider.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -40,16 +42,19 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => AuthProvider()),
         ChangeNotifierProvider(create: (_) => ProductPageProvider()),
         ChangeNotifierProvider(create: (_) => ProductListProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: MaterialApp(
-        title: 'CustomRig',
-        theme: myLightTheme,
-        darkTheme: myDarkTheme,
-        themeMode: ThemeMode.dark,
-        home: AuthWrapper(
-          isUserLoggedIn: isUserLoggedIn,
-        ),
-      ),
+      child: Consumer<ThemeProvider>(builder: (context, value, child) {
+        return MaterialApp(
+          title: 'CustomRig',
+          theme: myLightTheme,
+          darkTheme: myDarkTheme,
+          themeMode: value.themeMode,
+          home: AuthWrapper(
+            isUserLoggedIn: isUserLoggedIn,
+          ),
+        );
+      }),
     );
   }
 }

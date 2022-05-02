@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:customrig/global/constants/prefs_string.dart';
+import 'package:customrig/model/user.dart';
 import 'package:customrig/providers/authentication/repository/auth_repository.dart';
 import 'package:customrig/providers/authentication/repository/auth_repository_impl.dart';
 import 'package:customrig/services/prefs.dart';
@@ -41,6 +42,21 @@ class AuthProvider extends ChangeNotifier {
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
 
+  User? _user;
+  User? get user => _user;
+
+  Future<User?> getCurrentUser() async {
+    final userFromPrefs = await _prefs.getString(kUserKey);
+    if (userFromPrefs != null) {
+      final user = User.fromJson(json.decode(userFromPrefs));
+      _user = user;
+      notifyListeners();
+      return user;
+    } else {
+      return null;
+    }
+  }
+
   Future<void> handleLogin() async {
     if (_loginFormKey.currentState!.validate()) {
       _errorMessage = '';
@@ -50,7 +66,7 @@ class AuthProvider extends ChangeNotifier {
           _emailController.text.trim(),
           _passwordController.text,
         );
-
+        _user = user;
         _prefs.clearPrefs(kUserKey);
         final res = await _prefs.setString(kUserKey, json.encode(user));
         _setState(AuthState.complete);
@@ -80,6 +96,12 @@ class AuthProvider extends ChangeNotifier {
         _setState(AuthState.error);
       }
     }
+  }
+
+  Future<void> signOut() async {
+    _prefs.clearPrefs(kUserKey);
+    _prefs.clearPrefs(kFavoriteItems);
+    _prefs.clearPrefs(kBuildRigItems);
   }
 
   disposeProvider() {
