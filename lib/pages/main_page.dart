@@ -7,6 +7,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/global_widgets/drawer.dart';
+
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
 
@@ -31,7 +33,7 @@ class _MainPageState extends State<MainPage> {
                   title: Text(pages[navBar.index].title),
                 )
               : null,
-          drawer: const Drawer(),
+          drawer: const MyDrawer(),
           body: pages[navBar.index].page,
           bottomNavigationBar: NavigationBar(
             selectedIndex: navBar.index,
