@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         title: 'CustomRig',
         theme: myLightTheme,
         darkTheme: myDarkTheme,
-        themeMode: ThemeMode.light,
+        themeMode: ThemeMode.dark,
         home: AuthWrapper(
           isUserLoggedIn: isUserLoggedIn,
         ),

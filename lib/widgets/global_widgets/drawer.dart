@@ -1,5 +1,6 @@
 import 'package:customrig/pages/favorite_page.dart';
 import 'package:customrig/pages/product_list_page.dart';
+import 'package:customrig/pages/settings_page.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
@@ -97,7 +98,7 @@ class MyDrawer extends StatelessWidget {
               leading: const Icon(Ionicons.settings_outline),
               title: const Text('Settings'),
               onTap: () {
-                goToPage(context, const FavoritePage());
+                goToPage(context, const SettingsPage());
               },
             ),
           ],
