@@ -32,12 +32,13 @@ class MainProductCard extends StatelessWidget {
               ),
             ),
           ),
-          spacer(height: 4),
+          spacer(height: 6),
           SizedBox(
             width: screenDimension.height * .2,
             child: Text(
               item.title ?? '',
-              style: MyTextStyles.productSubtitle,
+              style: MyTextStyles.productSubtitle
+                  .copyWith(color: Theme.of(context).colorScheme.onSurface),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
             ),
@@ -45,7 +46,8 @@ class MainProductCard extends StatelessWidget {
           spacer(height: 4),
           Text(
             '₹ ' + formatCurrency(item.price ?? 0),
-            style: MyTextStyles.productTitle,
+            style: MyTextStyles.productTitle
+                .copyWith(color: Theme.of(context).colorScheme.primary),
           )
         ],
       ),

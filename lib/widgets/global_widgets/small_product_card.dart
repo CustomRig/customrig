@@ -56,7 +56,8 @@ class SmallProductCard extends StatelessWidget {
                 ),
                 Text(
                   item.description ?? '',
-                  style: MyTextStyles.productSubtitle,
+                  style: MyTextStyles.productSubtitle
+                      .copyWith(color: Theme.of(context).colorScheme.onSurface),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                 ),

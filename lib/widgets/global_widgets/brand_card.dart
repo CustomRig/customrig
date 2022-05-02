@@ -45,12 +45,17 @@ class BrandCard extends StatelessWidget {
       child: GestureDetector(
         onTap: () => onBrandChanged(brand),
         child: Material(
-          color: Colors.white,
           elevation: 2.3,
           borderRadius: BorderRadius.circular(12),
           child: Container(
             child: !_isBrandImagePresent(brand)
-                ? Center(child: Text(brand))
+                ? Center(
+                    child: Text(
+                    brand,
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+                  ))
                 : null,
             decoration: BoxDecoration(
               border: isSelected

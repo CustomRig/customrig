@@ -53,7 +53,7 @@ class SelectCabinet extends StatelessWidget {
               child: CabinetCardWidget(
                 title: sortedCabinets[index].title!,
                 imageUrl: sortedCabinets[index].imageUrl!,
-                price: sortedCabinets[index].price.toString(),
+                price: sortedCabinets[index].price!,
                 isSelected: selectedCabinet != null
                     ? sortedCabinets[index].id == selectedCabinet!.id!
                     : false,

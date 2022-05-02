@@ -1,10 +1,11 @@
+import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CabinetCardWidget extends StatelessWidget {
   final String title;
   final String imageUrl;
-  final String price;
+  final int price;
   final bool isSelected;
   final VoidCallback onTap;
   const CabinetCardWidget({
@@ -65,7 +66,7 @@ class CabinetCardWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                 ),
                 Text(
-                  '₹' + price,
+                  '₹ ' + formatCurrency(price),
                   style: MyTextStyles.productSubtitle.copyWith(
                     color: Colors.white,
                     fontSize: isSelected ? 18.0 : 16.0,

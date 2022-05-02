@@ -1,3 +1,4 @@
+import 'package:customrig/utils/helpers.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/item.dart';
@@ -48,14 +49,18 @@ class BuildRigItemCard extends StatelessWidget {
                     fontSize: 16,
                   ),
                 ),
+                spacer(height: 4),
                 Text(
                   item.description!,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
                 ),
                 const Spacer(),
                 Text(
-                  '₹${item.price!}',
+                  '₹ ' + formatCurrency(item.price!),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
