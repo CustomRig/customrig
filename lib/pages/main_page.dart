@@ -32,21 +32,18 @@ class _MainPageState extends State<MainPage> {
         return Scaffold(
           appBar: AppBar(
             title: Text(pages[navBar.index].title),
-            actions: <Widget>[
-              navBar.index == 0
-                  ? IconButton(
-                      onPressed: () {
-                        showSearch(
-                          context: context,
-                          delegate: MySearchDelegate(),
-                        );
-                      },
-                      icon: const Icon(Ionicons.search),
-                    )
-                  : const SizedBox.shrink(),
-            ],
+            actions: <Widget>[_buildSearchButton(navBar.index)],
           ),
-          drawer: const MyDrawer(),
+          drawer: MyDrawer(
+            onFavoriteClick: () {
+              Navigator.pop(context);
+              navBar.setIndex(1);
+            },
+            onMyRigsClick: () {
+              Navigator.pop(context);
+              navBar.setIndex(2);
+            },
+          ),
           body: pages[navBar.index].page,
           bottomNavigationBar: NavigationBar(
             selectedIndex: navBar.index,
@@ -74,5 +71,21 @@ class _MainPageState extends State<MainPage> {
         );
       },
     );
+  }
+
+  Widget _buildSearchButton(int index) {
+    if (index == 0) {
+      return IconButton(
+        onPressed: () {
+          showSearch(
+            context: context,
+            delegate: MySearchDelegate(),
+          );
+        },
+        icon: const Icon(Ionicons.search),
+      );
+    } else {
+      return const SizedBox.shrink();
+    }
   }
 }

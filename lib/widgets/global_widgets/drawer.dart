@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class MyDrawer extends StatelessWidget {
-  const MyDrawer({Key? key}) : super(key: key);
+  final VoidCallback onFavoriteClick;
+  final VoidCallback onMyRigsClick;
+  const MyDrawer({
+    Key? key,
+    required this.onFavoriteClick,
+    required this.onMyRigsClick,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -28,18 +34,14 @@ class MyDrawer extends StatelessWidget {
               thickness: 1,
             ),
             ListTile(
-              leading: const Icon(Ionicons.heart),
+              leading: const Icon(Ionicons.heart_outline),
               title: const Text('Favorites'),
-              onTap: () {
-                goToPage(context, const FavoritePage());
-              },
+              onTap: () => onFavoriteClick(),
             ),
             ListTile(
-              leading: const Icon(Ionicons.settings_sharp),
+              leading: const Icon(Ionicons.settings_outline),
               title: const Text('My Rigs'),
-              onTap: () {
-                goToPage(context, const FavoritePage());
-              },
+              onTap: () => onMyRigsClick(),
             ),
             const Divider(
               height: 1,
@@ -56,42 +58,43 @@ class MyDrawer extends StatelessWidget {
               title: 'Gaming Rigs',
               type: 'RIG',
               value: 'GAMING',
-              icon: Ionicons.game_controller,
+              icon: Ionicons.game_controller_outline,
             ),
             _buildTile(
               context,
               title: 'School Rigs',
               type: 'RIG',
               value: 'SCHOOL',
-              icon: Ionicons.school,
+              icon: Ionicons.school_outline,
             ),
             _buildTile(
               context,
               title: 'Office Rigs',
               type: 'RIG',
               value: 'OFFICE',
-              icon: Ionicons.document,
+              icon: Ionicons.document_outline,
             ),
             _buildTile(
               context,
               title: 'Mouse',
               type: 'ITEM',
               value: 'MOUSE',
-              icon: Ionicons.navigate,
+              icon: Ionicons.navigate_outline,
             ),
             _buildTile(
               context,
               title: 'Keyboard',
               type: 'ITEM',
               value: 'KEYBOARD',
-              icon: Ionicons.keypad,
+              icon: Ionicons.keypad_outline,
             ),
             const Divider(
               height: 1,
               thickness: 1,
             ),
             ListTile(
-              leading: const Icon(Ionicons.settings_sharp),
+              iconColor: Theme.of(context).colorScheme.onSurface,
+              leading: const Icon(Ionicons.settings_outline),
               title: const Text('Settings'),
               onTap: () {
                 goToPage(context, const FavoritePage());
