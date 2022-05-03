@@ -41,7 +41,7 @@ ThemeData myLightTheme = ThemeData(
 
   // navigation bar theme
   navigationBarTheme: NavigationBarThemeData(
-    backgroundColor: lightColorScheme.primaryContainer.withOpacity(.5),
+    backgroundColor: lightColorScheme.primaryContainer.withOpacity(.4),
     indicatorColor: lightColorScheme.primaryContainer,
   ),
 
