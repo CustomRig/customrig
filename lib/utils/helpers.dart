@@ -15,6 +15,13 @@ void goToPage(BuildContext context, Widget page) {
   );
 }
 
+void showMySnackBar(BuildContext context, {required String text}) {
+  ScaffoldMessenger.of(context).clearSnackBars();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    content: Text(text),
+  ));
+}
+
 void replacePage(BuildContext context, Widget page) {
   Navigator.pushReplacement(
     context,

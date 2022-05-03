@@ -21,17 +21,117 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
   int currentStep = 0;
   late TabController _tabController;
 
-  IconData _fabIcon = EvaIcons.chevronRight;
+  List list = [];
 
   @override
   void initState() {
     _tabController = TabController(vsync: this, length: 11);
+    _listenToTabController();
 
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
       Provider.of<BuildRigProvider>(context, listen: false).getAllItems();
     });
 
     super.initState();
+  }
+
+  void _listenToTabController() {
+    _tabController.addListener(() {
+      setState(() {
+        currentStep = _tabController.index;
+      });
+    });
+  }
+
+  void _goNext() {
+    _tabController.animateTo(
+      _tabController.index != _tabController.length - 1
+          ? ++_tabController.index
+          : _tabController.index,
+    );
+  }
+
+  void _handleNextButton(BuildRigProvider provider) {
+    // usageType
+    if (_tabController.index == 0) {
+      if (provider.usageType != '') {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select usage');
+      }
+    }
+
+    // cabinet
+    else if (_tabController.index == 1) {
+      if (provider.cabinet != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Cabinet');
+      }
+    }
+
+    // processor
+    else if (_tabController.index == 2) {
+      if (provider.processor != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Processor');
+      }
+    }
+
+// motherboard
+    else if (_tabController.index == 4) {
+      if (provider.motherboard != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Motherboard');
+      }
+    }
+
+    // ram
+    else if (_tabController.index == 3) {
+      if (provider.ram != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select RAM');
+      }
+    }
+
+    // storage
+    else if (_tabController.index == 5) {
+      if (provider.storage != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Storage');
+      }
+    }
+
+    // gpu
+    else if (_tabController.index == 6) {
+      if (provider.graphicCard != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Graphic Card');
+      }
+    }
+
+    // cooler
+    else if (_tabController.index == 7) {
+      if (provider.cooler != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Cooler');
+      }
+    }
+
+    //power supply
+    else if (_tabController.index == 8) {
+      if (provider.powerSupply != null) {
+        _goNext();
+      } else {
+        showMySnackBar(context, text: 'Please select Power Supply');
+      }
+    }
   }
 
   @override
@@ -227,11 +327,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     if (_tabController.index != _tabController.length - 1) {
       return FloatingActionButton(
         onPressed: () {
-          _tabController.animateTo(
-            _tabController.index != _tabController.length - 1
-                ? ++_tabController.index
-                : _tabController.index,
-          );
+          _handleNextButton(provider);
         },
         child: const Icon(EvaIcons.chevronRight),
       );
