@@ -64,7 +64,7 @@ class _ProductListPageState extends State<ProductListPage> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             childAspectRatio:
-                screenDimension.width / (screenDimension.height / 1.44),
+                screenDimension.width / (screenDimension.width * 1.15),
           ),
           itemCount: provider.items.length,
           itemBuilder: (BuildContext context, int index) {

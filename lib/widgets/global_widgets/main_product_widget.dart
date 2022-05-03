@@ -17,18 +17,22 @@ class MainProductCard extends StatelessWidget {
     final screenDimension = MediaQuery.of(context).size;
 
     return BaseCard(
+      width: screenDimension.width * 0.4,
       onTap: () => goToPage(context, ProductPage(item: item)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
-            width: screenDimension.height * .2,
-            height: screenDimension.height * .2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8.0),
-              image: DecorationImage(
-                image: NetworkImage(item.imageUrl ?? ''),
-                fit: BoxFit.cover,
+          Flexible(
+            child: Container(
+              // width: screenDimension.height * .2,
+              height: screenDimension.height * .2,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8.0),
+                image: DecorationImage(
+                  image: NetworkImage(item.imageUrl ?? ''),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
