@@ -35,6 +35,13 @@ class _MainPageState extends State<MainPage> {
             actions: <Widget>[_buildSearchButton(navBar.index)],
           ),
           drawer: MyDrawer(
+            isHomeSelected: navBar.index == 0,
+            isFavoriteSelected: navBar.index == 1,
+            isMyRigsSelected: navBar.index == 2,
+            onHomeClick: () {
+              Navigator.pop(context);
+              navBar.setIndex(0);
+            },
             onFavoriteClick: () {
               Navigator.pop(context);
               navBar.setIndex(1);

@@ -1,17 +1,25 @@
-import 'package:customrig/pages/favorite_page.dart';
 import 'package:customrig/pages/product_list_page.dart';
 import 'package:customrig/pages/settings_page.dart';
 import 'package:customrig/utils/helpers.dart';
+import 'package:customrig/widgets/global_widgets/my_tile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 class MyDrawer extends StatelessWidget {
+  final VoidCallback onHomeClick;
   final VoidCallback onFavoriteClick;
   final VoidCallback onMyRigsClick;
+  final bool isHomeSelected;
+  final bool isFavoriteSelected;
+  final bool isMyRigsSelected;
   const MyDrawer({
     Key? key,
+    required this.onHomeClick,
     required this.onFavoriteClick,
     required this.onMyRigsClick,
+    required this.isHomeSelected,
+    required this.isFavoriteSelected,
+    required this.isMyRigsSelected,
   }) : super(key: key);
 
   @override
@@ -27,23 +35,38 @@ class MyDrawer extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 'CustomRig',
-                style: textTheme.headline6,
+                style:
+                    textTheme.headline6?.copyWith(fontWeight: FontWeight.bold),
               ),
             ),
             const Divider(
               height: 1,
               thickness: 1,
             ),
-            ListTile(
-              leading: const Icon(Ionicons.heart_outline),
-              title: const Text('Favorites'),
-              onTap: () => onFavoriteClick(),
+            spacer(height: 6),
+            MyTile(
+              title: 'Home',
+              icon:
+                  isHomeSelected ? Ionicons.home_sharp : Ionicons.home_outline,
+              isSelected: isHomeSelected,
+              onClick: () => onHomeClick(),
             ),
-            ListTile(
-              leading: const Icon(Ionicons.settings_outline),
-              title: const Text('My Rigs'),
-              onTap: () => onMyRigsClick(),
+            MyTile(
+              title: 'Favorites',
+              icon:
+                  isFavoriteSelected ? Ionicons.heart : Ionicons.heart_outline,
+              isSelected: isFavoriteSelected,
+              onClick: () => onFavoriteClick(),
             ),
+            MyTile(
+              title: 'My Rigs',
+              icon: isMyRigsSelected
+                  ? Ionicons.settings_sharp
+                  : Ionicons.settings_outline,
+              isSelected: isMyRigsSelected,
+              onClick: () => onMyRigsClick(),
+            ),
+            spacer(height: 6),
             const Divider(
               height: 1,
               thickness: 1,
@@ -89,15 +112,17 @@ class MyDrawer extends StatelessWidget {
               value: 'KEYBOARD',
               icon: Ionicons.keypad_outline,
             ),
+            spacer(height: 6),
             const Divider(
               height: 1,
               thickness: 1,
             ),
-            ListTile(
-              iconColor: Theme.of(context).colorScheme.onSurface,
-              leading: const Icon(Ionicons.settings_outline),
-              title: const Text('Settings'),
-              onTap: () {
+            spacer(height: 6),
+            MyTile(
+              title: 'Settings',
+              icon: Ionicons.settings_outline,
+              // isSelected: true,
+              onClick: () {
                 goToPage(context, const SettingsPage());
               },
             ),
@@ -113,11 +138,13 @@ class MyDrawer extends StatelessWidget {
     required String type,
     required String value,
     required IconData icon,
+    bool isSelected = false,
   }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(title),
-      onTap: () {
+    return MyTile(
+      title: title,
+      icon: icon,
+      isSelected: isSelected,
+      onClick: () {
         goToPage(
           context,
           ProductListPage(
