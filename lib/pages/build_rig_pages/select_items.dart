@@ -12,6 +12,7 @@ class SelectItems extends StatelessWidget {
   final Item? selectedItem;
   final List<String>? pairingIds;
   final String? usage;
+  final String? category;
 
   final void Function(String) onBrandChanged;
   final void Function(Item) onItemChanged;
@@ -27,18 +28,23 @@ class SelectItems extends StatelessWidget {
     required this.onItemChanged,
     this.pairingIds,
     required this.usage,
+    this.category,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // sorting
+
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
     }).where((e) {
       return usage != null ? e.usage!.contains(usage) : true;
     }).where((e) {
-      return pairingIds != null
-          ? pairingIds!.any((element) => e.pairingIds!.contains(element))
-          : true;
+      return category == 'PROCESSOR'
+          ? true
+          : pairingIds != null
+              ? pairingIds!.any((element) => e.pairingIds!.contains(element))
+              : true;
     }).toList();
 
     return ListView(

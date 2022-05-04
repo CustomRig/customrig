@@ -122,7 +122,7 @@ class BuildRigProvider extends ChangeNotifier {
       case 'COOLER':
         _coolerBrand = brand;
         break;
-      case 'WIFI_ADAPTER ':
+      case 'WIFI_ADAPTER':
         _wifiBrand = brand;
         break;
       case 'OPERATING_SYSTEM':
@@ -235,9 +235,7 @@ class BuildRigProvider extends ChangeNotifier {
         wifiAdapterId: wifiAdapter!.id,
         operatingSystemId: operatingSystem!.id,
       );
-    } on DioError catch (e) {
-      print(e);
-    }
+    } on DioError catch (e) {}
 
     return rig!;
   }
@@ -253,11 +251,8 @@ class BuildRigProvider extends ChangeNotifier {
       final buildRigItemsFromPrefs = json.decode(buildRigItemsPrefsString);
       final buildRigItems = AllItems.fromJson(buildRigItemsFromPrefs);
 
-      print(buildRigItems);
       return buildRigItems;
     } else {
-      print('nullll');
-
       return null;
     }
   }

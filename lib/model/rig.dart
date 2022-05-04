@@ -49,7 +49,9 @@ class Rig extends BaseItem {
       super.operatingSystem = Item.fromJson(json['operating_system']);
     }
 
-    super.imageUrl = json['cabinet']['image_url'];
+    if (json['cabinet'] != null) {
+      super.imageUrl = json['cabinet']['image_url'];
+    }
     // super.category = json['category'];
     super.id = json['_id'];
     super.usage = json['usage'].cast<String>();

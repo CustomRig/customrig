@@ -72,6 +72,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
     // processor
     else if (_tabController.index == 2) {
+      // print(provider.processor?.pairingIds?.first);
       if (provider.processor != null) {
         _goNext();
       } else {
@@ -80,7 +81,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     }
 
 // motherboard
-    else if (_tabController.index == 4) {
+    else if (_tabController.index == 3) {
       if (provider.motherboard != null) {
         _goNext();
       } else {
@@ -89,7 +90,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     }
 
     // ram
-    else if (_tabController.index == 3) {
+    else if (_tabController.index == 4) {
       if (provider.ram != null) {
         _goNext();
       } else {
@@ -108,7 +109,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
     // gpu
     else if (_tabController.index == 6) {
-      if (provider.graphicCard != null) {
+      if (provider.usageType == 'OFFICE' ||
+          provider.usageType == 'SCHOOL' ||
+          provider.graphicCard != null) {
         _goNext();
       } else {
         showMySnackBar(context, text: 'Please select Graphic Card');
@@ -131,6 +134,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
       } else {
         showMySnackBar(context, text: 'Please select Power Supply');
       }
+    } else {
+      _goNext();
     }
   }
 
@@ -184,6 +189,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "PROCESSOR"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        category: provider.processor?.category,
                       ),
 
                       // mother board
