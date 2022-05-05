@@ -35,6 +35,7 @@ class DashboardProvider extends ChangeNotifier {
 
         final _dashboardFromApi = await _repository.getDashboard();
         _dashboard = _dashboardFromApi;
+        _prefs.setString(kDashboard, json.encode(_dashboard));
         notifyListeners();
       } else {
         _dashboard = await _repository.getDashboard();

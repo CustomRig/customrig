@@ -34,7 +34,8 @@ class SelectItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // sorting
-
+    
+    // short on time, please don't judge for this stupid dirty code
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
     }).where((e) {
