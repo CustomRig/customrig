@@ -2,9 +2,11 @@ import 'package:customrig/global/dio/dio.dart';
 import 'package:customrig/model/all_items.dart';
 import 'package:customrig/model/rig.dart';
 import 'package:customrig/providers/build_rig/repository/build_rig_repository.dart';
+import 'package:customrig/services/user_service.dart';
 
 class BuildRigRepositoryImpl implements BuildRigRepository {
-  final _uid = 'ahjfshlkajsflka';
+  final UserService _userService = UserService();
+  String? _uid;
 
   @override
   Future<AllItems> getAllItems() async {
@@ -30,9 +32,12 @@ class BuildRigRepositoryImpl implements BuildRigRepository {
     required String? wifiAdapterId,
     required String? operatingSystemId,
   }) async {
+    _uid = await _userService.getUserId();
+
     final dio = await MyDio.provideDio();
     final result = await dio.post('/rig/buildUserRig', data: {
       "uid": _uid,
+      "title": title,
       "price": price,
       "description": description,
       "cabinet": cabinetId,

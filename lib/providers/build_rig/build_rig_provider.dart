@@ -17,9 +17,19 @@ enum BuildRigState {
   error,
 }
 
+enum BuildRigFinishState {
+  initial,
+  loading,
+  complete,
+  error,
+}
+
 class BuildRigProvider extends ChangeNotifier {
   BuildRigState _state = BuildRigState.initial;
   BuildRigState get state => _state;
+
+  BuildRigFinishState _finishState = BuildRigFinishState.initial;
+  BuildRigFinishState get finishState => _finishState;
 
   final BuildRigRepository _repository = BuildRigRepositoryImpl();
 
@@ -103,30 +113,39 @@ class BuildRigProvider extends ChangeNotifier {
     switch (category) {
       case 'PROCESSOR':
         _processorBrand = brand;
+        _processor = null;
         break;
       case 'MOTHERBOARD':
         _motherboardBrand = brand;
+        _motherboard = null;
         break;
       case 'GRAPHIC_CARD':
         _graphicCardBrand = brand;
+        _graphicCard = null;
         break;
       case 'POWER_SUPPLY':
         _powerSupplyBrand = brand;
+        _powerSupply = null;
         break;
       case 'STORAGE':
         _storageBrand = brand;
+        _storage = null;
         break;
       case 'RAM':
         _ramBrand = brand;
+        _ram = null;
         break;
       case 'COOLER':
         _coolerBrand = brand;
+        _cooler = null;
         break;
       case 'WIFI_ADAPTER':
         _wifiBrand = brand;
+        _wifi = null;
         break;
       case 'OPERATING_SYSTEM':
         _operatingSystemBrand = brand;
+        _operatingSystem = null;
         break;
     }
     notifyListeners();
@@ -166,16 +185,27 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   int _getRigPrice() {
-    return cabinet!.price! +
-        processor!.price! +
-        motherboard!.price! +
-        graphicCard!.price! +
-        powerSupply!.price! +
-        storage!.price! +
-        ram!.price! +
-        cooler!.price! +
-        wifiAdapter!.price! +
-        operatingSystem!.price!;
+    int cabinetPrice = _cabinet?.price ?? 0;
+    int processorPrice = _processor?.price ?? 0;
+    int motherboardPrice = _motherboard?.price ?? 0;
+    int graphicCardPrice = _graphicCard?.price ?? 0;
+    int powerSupplyPrice = _powerSupply?.price ?? 0;
+    int storagePrice = _storage?.price ?? 0;
+    int ramPrice = _ram?.price ?? 0;
+    int coolerPrice = _cooler?.price ?? 0;
+    int wifiPrice = _wifi?.price ?? 0;
+    int operatingSystemPrice = _operatingSystem?.price ?? 0;
+
+    return cabinetPrice +
+        processorPrice +
+        motherboardPrice +
+        graphicCardPrice +
+        powerSupplyPrice +
+        storagePrice +
+        ramPrice +
+        coolerPrice +
+        wifiPrice +
+        operatingSystemPrice;
   }
 
   String _getRigDescription() {
@@ -183,7 +213,7 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   String _getRigTitle() {
-    return 'Rig #${UniqueKey().toString()}';
+    return '${_usageType.toLowerCase()} rig';
   }
 
   void getAllItems() async {
@@ -216,8 +246,9 @@ class BuildRigProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<Rig> buildUserRig() async {
+  Future<Rig?> buildUserRig() async {
     Rig? rig;
+    setFinishState(BuildRigFinishState.loading);
     try {
       rig = await _repository.buildUserRig(
         title: _getRigTitle(),
@@ -228,20 +259,28 @@ class BuildRigProvider extends ChangeNotifier {
         processorId: _processor?.id,
         motherboardId: _motherboard?.id,
         graphicCardId: graphicCard?.id,
-        powerSupplyId: powerSupply!.id,
-        storageId: storage!.id,
-        ramId: ram!.id,
-        coolerId: _cooler!.id,
-        wifiAdapterId: wifiAdapter!.id,
-        operatingSystemId: operatingSystem!.id,
+        powerSupplyId: powerSupply?.id,
+        storageId: storage?.id,
+        ramId: ram?.id,
+        coolerId: _cooler?.id,
+        wifiAdapterId: wifiAdapter?.id,
+        operatingSystemId: operatingSystem?.id,
       );
-    } on DioError catch (e) {}
-
-    return rig!;
+      setFinishState(BuildRigFinishState.complete);
+      return rig;
+    } on DioError catch (e) {
+      setFinishState(BuildRigFinishState.error);
+      return null;
+    }
   }
 
   void setState(BuildRigState state) {
     _state = state;
+    notifyListeners();
+  }
+
+  void setFinishState(BuildRigFinishState state) {
+    _finishState = state;
     notifyListeners();
   }
 
