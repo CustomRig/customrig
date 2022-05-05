@@ -2,6 +2,7 @@ import 'package:customrig/pages/product_list_page.dart';
 import 'package:customrig/pages/settings_page.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/widgets/global_widgets/my_tile_widget.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -46,23 +47,21 @@ class MyDrawer extends StatelessWidget {
             spacer(height: 6),
             MyTile(
               title: 'Home',
-              icon:
-                  isHomeSelected ? Ionicons.home_sharp : Ionicons.home_outline,
+              icon: isHomeSelected ? EvaIcons.home : EvaIcons.homeOutline,
               isSelected: isHomeSelected,
               onClick: () => onHomeClick(),
             ),
             MyTile(
               title: 'Favorites',
-              icon:
-                  isFavoriteSelected ? Ionicons.heart : Ionicons.heart_outline,
+              icon: isFavoriteSelected ? EvaIcons.heart : EvaIcons.heartOutline,
               isSelected: isFavoriteSelected,
               onClick: () => onFavoriteClick(),
             ),
             MyTile(
               title: 'My Rigs',
               icon: isMyRigsSelected
-                  ? Ionicons.settings_sharp
-                  : Ionicons.settings_outline,
+                  ? EvaIcons.settings
+                  : EvaIcons.settingsOutline,
               isSelected: isMyRigsSelected,
               onClick: () => onMyRigsClick(),
             ),
@@ -120,7 +119,7 @@ class MyDrawer extends StatelessWidget {
             spacer(height: 6),
             MyTile(
               title: 'Settings',
-              icon: Ionicons.settings_outline,
+              icon: EvaIcons.settingsOutline,
               // isSelected: true,
               onClick: () {
                 goToPage(context, const SettingsPage());
