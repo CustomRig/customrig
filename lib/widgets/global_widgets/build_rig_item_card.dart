@@ -8,11 +8,14 @@ class BuildRigItemCard extends StatelessWidget {
   final bool isSelected;
 
   final void Function(Item) onItemChanged;
+  final void Function(Item) showItemDetails;
+
   const BuildRigItemCard({
     Key? key,
     required this.item,
     required this.isSelected,
     required this.onItemChanged,
+    required this.showItemDetails,
   }) : super(key: key);
 
   @override
@@ -25,8 +28,9 @@ class BuildRigItemCard extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(12.0),
           onTap: () => onItemChanged(item),
+          onLongPress: () => showItemDetails(item),
           child: Container(
-            padding: const EdgeInsets.all(12.0),
+            padding: EdgeInsets.all(isSelected ? 6.0 : 12.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(12.0),
               border: isSelected
@@ -43,6 +47,7 @@ class BuildRigItemCard extends StatelessWidget {
                 Text(
                   item.title!,
                   maxLines: 2,
+                  textAlign: TextAlign.left,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.primary,
                     fontWeight: FontWeight.bold,
@@ -52,7 +57,8 @@ class BuildRigItemCard extends StatelessWidget {
                 spacer(height: 4),
                 Text(
                   item.description!,
-                  maxLines: 3,
+                  textAlign: TextAlign.left,
+                  maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     color: Theme.of(context).colorScheme.onSurface,

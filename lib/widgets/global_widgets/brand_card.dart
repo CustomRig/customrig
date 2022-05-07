@@ -31,69 +31,49 @@ class BrandCard extends StatelessWidget {
         calculatedSizeForCard = 0.300;
         break;
       case 4:
-        calculatedSizeForCard = 0.218;
+        calculatedSizeForCard = 0.3;
         break;
       default:
         calculatedSizeForCard = 0.0;
     }
 
     // if cards are more than 4, than set this below size and wrap to bottom
-    if (brandsLength > 4) calculatedSizeForCard = 0.223;
+    if (brandsLength > 4) calculatedSizeForCard = 0.3;
 
     return Padding(
-      padding: const EdgeInsets.all(3),
+      padding: const EdgeInsets.all(3.0),
       child: GestureDetector(
         onTap: () => onBrandChanged(brand),
         child: Material(
           elevation: 2.3,
           borderRadius: BorderRadius.circular(12),
           child: Container(
-            child: !_isBrandImagePresent(brand)
-                ? Center(
-                    child: Text(
-                    brand,
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.onSurface,
-                    ),
-                  ))
-                : null,
+            padding: EdgeInsets.all(isSelected ? 3.0 : 6.0),
+            child: Center(
+              child: Text(
+                brand,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 14,
+                ),
+              ),
+            ),
             decoration: BoxDecoration(
               border: isSelected
                   ? Border.all(
-                      width: 6,
+                      width: 4,
                       color: Theme.of(context).colorScheme.primary,
                     )
                   : null,
               borderRadius: BorderRadius.circular(12),
-              image: _isBrandImagePresent(brand)
-                  ? DecorationImage(
-                      image: AssetImage(
-                          'assets/images/brands/' + _getBrandImage(brand)!),
-                      fit: BoxFit.contain,
-                    )
-                  : null,
             ),
-            height: screenSize.width * calculatedSizeForCard,
+            height: screenSize.width * 0.18,
             width: screenSize.width * calculatedSizeForCard,
           ),
         ),
       ),
     );
-  }
-
-  bool _isBrandImagePresent(brand) => _getBrandImage(brand) != null;
-
-  String? _getBrandImage(String brand) {
-    String? _brand;
-    switch (brand) {
-      case 'ASUS':
-        _brand = 'asus.png';
-        break;
-
-      default:
-        _brand = null;
-        break;
-    }
-    return _brand;
   }
 }

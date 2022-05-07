@@ -1,3 +1,4 @@
+import 'package:customrig/model/base_item.dart';
 import 'package:customrig/pages/build_rig_pages/select_cabinet.dart';
 import 'package:customrig/pages/build_rig_pages/select_items.dart';
 import 'package:customrig/pages/build_rig_pages/select_usage.dart';
@@ -141,6 +142,69 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     }
   }
 
+  void showItemDetailsDialog(BaseItem item) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          content: ListView(
+            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
+            children: [
+              Container(
+                width: double.maxFinite,
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12.0),
+                  image: DecorationImage(
+                    image: NetworkImage(item.imageUrl!),
+                    fit: BoxFit.fitHeight,
+                  ),
+                ),
+              ),
+              spacer(height: 6),
+              Text(
+                item.title!,
+                textAlign: TextAlign.left,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
+              ),
+              spacer(height: 6),
+              Text(
+                '₹ ' + formatCurrency(item.price!),
+                textAlign: TextAlign.left,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              spacer(height: 6),
+              Text(
+                item.description!,
+                textAlign: TextAlign.left,
+              ),
+            ],
+          ),
+          actions: [
+            ElevatedButton.icon(
+              onPressed: () {
+                launchURL(item.purchaseUrl ?? '');
+              },
+              icon: const Icon(EvaIcons.shoppingBagOutline),
+              label: const Text('VIEW'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<BuildRigProvider>(
@@ -192,6 +256,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
                         category: provider.processor?.category,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // mother board
@@ -207,6 +272,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "MOTHERBOARD"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // RAM
@@ -222,6 +288,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "RAM"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // Storage
@@ -237,6 +304,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "STORAGE"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       //graphic card
@@ -252,6 +320,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "GRAPHIC_CARD"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // cooler
@@ -267,6 +336,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "COOLER"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // power supply
@@ -282,6 +352,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "POWER_SUPPLY"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // wifi adapter
@@ -297,6 +368,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "WIFI_ADAPTER"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
 
                       // OS
@@ -312,6 +384,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "OPERATING_SYSTEM"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        showItemDetails: showItemDetailsDialog,
                       ),
                     ],
                   )

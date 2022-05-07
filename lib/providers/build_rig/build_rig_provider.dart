@@ -112,40 +112,75 @@ class BuildRigProvider extends ChangeNotifier {
   void setBrand({required String brand, required String category}) {
     switch (category) {
       case 'PROCESSOR':
-        _processorBrand = brand;
-        _processor = null;
+        if (_processorBrand != null) {
+          _processorBrand = null;
+        } else {
+          _processorBrand = brand;
+        }
         break;
+
       case 'MOTHERBOARD':
-        _motherboardBrand = brand;
-        _motherboard = null;
+        if (_motherboardBrand != null) {
+          _motherboardBrand = null;
+        } else {
+          _motherboardBrand = brand;
+        }
         break;
+
       case 'GRAPHIC_CARD':
-        _graphicCardBrand = brand;
-        _graphicCard = null;
+        if (_graphicCardBrand != null) {
+          _graphicCardBrand = null;
+        } else {
+          _graphicCardBrand = brand;
+        }
         break;
+
       case 'POWER_SUPPLY':
-        _powerSupplyBrand = brand;
-        _powerSupply = null;
+        if (_powerSupplyBrand != null) {
+          _powerSupplyBrand = null;
+        } else {
+          _powerSupplyBrand = brand;
+        }
         break;
+
       case 'STORAGE':
-        _storageBrand = brand;
-        _storage = null;
+        if (_storageBrand != null) {
+          _storageBrand = null;
+        } else {
+          _storageBrand = brand;
+        }
         break;
+
       case 'RAM':
-        _ramBrand = brand;
-        _ram = null;
+        if (_ramBrand != null) {
+          _ramBrand = null;
+        } else {
+          _ramBrand = brand;
+        }
         break;
+
       case 'COOLER':
-        _coolerBrand = brand;
-        _cooler = null;
+        if (_coolerBrand != null) {
+          _coolerBrand = null;
+        } else {
+          _coolerBrand = brand;
+        }
         break;
+
       case 'WIFI_ADAPTER':
-        _wifiBrand = brand;
-        _wifi = null;
+        if (_wifiBrand != null) {
+          _wifiBrand = null;
+        } else {
+          _wifiBrand = brand;
+        }
         break;
+
       case 'OPERATING_SYSTEM':
-        _operatingSystemBrand = brand;
-        _operatingSystem = null;
+        if (_operatingSystemBrand != null) {
+          _operatingSystemBrand = null;
+        } else {
+          _operatingSystemBrand = brand;
+        }
         break;
     }
     notifyListeners();
@@ -154,31 +189,75 @@ class BuildRigProvider extends ChangeNotifier {
   void setItem({required Item item, required String category}) {
     switch (category) {
       case 'PROCESSOR':
-        _processor = item;
+        if (_processor != null) {
+          _processor = null;
+        } else {
+          _processor = item;
+        }
         break;
+
       case 'MOTHERBOARD':
-        _motherboard = item;
+        if (_motherboard != null) {
+          _motherboard = null;
+        } else {
+          _motherboard = item;
+        }
         break;
+
       case 'GRAPHIC_CARD':
-        _graphicCard = item;
+        if (_graphicCard != null) {
+          _graphicCard = null;
+        } else {
+          _graphicCard = item;
+        }
         break;
+
       case 'POWER_SUPPLY':
-        _powerSupply = item;
+        if (_powerSupply != null) {
+          _powerSupply = null;
+        } else {
+          _powerSupply = item;
+        }
         break;
+
       case 'STORAGE':
-        _storage = item;
+        if (_storage != null) {
+          _storage = null;
+        } else {
+          _storage = item;
+        }
         break;
+
       case 'RAM':
-        _ram = item;
+        if (_ram != null) {
+          _ram = null;
+        } else {
+          _ram = item;
+        }
         break;
+
       case 'COOLER':
-        _cooler = item;
+        if (_cooler != null) {
+          _cooler = null;
+        } else {
+          _cooler = item;
+        }
         break;
+
       case 'WIFI_ADAPTER':
-        _wifi = item;
+        if (_wifi != null) {
+          _wifi = null;
+        } else {
+          _wifi = item;
+        }
         break;
+
       case 'OPERATING_SYSTEM':
-        _operatingSystem = item;
+        if (_operatingSystem != null) {
+          _operatingSystem = null;
+        } else {
+          _operatingSystem = item;
+        }
         break;
     }
     notifyListeners();

@@ -16,6 +16,7 @@ class SelectItems extends StatelessWidget {
 
   final void Function(String) onBrandChanged;
   final void Function(Item) onItemChanged;
+  final void Function(Item) showItemDetails;
 
   const SelectItems({
     Key? key,
@@ -26,6 +27,7 @@ class SelectItems extends StatelessWidget {
     this.selectedItem,
     required this.onBrandChanged,
     required this.onItemChanged,
+    required this.showItemDetails,
     this.pairingIds,
     required this.usage,
     this.category,
@@ -34,7 +36,7 @@ class SelectItems extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // sorting
-    
+
     // short on time, please don't judge for this stupid dirty code
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
@@ -67,6 +69,10 @@ class SelectItems extends StatelessWidget {
           padding: EdgeInsets.only(left: 12.0, top: 12.0),
           child: Text(
             'Brand',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         Padding(
@@ -82,27 +88,48 @@ class SelectItems extends StatelessWidget {
           padding: EdgeInsets.only(left: 12.0, top: 12.0),
           child: Text(
             'Products',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(9.0),
-          child: GridView.builder(
-            itemCount: sortedItems.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 2 / 1.8),
-            itemBuilder: (context, index) {
-              return BuildRigItemCard(
-                item: sortedItems[index],
-                isSelected: selectedItem == sortedItems[index],
-                onItemChanged: onItemChanged,
-              );
-            },
-          ),
-        ),
+        _buildProductsGrid(sortedItems),
       ],
     );
+  }
+
+  Widget _buildProductsGrid(List<Item> sortedItems) {
+    if (sortedItems.isNotEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(9.0),
+        child: GridView.builder(
+          itemCount: sortedItems.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 2, childAspectRatio: 2 / 1.5),
+          itemBuilder: (context, index) {
+            return BuildRigItemCard(
+              item: sortedItems[index],
+              isSelected: selectedItem == sortedItems[index],
+              onItemChanged: onItemChanged,
+              showItemDetails: showItemDetails,
+            );
+          },
+        ),
+      );
+    } else {
+      return Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          spacer(height: 44),
+          const Center(
+            child: Text('No products to show!'),
+          ),
+        ],
+      );
+    }
   }
 
   Widget _buildBrandCard(int brandsLength, String brand) {
