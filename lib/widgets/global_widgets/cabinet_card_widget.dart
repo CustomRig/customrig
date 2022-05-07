@@ -26,7 +26,7 @@ class CabinetCardWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12.0),
           image: DecorationImage(
             image: NetworkImage(imageUrl),
-            fit: BoxFit.cover,
+            fit: BoxFit.fitHeight,
           ),
           border: isSelected
               ? Border.all(
@@ -37,7 +37,7 @@ class CabinetCardWidget extends StatelessWidget {
         // For the shadow
         child: DecoratedBox(
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(isSelected ? 4.0 : 12.0),
             gradient: LinearGradient(
               begin: FractionalOffset.topCenter,
               end: FractionalOffset.bottomCenter,
@@ -58,18 +58,20 @@ class CabinetCardWidget extends StatelessWidget {
               children: [
                 Text(
                   title,
-                  style: MyTextStyles.productTitle.copyWith(
+                  style: const TextStyle(
                     color: Colors.white,
-                    fontSize: isSelected ? 24.0 : 22.0,
+                    fontSize: 22,
                   ),
                   maxLines: 2,
                   textAlign: TextAlign.center,
                 ),
+                spacer(height: 6),
                 Text(
                   '₹ ' + formatCurrency(price),
-                  style: MyTextStyles.productSubtitle.copyWith(
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
                     color: Colors.white,
-                    fontSize: isSelected ? 18.0 : 16.0,
+                    fontSize: 16,
                   ),
                 ),
               ],
