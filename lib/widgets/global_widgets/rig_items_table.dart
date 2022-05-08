@@ -1,4 +1,6 @@
 import 'package:customrig/model/base_item.dart';
+import 'package:customrig/model/item.dart';
+import 'package:customrig/widgets/dialogs/item_details_dialog.dart';
 import 'package:customrig/widgets/global_widgets/my_badge.dart';
 import 'package:flutter/material.dart';
 import '../../utils/helpers.dart';
@@ -22,74 +24,71 @@ class RigItemTable extends StatelessWidget {
         ],
       ),
       columns: const [
-        DataColumn(label: Text('ITEM')),
-        DataColumn(numeric: true, label: Text('PRICE (₹)')),
+        DataColumn(
+          label: Text(
+            'ITEM',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
+        DataColumn(
+          numeric: true,
+          label: Text(
+            'PRICE (₹)',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ),
       ],
       rows: [
         if (item.motherboard != null)
           _buildRow(
             context,
-            title: item.motherboard?.title ?? '',
-            price: item.motherboard?.price ?? 0,
-            category: item.motherboard?.category ?? '',
+            item: item.motherboard,
           ),
 
         if (item.processor != null)
           _buildRow(
             context,
-            title: item.processor?.title ?? '',
-            price: item.processor?.price ?? 0,
-            category: item.processor?.category ?? '',
+            item: item.processor,
           ),
 
         if (item.ram != null)
           _buildRow(
             context,
-            title: item.ram?.title ?? '',
-            price: item.ram?.price ?? 0,
-            category: item.ram?.category ?? '',
+            item: item.ram,
           ),
 
         if (item.storage != null)
           _buildRow(
             context,
-            title: item.storage?.title ?? '',
-            price: item.storage?.price ?? 0,
-            category: item.storage?.category ?? '',
+            item: item.storage,
           ),
 
         if (item.powerSupply != null)
           _buildRow(
             context,
-            title: item.powerSupply?.title ?? '',
-            price: item.powerSupply?.price ?? 0,
-            category: item.powerSupply?.category ?? '',
+            item: item.powerSupply,
           ),
 
         if (item.wifiAdapter != null)
           _buildRow(
             context,
-            title: item.wifiAdapter?.title ?? '',
-            price: item.wifiAdapter?.price ?? 0,
-            category: item.wifiAdapter?.category ?? '',
+            item: item.wifiAdapter,
           ),
 
         if (item.operatingSystem != null)
           _buildRow(
             context,
-            title: item.operatingSystem?.title ?? '',
-            price: item.operatingSystem?.price ?? 0,
-            category: item.operatingSystem?.category ?? '',
+            item: item.operatingSystem,
           ),
 
         // Total price Row
         DataRow(
           selected: true,
           cells: [
-            const DataCell(
+            DataCell(
               Text(
-                'TOTAL',
-                style: TextStyle(fontWeight: FontWeight.bold),
+                item.type == 'RIG' ? 'TOTAL PRICE' : 'PRICE',
+                style: const TextStyle(fontWeight: FontWeight.bold),
               ),
             ),
             DataCell(
@@ -103,9 +102,7 @@ class RigItemTable extends StatelessWidget {
 
   DataRow _buildRow(
     BuildContext context, {
-    required String title,
-    required int price,
-    required String category,
+    required Item? item,
   }) {
     final screenSize = MediaQuery.of(context).size;
     return DataRow(
@@ -116,26 +113,29 @@ class RigItemTable extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                category.snakeCaseToTitleCase().toUpperCase(),
-                style: Theme.of(context)
-                    .textTheme
-                    .caption
-                    ?.copyWith(color: Theme.of(context).colorScheme.primary),
+                item?.category?.snakeCaseToTitleCase().toUpperCase() ?? '',
+                style: Theme.of(context).textTheme.caption?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
               SizedBox(
                 width: screenSize.width * 0.4,
                 child: Text(
-                  title,
+                  item?.title ?? '',
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
             ],
           ),
+          onTap: () {
+            showMyDialog(context, ItemDetailsDialog(item!));
+          },
         ),
         DataCell(
           Text(
-            formatCurrency(price),
+            formatCurrency(item?.price ?? 0),
             style: Theme.of(context).textTheme.bodyText1?.copyWith(
                   fontWeight: FontWeight.bold,
                   color: Theme.of(context).colorScheme.primary,

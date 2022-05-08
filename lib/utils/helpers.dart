@@ -22,6 +22,15 @@ void showMySnackBar(BuildContext context, {required String text}) {
   ));
 }
 
+void showMyDialog(BuildContext context, Widget widget) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return widget;
+    },
+  );
+}
+
 void replacePage(BuildContext context, Widget page) {
   Navigator.pushReplacement(
     context,

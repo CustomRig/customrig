@@ -6,6 +6,7 @@ import 'package:customrig/pages/product_page.dart';
 import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
+import 'package:customrig/widgets/dialogs/item_details_dialog.dart';
 import 'package:customrig/widgets/global_widgets/my_circular_progress_indicator.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -142,69 +143,6 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     }
   }
 
-  void showItemDetailsDialog(BaseItem item) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-          content: ListView(
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            children: [
-              Container(
-                width: double.maxFinite,
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12.0),
-                  image: DecorationImage(
-                    image: NetworkImage(item.imageUrl!),
-                    fit: BoxFit.fitHeight,
-                  ),
-                ),
-              ),
-              spacer(height: 6),
-              Text(
-                item.title!,
-                textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-              ),
-              spacer(height: 6),
-              Text(
-                '₹ ' + formatCurrency(item.price!),
-                textAlign: TextAlign.left,
-                style: const TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              spacer(height: 6),
-              Text(
-                item.description!,
-                textAlign: TextAlign.left,
-              ),
-            ],
-          ),
-          actions: [
-            ElevatedButton.icon(
-              onPressed: () {
-                launchURL(item.purchaseUrl ?? '');
-              },
-              icon: const Icon(EvaIcons.shoppingBagOutline),
-              label: const Text('VIEW'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<BuildRigProvider>(
@@ -256,7 +194,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
                         category: provider.processor?.category,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // mother board
@@ -272,7 +212,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "MOTHERBOARD"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // RAM
@@ -288,7 +230,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "RAM"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // Storage
@@ -304,7 +248,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "STORAGE"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       //graphic card
@@ -320,7 +266,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "GRAPHIC_CARD"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // cooler
@@ -336,7 +284,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "COOLER"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // power supply
@@ -352,7 +302,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "POWER_SUPPLY"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // wifi adapter
@@ -368,7 +320,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "WIFI_ADAPTER"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
 
                       // OS
@@ -384,7 +338,9 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "OPERATING_SYSTEM"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: showItemDetailsDialog,
+                        showItemDetails: (item) {
+                          showMyDialog(context, ItemDetailsDialog(item));
+                        },
                       ),
                     ],
                   )

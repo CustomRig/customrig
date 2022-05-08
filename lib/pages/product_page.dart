@@ -116,7 +116,7 @@ class _ProductPageState extends State<ProductPage> {
               bottomSheet: _buildBottomSheet(value.product!, isAtBottom),
             );
           } else {
-            return Text('something went wrong lol');
+            return const Text('something went wrong!');
           }
         }
 
@@ -173,7 +173,7 @@ class _ProductPageState extends State<ProductPage> {
         borderRadius: BorderRadius.circular(12.0),
         image: DecorationImage(
           image: NetworkImage(url),
-          fit: BoxFit.cover,
+          fit: BoxFit.fitHeight,
         ),
       ),
     );
@@ -197,6 +197,8 @@ class _ProductPageState extends State<ProductPage> {
         ),
 
         spacer(height: 8.0),
+
+        // only shown for the items and not for rigs
         if (item.type == 'ITEM')
           ElevatedButton.icon(
             onPressed: () {
