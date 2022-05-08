@@ -12,6 +12,9 @@ class MySearchDelegate extends SearchDelegate {
         );
   }
 
+  @override
+  String get searchFieldLabel => 'Search for parts, accessories etc';
+
   List<String> suggestions = [
     'Gaming pc',
     'Mouse',
