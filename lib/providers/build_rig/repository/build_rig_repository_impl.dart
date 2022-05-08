@@ -20,7 +20,7 @@ class BuildRigRepositoryImpl implements BuildRigRepository {
     required String? title,
     required String? description,
     required int price,
-    required String? usage,
+    required List<String>? usage,
     required String? cabinetId,
     required String? processorId,
     required String? motherboardId,
@@ -50,7 +50,7 @@ class BuildRigRepositoryImpl implements BuildRigRepository {
       "cooler": coolerId,
       "wifi_adapter": wifiAdapterId,
       "operating_system": operatingSystemId,
-      "category": usage,
+      "usage": usage,
     });
     return Rig.fromJson(result.data);
   }

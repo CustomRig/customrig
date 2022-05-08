@@ -333,7 +333,7 @@ class BuildRigProvider extends ChangeNotifier {
         title: _getRigTitle(),
         description: _getRigDescription(),
         price: _getRigPrice(),
-        usage: _usageType,
+        usage: [_usageType],
         cabinetId: _cabinet?.id,
         processorId: _processor?.id,
         motherboardId: _motherboard?.id,

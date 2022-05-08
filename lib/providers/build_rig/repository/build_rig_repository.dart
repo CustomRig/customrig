@@ -7,7 +7,7 @@ abstract class BuildRigRepository {
     required String? title,
     required String? description,
     required int price,
-    required String? usage,
+    required List<String>? usage,
     required String? cabinetId,
     required String? processorId,
     required String? motherboardId,
