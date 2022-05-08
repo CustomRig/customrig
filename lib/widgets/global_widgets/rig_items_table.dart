@@ -39,16 +39,28 @@ class RigItemTable extends StatelessWidget {
         ),
       ],
       rows: [
-        if (item.motherboard != null)
+        if (item.cabinet != null)
           _buildRow(
             context,
-            item: item.motherboard,
+            item: item.cabinet,
           ),
 
         if (item.processor != null)
           _buildRow(
             context,
             item: item.processor,
+          ),
+
+        if (item.motherboard != null)
+          _buildRow(
+            context,
+            item: item.motherboard,
+          ),
+
+        if (item.graphicCard != null)
+          _buildRow(
+            context,
+            item: item.graphicCard,
           ),
 
         if (item.ram != null)
@@ -67,6 +79,12 @@ class RigItemTable extends StatelessWidget {
           _buildRow(
             context,
             item: item.powerSupply,
+          ),
+
+        if (item.cooler != null)
+          _buildRow(
+            context,
+            item: item.cooler,
           ),
 
         if (item.wifiAdapter != null)

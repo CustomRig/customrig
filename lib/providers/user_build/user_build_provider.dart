@@ -25,7 +25,7 @@ class UserBuildProvider extends ChangeNotifier {
   String get errorMessage => _errorMessage;
 
   List<Rig> _userBuilds = [];
-  List<Rig> get favoriteItems => _userBuilds;
+  List<Rig> get userBuilds => _userBuilds;
 
   final Prefs _prefs = Prefs();
 

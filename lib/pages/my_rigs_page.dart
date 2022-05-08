@@ -34,13 +34,13 @@ class _MyRigsPageState extends State<MyRigsPage> {
         value.state == UserBuildState.initial) {
       return const Center(child: CircularProgressIndicator());
     } else if (value.state == UserBuildState.complete) {
-      if (value.favoriteItems.isEmpty) {
+      if (value.userBuilds.isEmpty) {
         return const Center(child: Text('No Rigs yet'));
       } else {
         return ListView(
           padding: const EdgeInsets.all(12.0),
           physics: const BouncingScrollPhysics(),
-          children: value.favoriteItems
+          children: value.userBuilds
               .map(
                 (e) => SmallProductCard(
                   item: e,
