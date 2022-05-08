@@ -288,7 +288,7 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   String _getRigDescription() {
-    return '${_processor!.title!}  ${_ram!.title!} Ram,  ${_graphicCard!.title!} GPU';
+    return '${_processor!.title!}  ${_ram!.title!} Ram,  ${_graphicCard?.title ?? 'NO'} GPU';
   }
 
   String _getRigTitle() {

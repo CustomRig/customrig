@@ -10,6 +10,7 @@ import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/my_horizontal_list.dart';
 import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
+import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -95,7 +96,7 @@ class _HomePageState extends State<HomePage> {
 
     // error
     else if (provider.state == DashboardState.error) {
-      return Center(child: Text(provider.errorMessage!));
+      return _showErrorWidget();
     }
 
     // null
@@ -109,31 +110,24 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  Widget _searchBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      child: TextFormField(
-        decoration: InputDecoration(
-          filled: true,
-          fillColor: Theme.of(context).colorScheme.primaryContainer,
-          hintText: 'Search for parts, accessories, etc.',
-          prefixIcon: const Icon(Icons.search),
-          prefixIconColor: Theme.of(context).colorScheme.onPrimaryContainer,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(50.0),
-            borderSide: BorderSide.none,
+  Widget _showErrorWidget() {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: const [
+          Icon(
+            EvaIcons.alertTriangleOutline,
+            size: 28,
           ),
-          contentPadding: const EdgeInsets.all(16.0),
-        ),
-        onFieldSubmitted: (value) {
-          goToPage(
-              context,
-              ProductListPage(
-                title: value,
-                value: value,
-                isSearch: true,
-              ));
-        },
+          Text(
+            'Something went wrong!',
+            style: MyTextStyles.productTitle,
+          ),
+          Text(
+            'Please try again later.',
+            style: MyTextStyles.productSubtitle,
+          ),
+        ],
       ),
     );
   }
