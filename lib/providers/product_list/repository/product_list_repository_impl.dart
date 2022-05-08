@@ -42,13 +42,13 @@ class ProductListRepositoryImpl extends ProductListRepository {
   }
 
   @override
-  Future<List<Item>> searchItems({required String query}) async {
+  Future<List<BaseItem>> searchItems({required String query}) async {
     final dio = await MyDio.provideDio();
     final result = await dio.post('/search', data: {"query": query});
 
     if (result.statusCode == 200) {
-      final items = result.data['items'] as List<dynamic>;
-      return items.map((item) => Item.fromJson(item)).toList();
+      final items = result.data as List<dynamic>;
+      return items.map((item) => BaseItem.fromJson(item)).toList();
     } else {
       return [];
     }

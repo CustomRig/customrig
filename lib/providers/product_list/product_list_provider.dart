@@ -38,13 +38,19 @@ class ProductListProvider extends ChangeNotifier {
   }
 
   Future<void> searchItems(String query) async {
-    try {
-      setState(ProductListState.loading);
-      _items = await _repository.searchItems(query: query);
-      setState(ProductListState.complete);
-    } on DioError catch (_) {
-      setState(ProductListState.error);
+    if (_items.isEmpty) {
+      try {
+        setState(ProductListState.loading);
+        _items = await _repository.searchItems(query: query);
+        setState(ProductListState.complete);
+      } on DioError catch (_) {
+        setState(ProductListState.error);
+      }
     }
+  }
+
+  void disposeItems() {
+    _items = [];
   }
 
   void setState(ProductListState state) {
