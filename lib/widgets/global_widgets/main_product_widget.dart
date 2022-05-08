@@ -25,13 +25,12 @@ class MainProductCard extends StatelessWidget {
         children: [
           Flexible(
             child: Container(
-              // width: screenDimension.height * .2,
               height: screenDimension.height * .2,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
                   image: NetworkImage(item.imageUrl ?? ''),
-                  fit: BoxFit.fitWidth,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),
