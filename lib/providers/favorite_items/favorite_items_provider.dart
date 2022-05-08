@@ -66,7 +66,7 @@ class FavoriteItemsProvider extends ChangeNotifier {
       _favoriteItemsPrefs.removeItemFromFavorites(itemId);
       await _repository.removeItemFromFavorite(itemId: itemId);
     } on DioError catch (e) {
-      //TODO: handle this if time permits
+      debugPrint(e.toString());
     }
   }
 

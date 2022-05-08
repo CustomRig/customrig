@@ -1,4 +1,6 @@
 import 'package:customrig/model/base_item.dart';
+import 'package:customrig/providers/favorite_items/repository/favorite_items_repository.dart';
+import 'package:customrig/providers/favorite_items/repository/favorite_items_repository_impl.dart';
 import 'package:customrig/providers/product_page/repository/product_page_repository.dart';
 import 'package:customrig/providers/product_page/repository/product_page_repository_impl.dart';
 import 'package:customrig/services/dynamic_link_service.dart';
@@ -15,7 +17,9 @@ enum ProductPageState {
 }
 
 class ProductPageProvider extends ChangeNotifier {
-  final ProductPageRepository _repository = ProductPageRepositoryImpl();
+  final ProductPageRepository _productRepository = ProductPageRepositoryImpl();
+  final FavoriteItemsRepository _favoriteRepository =
+      FavoriteItemsRepositoryImpl();
 
   final _favItemPrefsService = FavoriteItemsPrefsService();
   final _dynamicLink = DynamicLinkService();
@@ -58,7 +62,7 @@ class ProductPageProvider extends ChangeNotifier {
       try {
         _setState(ProductPageState.loading);
         final fetchedProduct =
-            await _repository.getProduct(itemId!, type: type!);
+            await _productRepository.getProduct(itemId!, type: type!);
         _product = fetchedProduct;
         notifyListeners();
         _setState(ProductPageState.complete);
@@ -76,10 +80,13 @@ class ProductPageProvider extends ChangeNotifier {
   Future<bool> _addItemToFavorite({required BaseItem item}) async {
     try {
       _favItemPrefsService.addItemToFavorite(item);
-      await _repository.addItemToFavorite(itemId: item.id!);
+      await _favoriteRepository.addItemToFavorite(
+        itemId: item.id!,
+        type: item.type!,
+      );
       return true;
-    } catch (e) {
-      print(e);
+    } on DioError catch (e) {
+      debugPrint(e.response.toString());
       return false;
     }
   }
@@ -87,7 +94,7 @@ class ProductPageProvider extends ChangeNotifier {
   Future<bool> _removeItemFromFavorites({required String itemId}) async {
     try {
       _favItemPrefsService.removeItemFromFavorites(itemId);
-      await _repository.remoteItemFromFavorite(itemId: itemId);
+      await _favoriteRepository.removeItemFromFavorite(itemId: itemId);
       return true;
     } catch (e) {
       return false;

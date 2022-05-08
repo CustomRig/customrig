@@ -78,18 +78,13 @@ class _ProductPageState extends State<ProductPage> {
             return Scaffold(
               appBar: AppBar(
                 actions: [
-                  // TODO: make able to add rigs to favorites
-                  value.product?.type == 'ITEM'
-                      ? IconButton(
-                          icon: Icon(
-                            value.isFavorite
-                                ? EvaIcons.heart
-                                : EvaIcons.heartOutline,
-                            color: value.isFavorite ? Colors.redAccent : null,
-                          ),
-                          onPressed: () => value.handleFavorite(),
-                        )
-                      : const SizedBox.shrink(),
+                  IconButton(
+                    icon: Icon(
+                      value.isFavorite ? EvaIcons.heart : EvaIcons.heartOutline,
+                      color: value.isFavorite ? Colors.redAccent : null,
+                    ),
+                    onPressed: () => value.handleFavorite(),
+                  ),
                   IconButton(
                     icon: const Icon(Icons.share),
                     onPressed: () async {

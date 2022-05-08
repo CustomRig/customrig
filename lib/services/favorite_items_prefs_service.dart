@@ -25,7 +25,7 @@ class FavoriteItemsPrefsService {
     await _prefs.setString(kFavoriteItems, json.encode(items));
   }
 
-  void addItemToFavorite(BaseItem item) async {
+  Future<void> addItemToFavorite(BaseItem item) async {
     final favItems = await getFavoriteItems();
     favItems.add(item);
     setFavoriteItems(favItems);
