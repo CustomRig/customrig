@@ -30,7 +30,7 @@ class SelectItems extends StatelessWidget {
     required this.showItemDetails,
     this.pairingIds,
     required this.usage,
-    this.category,
+    required this.category,
   }) : super(key: key);
 
   @override
@@ -41,9 +41,21 @@ class SelectItems extends StatelessWidget {
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
     }).where((e) {
-      return usage != null ? e.usage!.contains(usage) : true;
+      print(category);
+      return category == 'WIFI_ADAPTER' ||
+              category == 'OPERATING_SYSTEM' ||
+              category == 'POWER_SUPPLY' ||
+              category == 'STORAGE'
+          ? true
+          : usage != null
+              ? e.usage!.contains(usage)
+              : true;
     }).where((e) {
-      return category == 'PROCESSOR'
+      return category == 'PROCESSOR' ||
+              category == 'WIFI_ADAPTER' ||
+              category == 'OPERATING_SYSTEM' ||
+              category == 'POWER_SUPPLY' ||
+              category == 'STORAGE'
           ? true
           : pairingIds != null
               ? pairingIds!.any((element) => e.pairingIds!.contains(element))

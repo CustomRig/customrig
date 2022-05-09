@@ -193,7 +193,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             provider.setItem(item: item, category: "PROCESSOR"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
-                        category: provider.processor?.category,
+                        category: provider.allItems!.processor!.category!,
                         showItemDetails: (item) {
                           showMyDialog(context, ItemDetailsDialog(item));
                         },
@@ -212,6 +212,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                             item: item, category: "MOTHERBOARD"),
                         usage: provider.usageType,
                         pairingIds: provider.processor?.pairingIds!,
+                        category: provider.allItems!.motherboard!.category!,
                         showItemDetails: (item) {
                           showMyDialog(context, ItemDetailsDialog(item));
                         },
@@ -219,6 +220,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // RAM
                       SelectItems(
+                        category: provider.allItems!.ram!.category!,
                         itemName: provider.allItems!.ram!.category!,
                         brands: provider.allItems!.ram!.brands!,
                         items: provider.allItems!.ram!.items!,
@@ -237,6 +239,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // Storage
                       SelectItems(
+                        category: provider.allItems!.storage!.category!,
                         itemName: provider.allItems!.storage!.category!,
                         brands: provider.allItems!.storage!.brands!,
                         items: provider.allItems!.storage!.items!,
@@ -255,6 +258,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       //graphic card
                       SelectItems(
+                        category: provider.allItems!.graphicCard!.category!,
                         itemName: provider.allItems!.graphicCard!.category!,
                         brands: provider.allItems!.graphicCard!.brands!,
                         items: provider.allItems!.graphicCard!.items!,
@@ -273,6 +277,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // cooler
                       SelectItems(
+                        category: provider.allItems!.cooler!.category!,
                         itemName: provider.allItems!.cooler!.category!,
                         brands: provider.allItems!.cooler!.brands!,
                         items: provider.allItems!.cooler!.items!,
@@ -291,6 +296,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // power supply
                       SelectItems(
+                        category: provider.allItems!.powerSupply!.category!,
                         itemName: provider.allItems!.powerSupply!.category!,
                         brands: provider.allItems!.powerSupply!.brands!,
                         items: provider.allItems!.powerSupply!.items!,
@@ -309,6 +315,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // wifi adapter
                       SelectItems(
+                        category: provider.allItems!.wifiAdapter!.category!,
                         itemName: provider.allItems!.wifiAdapter!.category!,
                         brands: provider.allItems!.wifiAdapter!.brands!,
                         items: provider.allItems!.wifiAdapter!.items!,
@@ -327,6 +334,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
 
                       // OS
                       SelectItems(
+                        category: provider.allItems!.operatingSystem!.category!,
                         itemName: provider.allItems!.operatingSystem!.category!,
                         brands: provider.allItems!.operatingSystem!.brands!,
                         items: provider.allItems!.operatingSystem!.items!,
