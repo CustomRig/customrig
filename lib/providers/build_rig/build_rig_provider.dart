@@ -112,7 +112,7 @@ class BuildRigProvider extends ChangeNotifier {
   void setBrand({required String brand, required String category}) {
     switch (category) {
       case 'PROCESSOR':
-        if (_processorBrand != null) {
+        if (_processorBrand == brand) {
           _processorBrand = null;
         } else {
           _processorBrand = brand;
@@ -120,7 +120,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'MOTHERBOARD':
-        if (_motherboardBrand != null) {
+        if (_motherboardBrand == brand) {
           _motherboardBrand = null;
         } else {
           _motherboardBrand = brand;
@@ -128,7 +128,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'GRAPHIC_CARD':
-        if (_graphicCardBrand != null) {
+        if (_graphicCardBrand == brand) {
           _graphicCardBrand = null;
         } else {
           _graphicCardBrand = brand;
@@ -136,7 +136,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'POWER_SUPPLY':
-        if (_powerSupplyBrand != null) {
+        if (_powerSupplyBrand == brand) {
           _powerSupplyBrand = null;
         } else {
           _powerSupplyBrand = brand;
@@ -144,7 +144,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'STORAGE':
-        if (_storageBrand != null) {
+        if (_storageBrand == brand) {
           _storageBrand = null;
         } else {
           _storageBrand = brand;
@@ -152,7 +152,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'RAM':
-        if (_ramBrand != null) {
+        if (_ramBrand == brand) {
           _ramBrand = null;
         } else {
           _ramBrand = brand;
@@ -160,7 +160,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'COOLER':
-        if (_coolerBrand != null) {
+        if (_coolerBrand == brand) {
           _coolerBrand = null;
         } else {
           _coolerBrand = brand;
@@ -168,7 +168,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'WIFI_ADAPTER':
-        if (_wifiBrand != null) {
+        if (_wifiBrand == brand) {
           _wifiBrand = null;
         } else {
           _wifiBrand = brand;
@@ -176,7 +176,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'OPERATING_SYSTEM':
-        if (_operatingSystemBrand != null) {
+        if (_operatingSystemBrand == brand) {
           _operatingSystemBrand = null;
         } else {
           _operatingSystemBrand = brand;
@@ -189,7 +189,7 @@ class BuildRigProvider extends ChangeNotifier {
   void setItem({required Item item, required String category}) {
     switch (category) {
       case 'PROCESSOR':
-        if (_processor != null) {
+        if (_processor?.id == item.id) {
           _processor = null;
         } else {
           _processor = item;
@@ -197,7 +197,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'MOTHERBOARD':
-        if (_motherboard != null) {
+        if (_motherboard?.id == item.id) {
           _motherboard = null;
         } else {
           _motherboard = item;
@@ -205,7 +205,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'GRAPHIC_CARD':
-        if (_graphicCard != null) {
+        if (_graphicCard?.id == item.id) {
           _graphicCard = null;
         } else {
           _graphicCard = item;
@@ -213,7 +213,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'POWER_SUPPLY':
-        if (_powerSupply != null) {
+        if (_powerSupply?.id == item.id) {
           _powerSupply = null;
         } else {
           _powerSupply = item;
@@ -221,7 +221,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'STORAGE':
-        if (_storage != null) {
+        if (_storage?.id == item.id) {
           _storage = null;
         } else {
           _storage = item;
@@ -229,7 +229,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'RAM':
-        if (_ram != null) {
+        if (_ram?.id == item.id) {
           _ram = null;
         } else {
           _ram = item;
@@ -237,7 +237,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'COOLER':
-        if (_cooler != null) {
+        if (_cooler?.id == item.id) {
           _cooler = null;
         } else {
           _cooler = item;
@@ -245,7 +245,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'WIFI_ADAPTER':
-        if (_wifi != null) {
+        if (_wifi?.id == item.id) {
           _wifi = null;
         } else {
           _wifi = item;
@@ -253,7 +253,7 @@ class BuildRigProvider extends ChangeNotifier {
         break;
 
       case 'OPERATING_SYSTEM':
-        if (_operatingSystem != null) {
+        if (_operatingSystem?.id == item.id) {
           _operatingSystem = null;
         } else {
           _operatingSystem = item;
