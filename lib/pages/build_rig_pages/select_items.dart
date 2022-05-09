@@ -41,7 +41,6 @@ class SelectItems extends StatelessWidget {
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
     }).where((e) {
-      print(category);
       return category == 'WIFI_ADAPTER' ||
               category == 'OPERATING_SYSTEM' ||
               category == 'POWER_SUPPLY' ||

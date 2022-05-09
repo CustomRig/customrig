@@ -55,6 +55,10 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     );
   }
 
+  void _goTo(int index) {
+    _tabController.animateTo(index);
+  }
+
   void _handleNextButton(BuildRigProvider provider) {
     // usageType
     if (_tabController.index == 0) {
@@ -140,6 +144,41 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
       }
     } else {
       _goNext();
+    }
+  }
+
+  void _handleFinishButton(BuildRigProvider provider) async {
+    if (provider.usageType == '') {
+      showMySnackBar(context, text: 'Please select usage');
+      _goTo(0);
+    } else if (provider.cabinet == null) {
+      showMySnackBar(context, text: 'Please select cabinet');
+      _goTo(1);
+    } else if (provider.processor == null) {
+      showMySnackBar(context, text: 'Please select processor');
+      _goTo(2);
+    } else if (provider.motherboard == null) {
+      showMySnackBar(context, text: 'Please select Motherboard');
+      _goTo(3);
+    } else if (provider.ram == null) {
+      showMySnackBar(context, text: 'Please select Ram');
+      _goTo(4);
+    } else if (provider.graphicCard == null && provider.usageType == 'GAMING') {
+      showMySnackBar(context, text: 'Please select Graphic Card');
+      _goTo(6);
+    } else if (provider.cooler == null) {
+      showMySnackBar(context, text: 'Please select Cooler');
+      _goTo(7);
+    } else if (provider.powerSupply == null) {
+      showMySnackBar(context, text: 'Please select Power supply');
+      _goTo(8);
+    } else {
+      final rig = await provider.buildUserRig();
+      if (rig != null) {
+        goToPage(context, ProductPage(item: rig));
+      } else {
+        showMySnackBar(context, text: 'Failed to create rig!');
+      }
     }
   }
 
@@ -379,13 +418,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     } else {
       return FloatingActionButton.extended(
         onPressed: () async {
-          final rig = await provider.buildUserRig();
-          print(rig);
-          if (rig != null) {
-            goToPage(context, ProductPage(item: rig));
-          } else {
-            showMySnackBar(context, text: 'Failed to create rig!');
-          }
+          _handleFinishButton(provider);
         },
         label: const Text('FINISH'),
         icon: provider.finishState == BuildRigFinishState.loading
