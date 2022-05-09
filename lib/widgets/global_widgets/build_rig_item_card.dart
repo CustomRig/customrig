@@ -66,7 +66,9 @@ class BuildRigItemCard extends StatelessWidget {
                 ),
                 const Spacer(),
                 Text(
-                  '₹ ' + formatCurrency(item.price!),
+                  item.price! == 0
+                      ? 'FREE'
+                      : '₹ ' + formatCurrency(item.price!),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
