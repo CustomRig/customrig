@@ -1,4 +1,3 @@
-import 'package:customrig/model/base_item.dart';
 import 'package:customrig/pages/build_rig_pages/select_cabinet.dart';
 import 'package:customrig/pages/build_rig_pages/select_items.dart';
 import 'package:customrig/pages/build_rig_pages/select_usage.dart';
@@ -422,7 +421,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
         },
         label: const Text('FINISH'),
         icon: provider.finishState == BuildRigFinishState.loading
-            ? MyCircularProgressIndicator()
+            ? const MyCircularProgressIndicator()
             : const Icon(EvaIcons.checkmark),
       );
     }

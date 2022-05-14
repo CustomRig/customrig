@@ -1,5 +1,4 @@
 import 'package:customrig/utils/helpers.dart';
-import 'package:customrig/utils/text_styles.dart';
 import 'package:flutter/material.dart';
 
 class CabinetCardWidget extends StatelessWidget {

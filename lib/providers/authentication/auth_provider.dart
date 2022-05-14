@@ -68,7 +68,7 @@ class AuthProvider extends ChangeNotifier {
         );
         _user = user;
         _prefs.clearPrefs(kUserKey);
-        final res = await _prefs.setString(kUserKey, json.encode(user));
+        await _prefs.setString(kUserKey, json.encode(user));
         _setState(AuthState.complete);
       } on DioError catch (e) {
         _errorMessage = e.response!.data['err'];
@@ -88,8 +88,7 @@ class AuthProvider extends ChangeNotifier {
         );
 
         _prefs.clearPrefs(kUserKey);
-        final res = await _prefs.setString(kUserKey, json.encode(user));
-        print(res);
+        await _prefs.setString(kUserKey, json.encode(user));
         _setState(AuthState.complete);
       } on DioError catch (e) {
         _errorMessage = e.response!.data['err'];

@@ -16,7 +16,7 @@ enum UserBuildState {
 }
 
 class UserBuildProvider extends ChangeNotifier {
-  UserBuildRepository _repository = UserBuildRepositoryImpl();
+  final UserBuildRepository _repository = UserBuildRepositoryImpl();
 
   UserBuildState _state = UserBuildState.initial;
   UserBuildState get state => _state;
@@ -65,6 +65,7 @@ class UserBuildProvider extends ChangeNotifier {
       _prefs.setString(kUserRigs, json.encode(_userBuilds));
       await _repository.removeUserBuild(rigId: rigId);
     } on DioError catch (e) {
+      debugPrint('ERROR: $e');
       //TODO: handle this if time permits
     }
   }

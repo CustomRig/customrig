@@ -16,6 +16,7 @@ class Item extends BaseItem {
     super.usage = json['usage'].cast<String>();
   }
 
+  @override
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['brand'] = super.brand;

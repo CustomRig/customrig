@@ -308,10 +308,8 @@ class BuildRigProvider extends ChangeNotifier {
 
         final allItemsFromApi = await _repository.getAllItems();
 
-        if (allItemsFromApi != null) {
-          _allItems = allItemsFromApi;
-          notifyListeners();
-        }
+        _allItems = allItemsFromApi;
+        notifyListeners();
       } else {
         final items = await _repository.getAllItems();
         _prefs.setString(kBuildRigItems, json.encode(items));
@@ -319,6 +317,7 @@ class BuildRigProvider extends ChangeNotifier {
         setState(BuildRigState.complete);
       }
     } on DioError catch (e) {
+      debugPrint('ERROR: $e');
       setState(BuildRigState.error);
     }
 
@@ -348,6 +347,7 @@ class BuildRigProvider extends ChangeNotifier {
       setFinishState(BuildRigFinishState.complete);
       return rig;
     } on DioError catch (e) {
+      debugPrint('ERROR: $e');
       setFinishState(BuildRigFinishState.error);
       return null;
     }

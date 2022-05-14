@@ -5,7 +5,7 @@ import 'package:customrig/model/user.dart';
 import 'package:customrig/services/prefs.dart';
 
 class UserService {
-  Prefs _prefs = Prefs();
+  final Prefs _prefs = Prefs();
 
   Future<bool> signOut() async {
     return await _prefs.clearPrefs(kUserKey);

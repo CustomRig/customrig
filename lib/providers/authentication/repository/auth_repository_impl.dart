@@ -10,8 +10,7 @@ class AuthRepositoryImpl implements AuthRepository {
       'email': email,
       'password': password,
     });
-    // print("===========");
-    // print(result);
+
     return User.fromJson(result.data);
   }
 
@@ -22,7 +21,6 @@ class AuthRepositoryImpl implements AuthRepository {
       'email': email,
       'password': password,
     });
-    print(result.data);
 
     return User.fromJson(result.data);
   }

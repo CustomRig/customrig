@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:customrig/model/base_item.dart';
 import 'package:customrig/model/dashboard.dart';
 import 'package:customrig/pages/build_rig_pages/build_rig_main_page.dart';

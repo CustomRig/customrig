@@ -1,11 +1,10 @@
 import 'package:customrig/global/dio/dio.dart';
 import 'package:customrig/model/base_item.dart';
-import 'package:customrig/model/item.dart';
 import 'package:customrig/providers/favorite_items/repository/favorite_items_repository.dart';
 import 'package:customrig/services/user_service.dart';
 
 class FavoriteItemsRepositoryImpl implements FavoriteItemsRepository {
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
 
   String? _uid;
 

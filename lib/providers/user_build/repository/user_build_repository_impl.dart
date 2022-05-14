@@ -4,7 +4,7 @@ import 'package:customrig/providers/user_build/repository/user_build_repository.
 import 'package:customrig/services/user_service.dart';
 
 class UserBuildRepositoryImpl implements UserBuildRepository {
-  UserService _userService = UserService();
+  final UserService _userService = UserService();
 
   String? _uid;
 

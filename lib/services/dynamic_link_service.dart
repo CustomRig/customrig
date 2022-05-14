@@ -23,10 +23,8 @@ class DynamicLinkService {
   static Future<void> initDynamicLink(BuildContext context) async {
     FirebaseDynamicLinks.instance.onLink.listen((dynamicLinkData) {
       final deepLink = dynamicLinkData.link;
-      print(deepLink);
       String? id = deepLink.queryParameters["id"];
       String? type = deepLink.queryParameters["type"];
-      print(id);
       if (id != null) {
         Navigator.push(
           context,
