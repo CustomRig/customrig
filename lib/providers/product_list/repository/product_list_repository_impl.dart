@@ -16,7 +16,7 @@ class ProductListRepositoryImpl extends ProductListRepository {
 
     if (type == 'RIG') {
       final result = await dio.post(
-        '/rig/getRigsByCategory',
+        '/rig/getRigsByUsage',
         data: {"category": category},
       );
 
