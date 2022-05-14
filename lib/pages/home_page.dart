@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> {
     if (provider.state == DashboardState.complete &&
         provider.dashboard!.sections!.isNotEmpty) {
       return ListView(
-        // controller: _scrollController,
+        controller: _scrollController,
         physics: const BouncingScrollPhysics(),
         shrinkWrap: true,
         children: provider.dashboard!.sections!.map((e) {
