@@ -5,6 +5,7 @@ import 'package:customrig/widgets/global_widgets/my_badge.dart';
 import 'package:customrig/widgets/global_widgets/rig_items_table.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 
 class ProductPage extends StatefulWidget {
@@ -50,14 +51,6 @@ class _ProductPageState extends State<ProductPage> {
     super.initState();
   }
 
-  // void _checkIfFavorite() async {
-  //   final provider = Provider.of<ProductPageProvider>(context, listen: false);
-  //   isFavorite = await provider.isFavorite(product!.id!);
-  //   setState(() {
-  //     isFavorite = isFavorite;
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     screenDimension = MediaQuery.of(context).size;
@@ -91,10 +84,29 @@ class _ProductPageState extends State<ProductPage> {
                       await value.shareProduct(value.product!);
                     },
                   ),
-                  IconButton(
-                    icon: const Icon(EvaIcons.download),
-                    onPressed: () {},
-                  ),
+                  if (value.product?.type == 'RIG')
+                    IconButton(
+                      icon: const Icon(EvaIcons.download),
+                      onPressed: () async {
+                        final path =
+                            await value.downloadProduct(value.product!);
+
+                        // show snackbar
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('PDF Saved!'),
+                            action: SnackBarAction(
+                              textColor:
+                                  Theme.of(context).colorScheme.onPrimary,
+                              label: 'Open',
+                              onPressed: () {
+                                OpenFile.open(path);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    ),
                 ],
               ),
               body: ListView(

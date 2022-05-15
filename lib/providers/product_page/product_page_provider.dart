@@ -5,6 +5,7 @@ import 'package:customrig/providers/product_page/repository/product_page_reposit
 import 'package:customrig/providers/product_page/repository/product_page_repository_impl.dart';
 import 'package:customrig/services/dynamic_link_service.dart';
 import 'package:customrig/services/favorite_items_prefs_service.dart';
+import 'package:customrig/services/pdf_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:share_plus/share_plus.dart';
@@ -38,6 +39,11 @@ class ProductPageProvider extends ChangeNotifier {
     Share.share(
         'Checkout out this ${item.type == 'RIG' ? 'rig' : 'product'} \n' + link,
         subject: item.title);
+  }
+
+  Future<String> downloadProduct(BaseItem rig) async {
+    final PdfService _pdfService = PdfService();
+    return await _pdfService.createPdf(rig);
   }
 
   void handleFavorite() {
