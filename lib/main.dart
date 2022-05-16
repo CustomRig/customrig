@@ -44,17 +44,20 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => ProductListProvider()),
         ChangeNotifierProvider(create: (_) => ThemeProvider()),
       ],
-      child: Consumer<ThemeProvider>(builder: (context, value, child) {
-        return MaterialApp(
-          title: 'CustomRig',
-          theme: myLightTheme,
-          darkTheme: myDarkTheme,
-          themeMode: value.themeMode,
-          home: AuthWrapper(
-            isUserLoggedIn: isUserLoggedIn,
-          ),
-        );
-      }),
+      child: Consumer<ThemeProvider>(
+        builder: (context, value, child) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'CustomRig',
+            theme: myLightTheme,
+            darkTheme: myDarkTheme,
+            themeMode: value.themeMode,
+            home: AuthWrapper(
+              isUserLoggedIn: isUserLoggedIn,
+            ),
+          );
+        },
+      ),
     );
   }
 }

@@ -71,7 +71,8 @@ class AuthProvider extends ChangeNotifier {
         await _prefs.setString(kUserKey, json.encode(user));
         _setState(AuthState.complete);
       } on DioError catch (e) {
-        _errorMessage = e.response!.data['err'];
+        _errorMessage =
+            e.response != null ? e.response?.data['err'] : e.message;
         _setState(AuthState.error);
       }
     }
