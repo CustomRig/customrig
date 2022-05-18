@@ -7,6 +7,7 @@ import 'package:customrig/providers/dashboard/repository/dashboard_repository_im
 import 'package:customrig/services/prefs.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 enum DashboardState { initial, loading, complete, error }
 
@@ -22,6 +23,9 @@ class DashboardProvider extends ChangeNotifier {
   String? _errorMessage;
   String? get errorMessage => _errorMessage;
 
+  final RefreshController _refreshController = RefreshController();
+  RefreshController get refreshController => _refreshController;
+
   void getDashboard() async {
     if (_dashboard == null) setState(DashboardState.loading);
 
@@ -35,10 +39,12 @@ class DashboardProvider extends ChangeNotifier {
 
         final _dashboardFromApi = await _repository.getDashboard();
         _dashboard = _dashboardFromApi;
+        _refreshController.refreshCompleted();
         _prefs.setString(kDashboard, json.encode(_dashboard));
         notifyListeners();
       } else {
         _dashboard = await _repository.getDashboard();
+        _refreshController.refreshCompleted();
         setState(DashboardState.complete);
         _prefs.setString(kDashboard, json.encode(_dashboard));
       }

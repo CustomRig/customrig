@@ -11,6 +11,7 @@ import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -72,18 +73,22 @@ class _HomePageState extends State<HomePage> {
     // complete
     if (provider.state == DashboardState.complete &&
         provider.dashboard!.sections!.isNotEmpty) {
-      return ListView(
-        controller: _scrollController,
-        physics: const BouncingScrollPhysics(),
-        shrinkWrap: true,
-        children: provider.dashboard!.sections!.map((e) {
-          return Column(
-            children: [
-              _buildTitle(e),
-              _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
-            ],
-          );
-        }).toList(),
+      return SmartRefresher(
+        controller: provider.refreshController,
+        onRefresh: () => provider.getDashboard(),
+        child: ListView(
+          controller: _scrollController,
+          physics: const BouncingScrollPhysics(),
+          shrinkWrap: true,
+          children: provider.dashboard!.sections!.map((e) {
+            return Column(
+              children: [
+                _buildTitle(e),
+                _buildItems(e.items ?? [], type: e.type ?? 'RIG'),
+              ],
+            );
+          }).toList(),
+        ),
       );
     }
 
