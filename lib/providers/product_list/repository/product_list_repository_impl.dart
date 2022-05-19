@@ -11,6 +11,7 @@ class ProductListRepositoryImpl extends ProductListRepository {
     required String category,
     required String type,
     required int limit,
+    required int offset,
   }) async {
     final dio = await MyDio.provideDio();
 
@@ -19,11 +20,15 @@ class ProductListRepositoryImpl extends ProductListRepository {
         '/rig/getRigsByUsage',
         data: {
           "usage": category,
+          "limit": limit,
+          "offset": offset,
         },
       );
 
       if (result.statusCode == 200) {
         final items = result.data as List<dynamic>;
+        print('result.data');
+        print(result);
         return items.map((item) => Rig.fromJson(item)).toList();
       } else {
         return [];
@@ -31,11 +36,18 @@ class ProductListRepositoryImpl extends ProductListRepository {
     } else {
       final result = await dio.post(
         '/item/getItemsByCategory',
-        data: {"category": category},
+        data: {
+          "category": category,
+          "limit": limit,
+          "offset": offset,
+        },
       );
 
       if (result.statusCode == 200) {
         final items = result.data as List<dynamic>;
+        print('result.data');
+        print(result);
+
         return items.map((item) => Item.fromJson(item)).toList();
       } else {
         return [];
@@ -44,9 +56,17 @@ class ProductListRepositoryImpl extends ProductListRepository {
   }
 
   @override
-  Future<List<BaseItem>> searchItems({required String query}) async {
+  Future<List<BaseItem>> searchItems({
+    required String query,
+    required int limit,
+    required int offset,
+  }) async {
     final dio = await MyDio.provideDio();
-    final result = await dio.post('/search', data: {"query": query});
+    final result = await dio.post('/search', data: {
+      "query": query,
+      "limit": limit,
+      "offset": offset,
+    });
 
     if (result.statusCode == 200) {
       final items = result.data as List<dynamic>;
