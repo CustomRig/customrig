@@ -41,20 +41,16 @@ class SelectItems extends StatelessWidget {
     List<Item> sortedItems = items.where((e) {
       return selectedBrand != null ? e.brand == selectedBrand : true;
     }).where((e) {
-      return category == 'WIFI_ADAPTER' ||
-              category == 'OPERATING_SYSTEM' ||
-              category == 'POWER_SUPPLY' ||
-              category == 'STORAGE'
+      return category != 'PROCESSOR' ||
+              category != 'MOTHERBOARD' ||
+              category != 'RAM' ||
+              category != 'GRAPHIC_CARD'
           ? true
           : usage != null
               ? e.usage!.contains(usage)
               : true;
     }).where((e) {
-      return category == 'PROCESSOR' ||
-              category == 'WIFI_ADAPTER' ||
-              category == 'OPERATING_SYSTEM' ||
-              category == 'POWER_SUPPLY' ||
-              category == 'STORAGE'
+      return category != 'PROCESSOR' || category == 'MOTHERBOARD'
           ? true
           : pairingIds != null
               ? pairingIds!.any((element) => e.pairingIds!.contains(element))
@@ -66,7 +62,9 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 12.0, top: 12.0),
           child: Text(
-            'Select ${itemName.snakeCaseToTitleCase()}',
+            itemName == 'RAM'
+                ? 'Select RAM'
+                : 'Select ${itemName.snakeCaseToTitleCase()}',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
