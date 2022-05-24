@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../widgets/shimmer_widgets/home_page_shimmer_widget.dart';
+
 class ProductListPage extends StatefulWidget {
   final String title;
   final String value;
@@ -111,7 +113,7 @@ class _ProductListPageState extends State<ProductListPage> {
 
     // loading
     else if (provider.state == ProductListState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: HomePageShimmer(removeTitle: true));
     }
 
     // error

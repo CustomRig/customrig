@@ -1,5 +1,6 @@
 import 'package:customrig/providers/user_build/user_build_provider.dart';
 import 'package:customrig/widgets/global_widgets/small_product_card.dart';
+import 'package:customrig/widgets/shimmer_widgets/small_card_page_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -23,17 +24,19 @@ class _MyRigsPageState extends State<MyRigsPage> {
   @override
   Widget build(BuildContext context) {
     return Consumer<UserBuildProvider>(builder: (context, value, child) {
-      return Scaffold(
-        body: _buildUserBuildRigs(value),
-      );
+      return Scaffold(body: _buildUserBuildRigs(value));
     });
   }
 
   Widget _buildUserBuildRigs(UserBuildProvider value) {
+    // loading
     if (value.state == UserBuildState.loading ||
         value.state == UserBuildState.initial) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (value.state == UserBuildState.complete) {
+      return const SmallCardPageShimmer();
+    }
+
+    // complete
+    else if (value.state == UserBuildState.complete) {
       if (value.userBuilds.isEmpty) {
         return const Center(child: Text('No Rigs yet'));
       } else {
@@ -52,9 +55,15 @@ class _MyRigsPageState extends State<MyRigsPage> {
               .toList(),
         );
       }
-    } else if (value.state == UserBuildState.error) {
+    }
+
+    // error
+    else if (value.state == UserBuildState.error) {
       return Text(value.errorMessage);
-    } else {
+    }
+
+    // else
+    else {
       return const Text('Something went wrong!');
     }
   }

@@ -8,6 +8,7 @@ import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/global_widgets/my_horizontal_list.dart';
 import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
+import 'package:customrig/widgets/shimmer_widgets/home_page_shimmer_widget.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -94,7 +95,7 @@ class _HomePageState extends State<HomePage> {
 
     // loading
     else if (provider.state == DashboardState.loading) {
-      return const Center(child: CircularProgressIndicator());
+      return const HomePageShimmer();
     }
 
     // error

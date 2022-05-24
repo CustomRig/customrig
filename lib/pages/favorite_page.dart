@@ -1,5 +1,6 @@
 import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
 import 'package:customrig/widgets/global_widgets/small_product_card.dart';
+import 'package:customrig/widgets/shimmer_widgets/small_card_page_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -31,10 +32,14 @@ class _FavoritePageState extends State<FavoritePage> {
   }
 
   Widget _buildFavoriteItems(FavoriteItemsProvider value) {
+    // loading
     if (value.state == FavoriteItemState.loading ||
         value.state == FavoriteItemState.initial) {
-      return const Center(child: CircularProgressIndicator());
-    } else if (value.state == FavoriteItemState.complete) {
+      return const SmallCardPageShimmer();
+    }
+
+    // Complete
+    else if (value.state == FavoriteItemState.complete) {
       if (value.favoriteItems.isEmpty) {
         return const Center(child: Text('No Favorite items yet'));
       } else {
@@ -53,9 +58,15 @@ class _FavoritePageState extends State<FavoritePage> {
               .toList(),
         );
       }
-    } else if (value.state == FavoriteItemState.error) {
+    }
+
+    // error
+    else if (value.state == FavoriteItemState.error) {
       return Text(value.errorMessage);
-    } else {
+    }
+
+    // else
+    else {
       return const Text('Something went wrong!');
     }
   }
