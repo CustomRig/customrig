@@ -38,30 +38,41 @@ class SelectCabinet extends StatelessWidget {
           ),
         ),
         spacer(height: 8.0),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const BouncingScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio:
-                screenDimension.width / (screenDimension.height / 1.6),
-          ),
-          itemCount: sortedCabinets.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: CabinetCardWidget(
-                title: sortedCabinets[index].title!,
-                imageUrl: sortedCabinets[index].imageUrl!,
-                price: sortedCabinets[index].price!,
-                isSelected: selectedCabinet != null
-                    ? sortedCabinets[index].id == selectedCabinet!.id!
-                    : false,
-                onTap: () => onSelectedCabinetChanged(sortedCabinets[index]),
+        sortedCabinets.isNotEmpty
+            ? GridView.builder(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio:
+                      screenDimension.width / (screenDimension.height / 1.6),
+                ),
+                itemCount: sortedCabinets.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: CabinetCardWidget(
+                      title: sortedCabinets[index].title!,
+                      imageUrl: sortedCabinets[index].imageUrl!,
+                      price: sortedCabinets[index].price!,
+                      isSelected: selectedCabinet != null
+                          ? sortedCabinets[index].id == selectedCabinet!.id!
+                          : false,
+                      onTap: () =>
+                          onSelectedCabinetChanged(sortedCabinets[index]),
+                    ),
+                  );
+                },
+              )
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  spacer(height: 44),
+                  const Center(
+                    child: Text('Please select usage!'),
+                  ),
+                ],
               ),
-            );
-          },
-        ),
       ],
     );
   }
