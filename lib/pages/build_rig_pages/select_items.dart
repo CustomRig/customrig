@@ -2,9 +2,11 @@ import 'package:customrig/model/item.dart';
 import 'package:customrig/widgets/global_widgets/brand_card.dart';
 import 'package:customrig/widgets/global_widgets/build_rig_item_card.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:showcaseview/showcaseview.dart';
 import '../../utils/helpers.dart';
 
-class SelectItems extends StatelessWidget {
+class SelectItems extends StatefulWidget {
   final String itemName;
   final List<Item> items;
   final List<String> brands;
@@ -34,26 +36,62 @@ class SelectItems extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  State<SelectItems> createState() => _SelectItemsState();
+}
+
+class _SelectItemsState extends State<SelectItems> {
+  final _showcaseKey = GlobalKey();
+
+  @override
+  void initState() {
+    WidgetsBinding.instance?.addPostFrameCallback(
+      (timeStamp) {
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _isFirstLaunch().then((isFirstLaunch) {
+            if (isFirstLaunch) {
+              ShowCaseWidget.of(context)?.startShowCase([_showcaseKey]);
+            }
+          });
+        });
+      },
+    );
+
+    super.initState();
+  }
+
+  Future<bool> _isFirstLaunch() async {
+    final sharedPreferences = await SharedPreferences.getInstance();
+    bool isFirstLaunch = sharedPreferences.getBool('isFirstLaunch') ?? true;
+
+    if (isFirstLaunch) sharedPreferences.setBool('isFirstLaunch', false);
+
+    return isFirstLaunch;
+  }
+
+  @override
   Widget build(BuildContext context) {
     // sorting
 
     // short on time, please don't judge for this stupid dirty code
-    List<Item> sortedItems = items.where((e) {
-      return selectedBrand != null ? e.brand == selectedBrand : true;
+    List<Item> sortedItems = widget.items.where((e) {
+      return widget.selectedBrand != null
+          ? e.brand == widget.selectedBrand
+          : true;
     }).where((e) {
-      return category != 'PROCESSOR' ||
-              category != 'MOTHERBOARD' ||
-              category != 'RAM' ||
-              category != 'GRAPHIC_CARD'
+      return widget.category != 'PROCESSOR' ||
+              widget.category != 'MOTHERBOARD' ||
+              widget.category != 'RAM' ||
+              widget.category != 'GRAPHIC_CARD'
           ? true
-          : usage != null
-              ? e.usage!.contains(usage)
+          : widget.usage != null
+              ? e.usage!.contains(widget.usage)
               : true;
     }).where((e) {
-      return category != 'PROCESSOR' || category == 'MOTHERBOARD'
+      return widget.category != 'PROCESSOR' || widget.category == 'MOTHERBOARD'
           ? true
-          : pairingIds != null
-              ? pairingIds!.any((element) => e.pairingIds!.contains(element))
+          : widget.pairingIds != null
+              ? widget.pairingIds!
+                  .any((element) => e.pairingIds!.contains(element))
               : true;
     }).toList();
 
@@ -62,9 +100,9 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 12.0, top: 12.0),
           child: Text(
-            itemName == 'RAM'
+            widget.itemName == 'RAM'
                 ? 'Select RAM'
-                : 'Select ${itemName.snakeCaseToTitleCase()}',
+                : 'Select ${widget.itemName.snakeCaseToTitleCase()}',
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -87,8 +125,9 @@ class SelectItems extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(9.0),
           child: Wrap(
-            children:
-                brands.map((e) => _buildBrandCard(brands.length, e)).toList(),
+            children: widget.brands
+                .map((e) => _buildBrandCard(widget.brands.length, e))
+                .toList(),
           ),
         ),
 
@@ -119,12 +158,24 @@ class SelectItems extends StatelessWidget {
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2, childAspectRatio: 2 / 1.5),
           itemBuilder: (context, index) {
-            return BuildRigItemCard(
-              item: sortedItems[index],
-              isSelected: selectedItem == sortedItems[index],
-              onItemChanged: onItemChanged,
-              showItemDetails: showItemDetails,
-            );
+            return index == 0 && widget.category == "PROCESSOR"
+                ? Showcase(
+                    radius: BorderRadius.circular(12),
+                    key: _showcaseKey,
+                    description: 'Long press for more details',
+                    child: BuildRigItemCard(
+                      item: sortedItems[index],
+                      isSelected: widget.selectedItem == sortedItems[index],
+                      onItemChanged: widget.onItemChanged,
+                      showItemDetails: widget.showItemDetails,
+                    ),
+                  )
+                : BuildRigItemCard(
+                    item: sortedItems[index],
+                    isSelected: widget.selectedItem == sortedItems[index],
+                    onItemChanged: widget.onItemChanged,
+                    showItemDetails: widget.showItemDetails,
+                  );
           },
         ),
       );
@@ -145,8 +196,8 @@ class SelectItems extends StatelessWidget {
     return BrandCard(
       brandsLength: brandsLength,
       brand: brand,
-      isSelected: brand == selectedBrand,
-      onBrandChanged: onBrandChanged,
+      isSelected: brand == widget.selectedBrand,
+      onBrandChanged: widget.onBrandChanged,
     );
   }
 }

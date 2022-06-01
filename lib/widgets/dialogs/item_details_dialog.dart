@@ -17,46 +17,50 @@ class ItemDetailsDialog extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      content: ListView(
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        children: [
-          Container(
-            width: double.maxFinite,
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12.0),
-              image: DecorationImage(
-                image: NetworkImage(item.imageUrl!),
-                fit: BoxFit.fitHeight,
+      content: SizedBox(
+        height: MediaQuery.of(context).size.height * 0.4,
+        width: MediaQuery.of(context).size.height * 0.4,
+        child: ListView(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Container(
+              width: 200,
+              height: 200,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12.0),
+                image: DecorationImage(
+                  image: NetworkImage(item.imageUrl!),
+                  fit: BoxFit.fitHeight,
+                ),
               ),
             ),
-          ),
-          spacer(height: 6),
-          Text(
-            item.title!,
-            textAlign: TextAlign.left,
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.primary,
+            spacer(height: 6),
+            Text(
+              item.title!,
+              textAlign: TextAlign.left,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).colorScheme.primary,
+              ),
             ),
-          ),
-          spacer(height: 6),
-          Text(
-            '₹ ' + formatCurrency(item.price!),
-            textAlign: TextAlign.left,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+            spacer(height: 6),
+            Text(
+              '₹ ' + formatCurrency(item.price!),
+              textAlign: TextAlign.left,
+              style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
             ),
-          ),
-          spacer(height: 6),
-          Text(
-            item.description!,
-            textAlign: TextAlign.left,
-          ),
-        ],
+            spacer(height: 6),
+            Text(
+              item.description!,
+              textAlign: TextAlign.left,
+            ),
+          ],
+        ),
       ),
       actions: [
         ElevatedButton.icon(

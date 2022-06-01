@@ -10,6 +10,7 @@ import 'package:customrig/widgets/global_widgets/my_circular_progress_indicator.
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 class BuildRigMainPage extends StatefulWidget {
   const BuildRigMainPage({Key? key}) : super(key: key);
@@ -185,222 +186,228 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
   Widget build(BuildContext context) {
     return Consumer<BuildRigProvider>(
       builder: (context, provider, child) {
-        return DefaultTabController(
-          length: 11,
-          initialIndex: 0,
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('Custom Build'),
-              bottom: PreferredSize(
-                child: LinearProgressIndicator(value: currentStep / 10),
-                preferredSize: const Size.fromHeight(6.0),
+        return ShowCaseWidget(
+          builder: Builder(builder: (context) {
+            return DefaultTabController(
+              length: 11,
+              initialIndex: 0,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: const Text('Custom Build'),
+                  bottom: PreferredSize(
+                    child: LinearProgressIndicator(value: currentStep / 10),
+                    preferredSize: const Size.fromHeight(6.0),
+                  ),
+                ),
+                //
+                body: provider.state == BuildRigState.complete
+                    ? TabBarView(
+                        controller: _tabController,
+                        physics: const BouncingScrollPhysics(),
+                        children: [
+                          // usage
+                          SelectUsage(
+                            selectedUsage: provider.usageType,
+                            onSelectedUsageChanged: (usage) =>
+                                provider.setUsageType(usage),
+                          ),
+
+                          // Cabinet
+                          SelectCabinet(
+                            cabinets: provider.allItems!.cabinet!.items!,
+                            selectedCabinet: provider.cabinet,
+                            onSelectedCabinetChanged: (cabinet) =>
+                                provider.setCabinet(cabinet),
+                            usage: provider.usageType,
+                          ),
+
+                          // processor
+                          SelectItems(
+                            itemName: provider.allItems!.processor!.category!,
+                            brands: provider.allItems!.processor!.brands!,
+                            items: provider.allItems!.processor!.items!,
+                            selectedBrand: provider.processorBrand,
+                            selectedItem: provider.processor,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "PROCESSOR"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "PROCESSOR"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            category: provider.allItems!.processor!.category!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // mother board
+                          SelectItems(
+                            itemName: provider.allItems!.motherboard!.category!,
+                            brands: provider.allItems!.motherboard!.brands!,
+                            items: provider.allItems!.motherboard!.items!,
+                            selectedBrand: provider.motherboardBrand,
+                            selectedItem: provider.motherboard,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "MOTHERBOARD"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "MOTHERBOARD"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            category: provider.allItems!.motherboard!.category!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // RAM
+                          SelectItems(
+                            category: provider.allItems!.ram!.category!,
+                            itemName: provider.allItems!.ram!.category!,
+                            brands: provider.allItems!.ram!.brands!,
+                            items: provider.allItems!.ram!.items!,
+                            selectedBrand: provider.ramBrand,
+                            selectedItem: provider.ram,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "RAM"),
+                            onItemChanged: (item) =>
+                                provider.setItem(item: item, category: "RAM"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // Storage
+                          SelectItems(
+                            category: provider.allItems!.storage!.category!,
+                            itemName: provider.allItems!.storage!.category!,
+                            brands: provider.allItems!.storage!.brands!,
+                            items: provider.allItems!.storage!.items!,
+                            selectedBrand: provider.storageBrand,
+                            selectedItem: provider.storage,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "STORAGE"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "STORAGE"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          //graphic card
+                          SelectItems(
+                            category: provider.allItems!.graphicCard!.category!,
+                            itemName: provider.allItems!.graphicCard!.category!,
+                            brands: provider.allItems!.graphicCard!.brands!,
+                            items: provider.allItems!.graphicCard!.items!,
+                            selectedBrand: provider.graphicCardBrand,
+                            selectedItem: provider.graphicCard,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "GRAPHIC_CARD"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "GRAPHIC_CARD"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // cooler
+                          SelectItems(
+                            category: provider.allItems!.cooler!.category!,
+                            itemName: provider.allItems!.cooler!.category!,
+                            brands: provider.allItems!.cooler!.brands!,
+                            items: provider.allItems!.cooler!.items!,
+                            selectedBrand: provider.coolerBrand,
+                            selectedItem: provider.cooler,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "COOLER"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "COOLER"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // power supply
+                          SelectItems(
+                            category: provider.allItems!.powerSupply!.category!,
+                            itemName: provider.allItems!.powerSupply!.category!,
+                            brands: provider.allItems!.powerSupply!.brands!,
+                            items: provider.allItems!.powerSupply!.items!,
+                            selectedBrand: provider.powerSupplyBrand,
+                            selectedItem: provider.powerSupply,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "POWER_SUPPLY"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "POWER_SUPPLY"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // wifi adapter
+                          SelectItems(
+                            category: provider.allItems!.wifiAdapter!.category!,
+                            itemName: provider.allItems!.wifiAdapter!.category!,
+                            brands: provider.allItems!.wifiAdapter!.brands!,
+                            items: provider.allItems!.wifiAdapter!.items!,
+                            selectedBrand: provider.wifiAdapterBrand,
+                            selectedItem: provider.wifiAdapter,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "WIFI_ADAPTER"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "WIFI_ADAPTER"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+
+                          // OS
+                          SelectItems(
+                            category:
+                                provider.allItems!.operatingSystem!.category!,
+                            itemName:
+                                provider.allItems!.operatingSystem!.category!,
+                            brands: provider.allItems!.operatingSystem!.brands!,
+                            items: provider.allItems!.operatingSystem!.items!,
+                            selectedBrand: provider.operatingSystemBrand,
+                            selectedItem: provider.operatingSystem,
+                            onBrandChanged: (brand) => provider.setBrand(
+                                brand: brand, category: "OPERATING_SYSTEM"),
+                            onItemChanged: (item) => provider.setItem(
+                                item: item, category: "OPERATING_SYSTEM"),
+                            usage: provider.usageType,
+                            pairingIds: provider.processor?.pairingIds!,
+                            showItemDetails: (item) {
+                              showMyDialog(context, ItemDetailsDialog(item));
+                            },
+                          ),
+                        ],
+                      )
+                    : provider.state == BuildRigState.loading
+                        ? _showLoadingWidget()
+                        : provider.state == BuildRigState.error
+                            ? _showErrorWidget()
+                            : const SizedBox.shrink(),
+                //
+
+                floatingActionButton: provider.state == BuildRigState.complete
+                    ? _getFloatingActionButton(provider)
+                    : const SizedBox.shrink(),
               ),
-            ),
-            //
-            body: provider.state == BuildRigState.complete
-                ? TabBarView(
-                    controller: _tabController,
-                    physics: const BouncingScrollPhysics(),
-                    children: [
-                      // usage
-                      SelectUsage(
-                        selectedUsage: provider.usageType,
-                        onSelectedUsageChanged: (usage) =>
-                            provider.setUsageType(usage),
-                      ),
-
-                      // Cabinet
-                      SelectCabinet(
-                        cabinets: provider.allItems!.cabinet!.items!,
-                        selectedCabinet: provider.cabinet,
-                        onSelectedCabinetChanged: (cabinet) =>
-                            provider.setCabinet(cabinet),
-                        usage: provider.usageType,
-                      ),
-
-                      // processor
-                      SelectItems(
-                        itemName: provider.allItems!.processor!.category!,
-                        brands: provider.allItems!.processor!.brands!,
-                        items: provider.allItems!.processor!.items!,
-                        selectedBrand: provider.processorBrand,
-                        selectedItem: provider.processor,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "PROCESSOR"),
-                        onItemChanged: (item) =>
-                            provider.setItem(item: item, category: "PROCESSOR"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        category: provider.allItems!.processor!.category!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // mother board
-                      SelectItems(
-                        itemName: provider.allItems!.motherboard!.category!,
-                        brands: provider.allItems!.motherboard!.brands!,
-                        items: provider.allItems!.motherboard!.items!,
-                        selectedBrand: provider.motherboardBrand,
-                        selectedItem: provider.motherboard,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "MOTHERBOARD"),
-                        onItemChanged: (item) => provider.setItem(
-                            item: item, category: "MOTHERBOARD"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        category: provider.allItems!.motherboard!.category!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // RAM
-                      SelectItems(
-                        category: provider.allItems!.ram!.category!,
-                        itemName: provider.allItems!.ram!.category!,
-                        brands: provider.allItems!.ram!.brands!,
-                        items: provider.allItems!.ram!.items!,
-                        selectedBrand: provider.ramBrand,
-                        selectedItem: provider.ram,
-                        onBrandChanged: (brand) =>
-                            provider.setBrand(brand: brand, category: "RAM"),
-                        onItemChanged: (item) =>
-                            provider.setItem(item: item, category: "RAM"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // Storage
-                      SelectItems(
-                        category: provider.allItems!.storage!.category!,
-                        itemName: provider.allItems!.storage!.category!,
-                        brands: provider.allItems!.storage!.brands!,
-                        items: provider.allItems!.storage!.items!,
-                        selectedBrand: provider.storageBrand,
-                        selectedItem: provider.storage,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "STORAGE"),
-                        onItemChanged: (item) =>
-                            provider.setItem(item: item, category: "STORAGE"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      //graphic card
-                      SelectItems(
-                        category: provider.allItems!.graphicCard!.category!,
-                        itemName: provider.allItems!.graphicCard!.category!,
-                        brands: provider.allItems!.graphicCard!.brands!,
-                        items: provider.allItems!.graphicCard!.items!,
-                        selectedBrand: provider.graphicCardBrand,
-                        selectedItem: provider.graphicCard,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "GRAPHIC_CARD"),
-                        onItemChanged: (item) => provider.setItem(
-                            item: item, category: "GRAPHIC_CARD"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // cooler
-                      SelectItems(
-                        category: provider.allItems!.cooler!.category!,
-                        itemName: provider.allItems!.cooler!.category!,
-                        brands: provider.allItems!.cooler!.brands!,
-                        items: provider.allItems!.cooler!.items!,
-                        selectedBrand: provider.coolerBrand,
-                        selectedItem: provider.cooler,
-                        onBrandChanged: (brand) =>
-                            provider.setBrand(brand: brand, category: "COOLER"),
-                        onItemChanged: (item) =>
-                            provider.setItem(item: item, category: "COOLER"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // power supply
-                      SelectItems(
-                        category: provider.allItems!.powerSupply!.category!,
-                        itemName: provider.allItems!.powerSupply!.category!,
-                        brands: provider.allItems!.powerSupply!.brands!,
-                        items: provider.allItems!.powerSupply!.items!,
-                        selectedBrand: provider.powerSupplyBrand,
-                        selectedItem: provider.powerSupply,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "POWER_SUPPLY"),
-                        onItemChanged: (item) => provider.setItem(
-                            item: item, category: "POWER_SUPPLY"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // wifi adapter
-                      SelectItems(
-                        category: provider.allItems!.wifiAdapter!.category!,
-                        itemName: provider.allItems!.wifiAdapter!.category!,
-                        brands: provider.allItems!.wifiAdapter!.brands!,
-                        items: provider.allItems!.wifiAdapter!.items!,
-                        selectedBrand: provider.wifiAdapterBrand,
-                        selectedItem: provider.wifiAdapter,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "WIFI_ADAPTER"),
-                        onItemChanged: (item) => provider.setItem(
-                            item: item, category: "WIFI_ADAPTER"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-
-                      // OS
-                      SelectItems(
-                        category: provider.allItems!.operatingSystem!.category!,
-                        itemName: provider.allItems!.operatingSystem!.category!,
-                        brands: provider.allItems!.operatingSystem!.brands!,
-                        items: provider.allItems!.operatingSystem!.items!,
-                        selectedBrand: provider.operatingSystemBrand,
-                        selectedItem: provider.operatingSystem,
-                        onBrandChanged: (brand) => provider.setBrand(
-                            brand: brand, category: "OPERATING_SYSTEM"),
-                        onItemChanged: (item) => provider.setItem(
-                            item: item, category: "OPERATING_SYSTEM"),
-                        usage: provider.usageType,
-                        pairingIds: provider.processor?.pairingIds!,
-                        showItemDetails: (item) {
-                          showMyDialog(context, ItemDetailsDialog(item));
-                        },
-                      ),
-                    ],
-                  )
-                : provider.state == BuildRigState.loading
-                    ? _showLoadingWidget()
-                    : provider.state == BuildRigState.error
-                        ? _showErrorWidget()
-                        : const SizedBox.shrink(),
-            //
-
-            floatingActionButton: provider.state == BuildRigState.complete
-                ? _getFloatingActionButton(provider)
-                : const SizedBox.shrink(),
-          ),
+            );
+          }),
         );
       },
     );
