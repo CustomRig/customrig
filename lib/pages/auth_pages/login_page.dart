@@ -57,7 +57,12 @@ class LoginPage extends StatelessWidget {
                         }
                       },
                       suffix: value.state == AuthState.loading
-                          ? const MyCircularProgressIndicator()
+                          ? Row(
+                              children: [
+                                spacer(width: 6),
+                                const MyCircularProgressIndicator(),
+                              ],
+                            )
                           : const Icon(EvaIcons.chevronRight),
                     ),
                     const Spacer(),
