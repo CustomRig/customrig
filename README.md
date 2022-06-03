@@ -1,16 +1,38 @@
-# customrig
+<p align="center">
+<img style= "border-radius : 8px " height="150px" width="150px" src="branding/app_icon.png" alt="logo"/>
+</p>
 
-A new Flutter project.
+# CustomRig
 
-## Getting Started
+ <hr />
 
-This project is a starting point for a Flutter application.
+CustomRig is a simple app that helps users to build Custom PC based on their requirements and usage. Users are also provided with pre-builds for different usages and requirements which will save their time instead of building their own custom PC from scratch.
 
-A few resources to get you started if this is your first Flutter project:
+CustomRig app also provides users with the best accessories available in the market which are required for PC setup. So users can easily purchase them directly without searching on large e-commerce websites.
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+<p align="center">
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<a href='https://play.google.com/store/apps/details?id=me.varad.customrig'>
+<img style= "border-radius : 8px " height="100px"" src="branding/google-play-badge.png" alt="customrig"/>
+</a>
+</p>
+
+## Screenshots
+
+<p>
+<img height="328px" width="175px" src="branding/screenshots/screenshot1.png" alt="4"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot2.png" alt="4"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot3.png" alt="1"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot4.png" alt="2"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot5.png" alt="3"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot6.png" alt="3"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot7.png" alt="3"/>
+</p>
+
+## Contributing
+
+Found any bugs? Have any suggestions or code improvements? [Submit an issue](https://github.com/CustomRig/customrig/issues) or fork and send a [pull request](https://github.com/CustomRig/customrig/pulls) with your changes. All contributions are more than welcome.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](https://choosealicense.com/licenses/mit/) file for details.
