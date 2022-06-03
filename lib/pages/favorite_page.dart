@@ -41,7 +41,23 @@ class _FavoritePageState extends State<FavoritePage> {
     // Complete
     else if (value.state == FavoriteItemState.complete) {
       if (value.favoriteItems.isEmpty) {
-        return const Center(child: Text('No Favorite items yet'));
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/not_found.png',
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
+              const Text(
+                'No favorites yet!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        );
       } else {
         return ListView(
           padding: const EdgeInsets.all(12.0),

@@ -38,7 +38,23 @@ class _MyRigsPageState extends State<MyRigsPage> {
     // complete
     else if (value.state == UserBuildState.complete) {
       if (value.userBuilds.isEmpty) {
-        return const Center(child: Text('No Rigs yet'));
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/images/empty_cart.png',
+                height: MediaQuery.of(context).size.height * 0.2,
+              ),
+              const Text(
+                'No builds yet!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        );
       } else {
         return ListView(
           padding: const EdgeInsets.all(12.0),
