@@ -73,26 +73,26 @@ class _SelectItemsState extends State<SelectItems> {
     // sorting
 
     // short on time, please don't judge for this stupid dirty code
+
     List<Item> sortedItems = widget.items.where((e) {
+      return widget.category == 'PROCESSOR' ||
+              widget.category == 'MOTHERBOARD' ||
+              widget.category == "GRAPHIC_CARD" ||
+              widget.category == "RAM"
+          ? widget.usage != null
+              ? e.usage!.contains(widget.usage)
+              : true
+          : true;
+    }).where((e) {
       return widget.selectedBrand != null
           ? e.brand == widget.selectedBrand
           : true;
     }).where((e) {
-      return widget.category != 'PROCESSOR' ||
-              widget.category != 'MOTHERBOARD' ||
-              widget.category != 'RAM' ||
-              widget.category != 'GRAPHIC_CARD'
-          ? true
-          : widget.usage != null
-              ? e.usage!.contains(widget.usage)
-              : true;
-    }).where((e) {
-      return widget.category != 'PROCESSOR' || widget.category == 'MOTHERBOARD'
-          ? true
-          : widget.pairingIds != null
-              ? widget.pairingIds!
-                  .any((element) => e.pairingIds!.contains(element))
-              : true;
+      return widget.category == "MOTHERBOARD"
+          ? widget.pairingIds != null
+              ? widget.pairingIds!.any((id) => e.pairingIds!.contains(id))
+              : true
+          : true;
     }).toList();
 
     return ListView(
