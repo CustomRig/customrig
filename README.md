@@ -20,13 +20,13 @@ CustomRig app also provides users with the best accessories available in the mar
 ## Screenshots
 
 <p>
-<img height="328px" width="175px" src="branding/screenshots/screenshot1.png" alt="4"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot2.png" alt="4"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot3.png" alt="1"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot4.png" alt="2"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot5.png" alt="3"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot6.png" alt="3"/>
-<img height="328px" width="175px" src="branding/screenshots/screenshot7.png" alt="3"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot1.PNG" alt="4"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot2.PNG" alt="4"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot3.PNG" alt="1"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot4.PNG" alt="2"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot5.PNG" alt="3"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot6.PNG" alt="3"/>
+<img height="328px" width="175px" src="branding/screenshots/screenshot7.PNG" alt="3"/>
 </p>
 
 ## Contributing
