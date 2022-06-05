@@ -1,8 +1,10 @@
 import 'package:customrig/providers/favorite_items/favorite_items_provider.dart';
+import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/widgets/global_widgets/small_product_card.dart';
 import 'package:customrig/widgets/shimmer_widgets/small_card_page_shimmer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({Key? key}) : super(key: key);
@@ -45,10 +47,11 @@ class _FavoritePageState extends State<FavoritePage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/images/not_found.png',
+              SvgPicture.asset(
+                'assets/images/not_found.svg',
                 height: MediaQuery.of(context).size.height * 0.2,
               ),
+              spacer(height: 12),
               const Text(
                 'No favorites yet!',
                 style: TextStyle(

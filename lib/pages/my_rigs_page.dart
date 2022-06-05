@@ -1,7 +1,9 @@
 import 'package:customrig/providers/user_build/user_build_provider.dart';
+import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/widgets/global_widgets/small_product_card.dart';
 import 'package:customrig/widgets/shimmer_widgets/small_card_page_shimmer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class MyRigsPage extends StatefulWidget {
@@ -42,10 +44,11 @@ class _MyRigsPageState extends State<MyRigsPage> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Image.asset(
-                'assets/images/empty_cart.png',
+              SvgPicture.asset(
+                'assets/images/empty_cart.svg',
                 height: MediaQuery.of(context).size.height * 0.2,
               ),
+              spacer(height: 12),
               const Text(
                 'No builds yet!',
                 style: TextStyle(
