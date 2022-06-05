@@ -10,7 +10,7 @@ class SmallCardPageShimmer extends StatelessWidget {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       padding: const EdgeInsets.all(12),
-      itemCount: 8,
+      itemCount: 15,
       itemBuilder: ((context, index) {
         return Padding(
           padding: const EdgeInsets.all(8.0),
