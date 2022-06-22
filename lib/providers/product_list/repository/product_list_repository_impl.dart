@@ -27,8 +27,6 @@ class ProductListRepositoryImpl extends ProductListRepository {
 
       if (result.statusCode == 200) {
         final items = result.data as List<dynamic>;
-        print('result.data');
-        print(result);
         return items.map((item) => Rig.fromJson(item)).toList();
       } else {
         return [];
@@ -45,8 +43,6 @@ class ProductListRepositoryImpl extends ProductListRepository {
 
       if (result.statusCode == 200) {
         final items = result.data as List<dynamic>;
-        print('result.data');
-        print(result);
 
         return items.map((item) => Item.fromJson(item)).toList();
       } else {

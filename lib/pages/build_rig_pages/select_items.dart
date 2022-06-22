@@ -44,7 +44,7 @@ class _SelectItemsState extends State<SelectItems> {
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback(
+    WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         Future.delayed(const Duration(milliseconds: 500), () {
           _isFirstLaunch().then((isFirstLaunch) {

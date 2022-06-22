@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     DynamicLinkService.initDynamicLink(context);
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<DashboardProvider>(context, listen: false).getDashboard();
     });
 

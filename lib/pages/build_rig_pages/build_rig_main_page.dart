@@ -32,7 +32,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     _tabController = TabController(vsync: this, length: 11);
     _listenToTabController();
 
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<BuildRigProvider>(context, listen: false).getAllItems();
     });
 

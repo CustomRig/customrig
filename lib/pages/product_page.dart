@@ -27,7 +27,7 @@ class _ProductPageState extends State<ProductPage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ProductPageProvider>(context, listen: false).loadProduct(
         widget.item,
         itemId: widget.itemId,

@@ -36,7 +36,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
   void initState() {
     obscureText = widget.isObscure;
     widget.controller.addListener(() {
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _changeText();
       });
     });

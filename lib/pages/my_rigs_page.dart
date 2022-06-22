@@ -16,7 +16,7 @@ class MyRigsPage extends StatefulWidget {
 class _MyRigsPageState extends State<MyRigsPage> {
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<UserBuildProvider>(context, listen: false).getUserBuild();
     });
 

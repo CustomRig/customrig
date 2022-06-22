@@ -26,7 +26,7 @@ class ProductListPage extends StatefulWidget {
 class _ProductListPageState extends State<ProductListPage> {
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Provider.of<ProductListProvider>(context, listen: false).disposeItems();
       if (widget.isSearch) {
         Provider.of<ProductListProvider>(context, listen: false).searchItems(
