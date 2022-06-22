@@ -35,6 +35,11 @@ class SettingsPage extends StatelessWidget {
         child: ChoiceChip(
           backgroundColor: Theme.of(context).colorScheme.secondaryContainer,
           selectedColor: Theme.of(context).colorScheme.primary,
+          labelStyle: TextStyle(
+            color: value.themeMode == theme
+                ? Theme.of(context).colorScheme.onPrimary
+                : Theme.of(context).colorScheme.onSecondaryContainer,
+          ),
           elevation: 2,
           label: Text(theme.name),
           selected: value.themeMode == theme,
