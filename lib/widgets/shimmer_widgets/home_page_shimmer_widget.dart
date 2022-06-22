@@ -71,25 +71,6 @@ class HomePageShimmer extends StatelessWidget {
           height: 12,
         ),
         spacer(height: 6),
-        const MyShimmer(
-          width: 50,
-          height: 12,
-        ),
-        spacer(height: 6),
-        const MyShimmer(
-          width: 50,
-          height: 12,
-        ),
-        spacer(height: 6),
-        const MyShimmer(
-          width: 50,
-          height: 12,
-        ),
-        spacer(height: 6),
-        const MyShimmer(
-          width: 50,
-          height: 12,
-        ),
       ],
     );
   }
