@@ -67,6 +67,14 @@ class ItemDetailsDialog extends StatelessWidget {
           onPressed: () {
             launchURL(item.purchaseUrl ?? '');
           },
+          style: ElevatedButton.styleFrom(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 18,
+              vertical: 8,
+            ),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+          ),
           icon: const Icon(EvaIcons.shoppingBagOutline),
           label: const Text('VIEW'),
         ),
