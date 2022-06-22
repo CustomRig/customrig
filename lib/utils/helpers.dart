@@ -22,8 +22,8 @@ void showMySnackBar(BuildContext context, {required String text}) {
   ));
 }
 
-void showMyDialog(BuildContext context, Widget widget) {
-  showDialog(
+Future<T?> showMyDialog<T>(BuildContext context, Widget widget) {
+  return showDialog<T>(
     context: context,
     builder: (context) {
       return widget;

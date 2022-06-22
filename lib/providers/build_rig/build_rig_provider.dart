@@ -296,6 +296,7 @@ class BuildRigProvider extends ChangeNotifier {
   }
 
   void getAllItems() async {
+    _disposeItems();
     if (_allItems == null) setState(BuildRigState.loading);
 
     try {
@@ -361,6 +362,29 @@ class BuildRigProvider extends ChangeNotifier {
   void setFinishState(BuildRigFinishState state) {
     _finishState = state;
     notifyListeners();
+  }
+
+  void _disposeItems() {
+    _usageType = '';
+    _cabinet = null;
+    _processor = null;
+    _processorBrand = null;
+    _motherboard = null;
+    _motherboardBrand = null;
+    _ram = null;
+    _ramBrand = null;
+    _storage = null;
+    _storageBrand = null;
+    _graphicCard = null;
+    _graphicCardBrand = null;
+    _cooler = null;
+    _coolerBrand = null;
+    _powerSupply = null;
+    _powerSupplyBrand = null;
+    _wifi = null;
+    _wifiBrand = null;
+    _operatingSystem = null;
+    _operatingSystemBrand = null;
   }
 
   Future<AllItems?> _getFavItemsFromPrefs() async {
