@@ -8,6 +8,7 @@ class PasswordTextField extends StatefulWidget {
   final String? hintText;
   final bool isObscure;
   final bool isForgot;
+  final VoidCallback? onForgotPasswordClick;
 
   const PasswordTextField({
     Key? key,
@@ -16,6 +17,7 @@ class PasswordTextField extends StatefulWidget {
     this.isForgot = true,
     this.validator,
     this.hintText,
+    this.onForgotPasswordClick,
   }) : super(key: key);
 
   @override
@@ -69,7 +71,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
             )
           : widget.isForgot
               ? InkWell(
-                  onTap: () {},
+                  onTap: widget.onForgotPasswordClick,
                   child: Text(
                     'FORGOT',
                     style: TextStyle(

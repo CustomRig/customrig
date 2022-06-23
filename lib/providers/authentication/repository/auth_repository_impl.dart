@@ -24,4 +24,14 @@ class AuthRepositoryImpl implements AuthRepository {
 
     return User.fromJson(result.data);
   }
+
+  @override
+  Future<String> forgotPassword({required String email}) async {
+    final dio = await MyDio.provideDio();
+    final result = await dio.post('/user/forgot-password', data: {
+      'email': email,
+    });
+
+    return result.data.toString();
+  }
 }

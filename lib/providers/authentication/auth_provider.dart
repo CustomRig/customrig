@@ -15,6 +15,13 @@ enum AuthState {
   error,
 }
 
+enum ForgotPasswordState {
+  initial,
+  loading,
+  complete,
+  error,
+}
+
 class AuthProvider extends ChangeNotifier {
   final Prefs _prefs = Prefs();
 
@@ -23,24 +30,38 @@ class AuthProvider extends ChangeNotifier {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
+  final TextEditingController _forgotPasswordEmailController =
+      TextEditingController();
+
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> get loginFormKey => _loginFormKey;
 
   final GlobalKey<FormState> _signupFormKey = GlobalKey<FormState>();
   GlobalKey<FormState> get signupFormKey => _signupFormKey;
 
+  final GlobalKey<FormState> _forgotPasswordFormKey = GlobalKey<FormState>();
+  GlobalKey<FormState> get forgotPasswordFormKey => _forgotPasswordFormKey;
+
   TextEditingController get emailController => _emailController;
   TextEditingController get passwordController => _passwordController;
   TextEditingController get confirmPasswordController =>
       _confirmPasswordController;
+  TextEditingController get forgotPasswordEmailController =>
+      _forgotPasswordEmailController;
 
   final AuthRepository _repository = AuthRepositoryImpl();
 
   AuthState _state = AuthState.initial;
   AuthState get state => _state;
 
+  ForgotPasswordState _forgotPasswordState = ForgotPasswordState.initial;
+  ForgotPasswordState get forgotPasswordState => _forgotPasswordState;
+
   String _errorMessage = '';
   String get errorMessage => _errorMessage;
+
+  String _forgotPasswordMessage = '';
+  String get forgotPasswordMessage => _forgotPasswordMessage;
 
   User? _user;
   User? get user => _user;
@@ -104,15 +125,43 @@ class AuthProvider extends ChangeNotifier {
     _prefs.clearPrefs(kBuildRigItems);
   }
 
+  Future forgotPassword() async {
+    try {
+      if (_forgotPasswordFormKey.currentState!.validate()) {
+        _setForgotPasswordState(ForgotPasswordState.loading);
+        final result = await _repository.forgotPassword(
+          email: _forgotPasswordEmailController.text.trim(),
+        );
+
+        _forgotPasswordMessage = result;
+        _setForgotPasswordState(ForgotPasswordState.complete);
+      }
+    } on DioError catch (e) {
+      _setForgotPasswordState(ForgotPasswordState.error);
+      _forgotPasswordMessage =
+          e.response != null ? e.response?.data['err'] : e.message;
+    }
+  }
+
   disposeProvider() {
     _errorMessage = '';
+    _forgotPasswordMessage = '';
     _emailController.clear();
     _passwordController.clear();
     _confirmPasswordController.clear();
+    _forgotPasswordEmailController.clear();
+
+    _state = AuthState.initial;
+    _forgotPasswordState = ForgotPasswordState.initial;
   }
 
   _setState(AuthState state) {
     _state = state;
+    notifyListeners();
+  }
+
+  _setForgotPasswordState(ForgotPasswordState state) {
+    _forgotPasswordState = state;
     notifyListeners();
   }
 }
