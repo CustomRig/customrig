@@ -9,7 +9,6 @@ import 'package:customrig/widgets/global_widgets/my_circular_progress_indicator.
 import 'package:customrig/widgets/text_fields/password_text_field.dart';
 import 'package:customrig/widgets/text_fields/primary_text_field.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -47,36 +46,8 @@ class LoginPage extends StatelessWidget {
                     PasswordTextField(
                       controller: value.passwordController,
                       validator: (str) => Validator.isValidPassword(str),
-                      onForgotPasswordClick: () {
-                        value.disposeProvider();
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return Consumer<AuthProvider>(
-                                  builder: ((context, value, child) {
-                                return ForgotPasswordDialog(
-                                  formKey: value.forgotPasswordFormKey,
-                                  controller:
-                                      value.forgotPasswordEmailController,
-                                  onSubmit: () async {
-                                    await value.forgotPassword();
-                                    if (value.forgotPasswordState ==
-                                        ForgotPasswordState.complete) {
-                                      await Future.delayed(
-                                          const Duration(seconds: 2));
-                                      Navigator.pop(context);
-                                    }
-                                  },
-                                  message: value.forgotPasswordMessage,
-                                  button: value.forgotPasswordState ==
-                                          ForgotPasswordState.loading
-                                      ? const MyCircularProgressIndicator(
-                                          darkColor: true)
-                                      : const Text('SUBMIT'),
-                                );
-                              }));
-                            });
-                      },
+                      onForgotPasswordClick: () =>
+                          _onForgotPasswordClick(context, value),
                     ),
                     _showErrorMessage(context, value),
                     PrimaryButton(
@@ -120,6 +91,32 @@ class LoginPage extends StatelessWidget {
         );
       }),
     );
+  }
+
+  void _onForgotPasswordClick(BuildContext context, AuthProvider value) {
+    value.initDialogData();
+    showDialog(
+        context: context,
+        builder: (context) {
+          return Consumer<AuthProvider>(builder: ((context, value, child) {
+            return ForgotPasswordDialog(
+              error: value.forgotPasswordState == ForgotPasswordState.error,
+              formKey: value.forgotPasswordFormKey,
+              controller: value.forgotPasswordEmailController,
+              onSubmit: () async {
+                await value.forgotPassword();
+                if (value.forgotPasswordState == ForgotPasswordState.complete) {
+                  await Future.delayed(const Duration(seconds: 2));
+                  Navigator.pop(context);
+                }
+              },
+              message: value.forgotPasswordMessage,
+              button: value.forgotPasswordState == ForgotPasswordState.loading
+                  ? const MyCircularProgressIndicator(darkColor: true)
+                  : const Text('SUBMIT'),
+            );
+          }));
+        });
   }
 
   Widget _showErrorMessage(BuildContext context, AuthProvider error) {

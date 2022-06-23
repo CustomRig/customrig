@@ -8,6 +8,7 @@ class ForgotPasswordDialog extends StatelessWidget {
   final GlobalKey formKey;
   final Widget button;
   final String message;
+  final bool error;
 
   const ForgotPasswordDialog({
     Key? key,
@@ -16,6 +17,7 @@ class ForgotPasswordDialog extends StatelessWidget {
     required this.formKey,
     required this.button,
     required this.message,
+    this.error = false,
   }) : super(key: key);
 
   @override
@@ -43,7 +45,9 @@ class ForgotPasswordDialog extends StatelessWidget {
                   child: Text(
                     message,
                     style: TextStyle(
-                        color: Theme.of(context).colorScheme.error,
+                        color: error
+                            ? Theme.of(context).colorScheme.error
+                            : Theme.of(context).colorScheme.primary,
                         fontSize: 14),
                   ),
                 )

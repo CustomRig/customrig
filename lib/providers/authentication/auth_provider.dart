@@ -30,7 +30,7 @@ class AuthProvider extends ChangeNotifier {
   final TextEditingController _confirmPasswordController =
       TextEditingController();
 
-  final TextEditingController _forgotPasswordEmailController =
+  TextEditingController _forgotPasswordEmailController =
       TextEditingController();
 
   final GlobalKey<FormState> _loginFormKey = GlobalKey<FormState>();
@@ -153,6 +153,14 @@ class AuthProvider extends ChangeNotifier {
 
     _state = AuthState.initial;
     _forgotPasswordState = ForgotPasswordState.initial;
+  }
+
+  initDialogData() {
+    if (_emailController.text.isNotEmpty) {
+      _forgotPasswordEmailController = _emailController;
+    }
+    _forgotPasswordState = ForgotPasswordState.initial;
+    _forgotPasswordMessage = '';
   }
 
   _setState(AuthState state) {
