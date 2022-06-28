@@ -176,7 +176,7 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
     } else {
       final rig = await provider.buildUserRig();
       if (rig != null) {
-        goToPage(context, ProductPage(item: rig));
+        replacePage(context, ProductPage(item: rig));
       } else {
         showMySnackBar(context, text: 'Failed to create rig!');
       }
