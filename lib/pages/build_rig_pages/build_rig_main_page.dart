@@ -6,6 +6,7 @@ import 'package:customrig/providers/build_rig/build_rig_provider.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
 import 'package:customrig/widgets/dialogs/item_details_dialog.dart';
+import 'package:customrig/widgets/global_widgets/exception_widget.dart';
 import 'package:customrig/widgets/global_widgets/my_circular_progress_indicator.dart';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
@@ -439,8 +440,8 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
                       : provider.state == BuildRigState.loading
                           ? _showLoadingWidget()
                           : provider.state == BuildRigState.error
-                              ? _showErrorWidget()
-                              : const SizedBox.shrink(),
+                              ? const ExceptionWidget()
+                              : const ExceptionWidget(),
                   //
 
                   floatingActionButton: provider.state == BuildRigState.complete
@@ -489,28 +490,6 @@ class _BuildRigMainPageState extends State<BuildRigMainPage>
           ),
           const Text(
             'Searching the best pc parts for you!',
-            style: MyTextStyles.productSubtitle,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _showErrorWidget() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(
-            EvaIcons.alertTriangleOutline,
-            size: 28,
-          ),
-          Text(
-            'Something went wrong!',
-            style: MyTextStyles.productTitle,
-          ),
-          Text(
-            'Please try again later.',
             style: MyTextStyles.productSubtitle,
           ),
         ],

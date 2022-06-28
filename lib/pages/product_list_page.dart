@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+import '../widgets/global_widgets/exception_widget.dart';
 import '../widgets/shimmer_widgets/home_page_shimmer_widget.dart';
 
 class ProductListPage extends StatefulWidget {
@@ -118,12 +119,12 @@ class _ProductListPageState extends State<ProductListPage> {
 
     // error
     else if (provider.state == ProductListState.error) {
-      return const Center(child: Text('Something went wrong!'));
+      return const ExceptionWidget();
     }
 
     // else
     else {
-      return const Center(child: Text('Something went wrong!'));
+      return const ExceptionWidget();
     }
   }
 }

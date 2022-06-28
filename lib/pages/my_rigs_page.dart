@@ -1,5 +1,6 @@
 import 'package:customrig/providers/user_build/user_build_provider.dart';
 import 'package:customrig/utils/helpers.dart';
+import 'package:customrig/widgets/global_widgets/exception_widget.dart';
 import 'package:customrig/widgets/global_widgets/small_product_card.dart';
 import 'package:customrig/widgets/shimmer_widgets/small_card_page_shimmer.dart';
 import 'package:flutter/material.dart';
@@ -78,12 +79,12 @@ class _MyRigsPageState extends State<MyRigsPage> {
 
     // error
     else if (value.state == UserBuildState.error) {
-      return Text(value.errorMessage);
+      return const ExceptionWidget();
     }
 
     // else
     else {
-      return const Text('Something went wrong!');
+      return const ExceptionWidget();
     }
   }
 }

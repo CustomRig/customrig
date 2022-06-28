@@ -6,6 +6,7 @@ import 'package:customrig/providers/dashboard/dashboard_provider.dart';
 import 'package:customrig/services/dynamic_link_service.dart';
 import 'package:customrig/utils/helpers.dart';
 import 'package:customrig/utils/text_styles.dart';
+import 'package:customrig/widgets/global_widgets/exception_widget.dart';
 import 'package:customrig/widgets/global_widgets/my_horizontal_list.dart';
 import 'package:customrig/widgets/global_widgets/main_product_widget.dart';
 import 'package:customrig/widgets/shimmer_widgets/home_page_shimmer_widget.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
 
     // error
     else if (provider.state == DashboardState.error) {
-      return _showErrorWidget();
+      return const ExceptionWidget();
     }
 
     // null
@@ -110,30 +111,8 @@ class _HomePageState extends State<HomePage> {
 
     // something went wrong
     else {
-      return const Center(child: Text('Something went wrong!'));
+      return const ExceptionWidget();
     }
-  }
-
-  Widget _showErrorWidget() {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: const [
-          Icon(
-            EvaIcons.alertTriangleOutline,
-            size: 28,
-          ),
-          Text(
-            'Something went wrong!',
-            style: MyTextStyles.productTitle,
-          ),
-          Text(
-            'Please try again later.',
-            style: MyTextStyles.productSubtitle,
-          ),
-        ],
-      ),
-    );
   }
 
   AnimatedContainer _expandedFloatingActionButton(BuildContext context) {

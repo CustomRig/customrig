@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/global_widgets/exception_widget.dart';
+
 class ProductPage extends StatefulWidget {
   final BaseItem? item;
   final String? itemId;
@@ -123,13 +125,13 @@ class _ProductPageState extends State<ProductPage> {
               bottomSheet: _buildBottomSheet(value.product!, isAtBottom),
             );
           } else {
-            return const Text('something went wrong!');
+            return const ExceptionWidget();
           }
         }
 
         // if api fetch fails
         else if (value.state == ProductPageState.error) {
-          return const Text('Failed to load item');
+          return const ExceptionWidget();
         }
 
         // if all above fails
